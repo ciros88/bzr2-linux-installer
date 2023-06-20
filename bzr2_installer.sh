@@ -34,7 +34,7 @@ main() {
   fi
 
   USER=${SUDO_USER}
-  HOME=$(eval echo ~${SUDO_USER})
+  HOME=$(eval echo ~"$SUDO_USER")
 
   bzr2_version_default='2.0.53.Alpha'
   winearch_default='win64'
@@ -103,14 +103,14 @@ main() {
     setup_bzr2
   fi
 
-  sudo -u $USER ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
+  sudo -u "$USER" ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
 
   echo -e "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> ${bold}$bzr2_wineprefix_dir${bold_reset} has been created\n"
 
   setup_dpi
   setup_launcher_script
 
-  sudo -u $USER ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
+  sudo -u "$USER" ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
 
   setup_desktop_entry
   setup_launcher_icon
@@ -280,9 +280,9 @@ get_mime_types_association() {
 }
 
 setup_bzr2() {
-  sudo -u $USER mkdir -p "$bzr2_dir"
-  sudo -u $USER unzip -oq "$bzr2_zip" -d "$bzr2_dir"
-  sudo -u $USER WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog autostart_winedbg=disabled
+  sudo -u "$USER" mkdir -p "$bzr2_dir"
+  sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog autostart_winedbg=disabled
 }
 
 setup_dpi() {
@@ -292,23 +292,23 @@ setup_dpi() {
   *)
     local dpi_to_set
     if [ "$dpi" == "auto" ]; then
-      dpi_to_set=$(sudo -u $USER xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
+      dpi_to_set=$(sudo -u "$USER" xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     else
       dpi_to_set='0x'$(printf '%x\n' "$dpi")
     fi
 
     echo -e "setting wine DPI to $dpi_to_set\n"
 
-    sudo -u $USER WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
-    sudo -u $USER WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
-    sudo -u $USER WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
     ;;
   esac
 }
 
 setup_launcher_script() {
 
-  sudo -u $USER cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
+  sudo -u "$USER" cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
 #!/bin/bash
 #
 # NAME
@@ -332,9 +332,9 @@ export WINEDEBUG=-all
 WINEPREFIX="$bzr2_wineprefix_dir_unversioned" WINEARCH="$winearch" wine "$bzr2_exe_win"
 EOF
 
-  sudo -u $USER sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  sudo -u "$USER" sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
 
-  sudo -u $USER chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  sudo -u "$USER" chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
 }
 
 setup_desktop_entry() {
@@ -345,7 +345,7 @@ setup_desktop_entry() {
     desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
   done
 
-  sudo -u $USER cat <<EOF >"$bzr2_desktop"
+  sudo -u "$USER" cat <<EOF >"$bzr2_desktop"
 [Desktop Entry]
 Type=Application
 Name=BZR Player 2
@@ -384,7 +384,7 @@ setup_mime_types() {
   echo
   echo "associating bzr2 to all supported MIME types"
 
-  sudo -u $USER xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
+  sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
 
   update-mime-database "$system_mime_dir"
 
