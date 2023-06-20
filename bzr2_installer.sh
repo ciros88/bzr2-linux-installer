@@ -125,9 +125,9 @@ main() {
 
 check_requirements() {
   local requirements=(
-    realpath cat sed sudo unzip update-desktop-database
-    update-mime-database wine winetricks xdg-desktop-menu
-    xdg-icon-resource xdg-mime xrdb
+    "eval" "realpath" "cat" "sed" "sudo" "unzip" "update-desktop-database"
+    "update-mime-database" "wine" "winetricks" "xdg-desktop-menu"
+    "xdg-icon-resource" "xdg-mime" "xrdb"
   )
 
   for requirement in "${requirements[@]}"; do
