@@ -35,12 +35,12 @@ main() {
   USER=${SUDO_USER}
   HOME=$(eval echo ~"$SUDO_USER")
 
-  bzr2_version_default='2.0.53.Alpha'
-  winearch_default='win64'
-  force_reinstall_default='n'
-  bzr2_zip_dir_default=.
-  dpi_default='auto'
-  mime_types_association_default='y'
+  bzr2_version_default="2.0.53.Alpha"
+  winearch_default="win64"
+  force_reinstall_default="n"
+  bzr2_zip_dir_default="."
+  dpi_default="auto"
+  mime_types_association_default="y"
   mime_types=(
     audio/flac audio/midi audio/mp2 audio/mpeg audio/ogg audio/prs.sid audio/x-ahx audio/x-bp audio/x-cust audio/x-dmf
     audio/x-dw audio/x-fc audio/x-fp audio/x-hip audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mod audio/x-mp3
@@ -54,8 +54,8 @@ main() {
 
   invalid_value_inserted_message="please insert a valid value"
 
-  bzr2_wineprefix_dir_unversioned="$HOME"'/.bzr2'
-  bzr2_exe_filename='BZRPlayer.exe'
+  bzr2_wineprefix_dir_unversioned="$HOME/.bzr2"
+  bzr2_exe_filename="BZRPlayer.exe"
   bzr2_launcher_filename="bzr2.sh"
   bzr2_desktop_filename="bzr2.desktop"
   bzr2_icon_unversioned="$bzr2_wineprefix_dir_unversioned"/bzr2.png
