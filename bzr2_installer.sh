@@ -171,15 +171,15 @@ get_winearch() {
 
     case $input in
     "win32")
-      bzr2_exe_win='c:\Program Files\BZR Player 2\'"$bzr2_exe_filename"
-      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned"-"$bzr2_version"-"$input"
-      bzr2_dir="$bzr2_wineprefix_dir"'/drive_c/Program Files/BZR Player 2'
+      bzr2_exe_win="c:\\Program Files\\BZR Player 2\\$bzr2_exe_filename"
+      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
+      bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files/BZR Player 2"
       break
       ;;
     "win64")
-      bzr2_exe_win='c:\Program Files (x86)\BZR Player 2\'"$bzr2_exe_filename"
-      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned"-"$bzr2_version"-"$input"
-      bzr2_dir="$bzr2_wineprefix_dir"'/drive_c/Program Files (x86)/BZR Player 2'
+      bzr2_exe_win="c:\\Program Files (x86)\\BZR Player 2\\$bzr2_exe_filename"
+      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
+      bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files (x86)/BZR Player 2"
       break
       ;;
     *)
