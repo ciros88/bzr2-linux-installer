@@ -59,7 +59,7 @@ invalid_value_inserted_message="please insert a valid value" ;
 
 check_requirements () {
     local requirements=(
-                         cat sed sudo unzip update-desktop-database
+                         realpath cat sed sudo unzip update-desktop-database
                          update-mime-database wine winetricks xdg-desktop-menu
                          xdg-icon-resource xdg-mime xrdb
                        )
@@ -148,7 +148,7 @@ get_bzr2_zip_dir () {
 
     while :
     do
-        local bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" ${bzr2_zip_dir_default}) ;
+        local bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" "$(realpath -s "$bzr2_zip_dir_default")") ;
 
         bzr2_zip="$bzr2_zip_dir"/"$bzr2_zip_filename"
 
