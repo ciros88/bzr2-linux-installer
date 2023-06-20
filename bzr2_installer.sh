@@ -372,6 +372,19 @@ setup_mime_types() {
   local system_mime_dir=/usr/share/mime
   local system_mime_packages_dir="$system_mime_dir/packages"
 
+  create_xml_mime_types_files
+
+  echo
+  echo "associating bzr2 to all supported MIME types"
+
+  sudo -u $USER xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
+
+  update-mime-database "$system_mime_dir"
+
+  update-desktop-database /usr/share/applications/
+}
+
+create_xml_mime_types_files() {
   cat <<'EOF' >"$system_mime_packages_dir/audio-flac.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
@@ -395,7 +408,7 @@ EOF
     <icon name="audio-x-generic"/>
     <magic>
       <match type="string" value="MThd" offset="0"/>
-  <!--<match type="string" value="RIFF" offset="0"/>-->
+<!--  <match type="string" value="RIFF" offset="0"/>-->
     </magic>
     <glob-deleteall/>
     <glob pattern="*.kar"/>
@@ -1099,15 +1112,6 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-
-  echo
-  echo "associating bzr2 to all supported MIME types"
-
-  sudo -u $USER xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
-
-  update-mime-database "$system_mime_dir"
-
-  update-desktop-database /usr/share/applications/
 }
 
 main "$@" exit
