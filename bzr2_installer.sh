@@ -384,9 +384,8 @@ setup_launcher_icon() {
 
 setup_mime_types() {
   local system_mime_dir=/usr/share/mime
-  local system_mime_packages_dir="$system_mime_dir/packages"
 
-  create_xml_mime_types_files
+  create_mime_type_xml_files
 
   echo
   echo "associating bzr2 to all supported MIME types"
@@ -398,7 +397,9 @@ setup_mime_types() {
   update-desktop-database /usr/share/applications/
 }
 
-create_xml_mime_types_files() {
+create_mime_type_xml_files() {
+  local system_mime_packages_dir="$system_mime_dir/packages"
+
   cat <<'EOF' >"$system_mime_packages_dir/audio-flac.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
