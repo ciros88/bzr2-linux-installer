@@ -27,7 +27,6 @@
 set -e
 
 main() {
-
   if [ "$(id -u)" -ne 0 ]; then
     echo "Root privileges are required"
     exit 1
@@ -43,15 +42,11 @@ main() {
   dpi_default='auto'
   mime_types_association_default='y'
   mime_types=(
-    audio/flac audio/midi audio/mp2 audio/mpeg audio/ogg audio/prs.sid
-    audio/x-ahx audio/x-bp audio/x-cust audio/x-dmf audio/x-dw
-    audio/x-fc audio/x-fp audio/x-hip audio/x-it audio/x-lds
-    audio/x-m2 audio/x-mdx audio/x-mod audio/x-mp3 audio/x-mpegurl
-    audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
-    audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2
-    audio/x-sndh audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun
-    audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m
-    audio/x-vgm audio/x-wav audio/x-xm
+    audio/flac audio/midi audio/mp2 audio/mpeg audio/ogg audio/prs.sid audio/x-ahx audio/x-bp audio/x-cust audio/x-dmf
+    audio/x-dw audio/x-fc audio/x-fp audio/x-hip audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mod audio/x-mp3
+    audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3 audio/x-s3m audio/x-sc2 audio/x-sc68
+    audio/x-scl audio/x-sid2 audio/x-sndh audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox
+    audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm audio/x-wav audio/x-xm
   )
 
   bold=$'\e[1m'
@@ -79,7 +74,8 @@ main() {
   if [ -f "$bzr2_exe" ]; then
     already_installed=1
 
-    echo -e "\nbzr2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation has been detected in ${bold}$bzr2_wineprefix_dir${bold_reset}"
+    echo -e "\nbzr2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation has been detected in \
+${bold}$bzr2_wineprefix_dir${bold_reset}"
     get_force_reinstall
   else
     already_installed=0
@@ -105,7 +101,8 @@ main() {
 
   sudo -u "$USER" ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
 
-  echo -e "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> ${bold}$bzr2_wineprefix_dir${bold_reset} has been created\n"
+  echo -e "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> \
+${bold}$bzr2_wineprefix_dir${bold_reset} has been created\n"
 
   setup_dpi
   setup_launcher_script
@@ -120,14 +117,12 @@ main() {
   fi
 
   echo -e "\nAll done, enjoy bzr2!"
-
 }
 
 check_requirements() {
   local requirements=(
-    "eval" "realpath" "cat" "sed" "sudo" "unzip" "update-desktop-database"
-    "update-mime-database" "wine" "winetricks" "xdg-desktop-menu"
-    "xdg-icon-resource" "xdg-mime" "xrdb"
+    "eval" "realpath" "cat" "sed" "sudo" "unzip" "update-desktop-database" "update-mime-database" "wine" "winetricks"
+    "xdg-desktop-menu" "xdg-icon-resource" "xdg-mime" "xrdb"
   )
 
   for requirement in "${requirements[@]}"; do
@@ -167,7 +162,8 @@ get_bzr2_version() {
 get_winearch() {
   while :; do
     local input
-    input=$(show_message_and_read_input "select the 32/64 bit ${bold}win32${bold_reset} or ${bold}win64${bold_reset} wine environment (multilib pkgs could be required)" ${winearch_default})
+    input=$(show_message_and_read_input "select the 32/64 bit ${bold}win32${bold_reset} or ${bold}win64${bold_reset} \
+wine environment (multilib pkgs could be required)" ${winearch_default})
 
     case $input in
     "win32")
@@ -194,7 +190,8 @@ get_winearch() {
 get_force_reinstall() {
   while :; do
     local input
-    input=$(show_message_and_read_input "force to reinstall bzr2 (fresh installation, does not keep settings) and the entire wine env, otherwise only the configuration will be performed" ${force_reinstall_default})
+    input=$(show_message_and_read_input "force to reinstall bzr2 (fresh installation, does not keep settings) and the \
+entire wine env, otherwise only the configuration will be performed" ${force_reinstall_default})
 
     case $input in
     y | n)
@@ -217,14 +214,16 @@ get_bzr2_zip_dir() {
 
   while :; do
     local bzr2_zip_dir
-    bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" "$(realpath -s "$bzr2_zip_dir_default")")
+    bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" \
+      "$(realpath -s "$bzr2_zip_dir_default")")
 
     bzr2_zip="$bzr2_zip_dir"/"$bzr2_zip_filename"
 
     if [ ! -f "$bzr2_zip" ]; then
       echo -e "\nfile ${bold}$bzr2_zip${bold_reset} not found... $invalid_value_inserted_message"
     else
-      echo -e "\nrelease zip archive ${bold}$bzr2_zip${bold_reset} for version ${bold}$bzr2_version${bold_reset} has been found"
+      echo -e "\nrelease zip archive ${bold}$bzr2_zip${bold_reset} for version ${bold}$bzr2_version${bold_reset} \
+has been found"
       break
     fi
   done
@@ -235,7 +234,8 @@ get_dpi() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "select the DPI, ${bold}auto${bold_reset} for using the current from xorg screen 0 or ${bold}default${bold_reset} for using the default one" ${dpi_default})
+    input=$(show_message_and_read_input "select the DPI, ${bold}auto${bold_reset} for using the current from xorg \
+screen 0 or ${bold}default${bold_reset} for using the default one" ${dpi_default})
 
     case $input in
     default | auto)
@@ -257,7 +257,8 @@ get_dpi() {
 get_mime_types_association() {
   while :; do
     local input
-    input=$(show_message_and_read_input "associate bzr2 to all suppported MIME types (enter ${bold}list${bold_reset} for listing all)" ${mime_types_association_default})
+    input=$(show_message_and_read_input "associate bzr2 to all suppported MIME types (enter ${bold}list${bold_reset} \
+for listing all)" ${mime_types_association_default})
 
     case $input in
     y | n)
@@ -282,7 +283,8 @@ get_mime_types_association() {
 setup_bzr2() {
   sudo -u "$USER" mkdir -p "$bzr2_dir"
   sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog autostart_winedbg=disabled
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog \
+    autostart_winedbg=disabled
 }
 
 setup_dpi() {
@@ -299,9 +301,14 @@ setup_dpi() {
 
     echo -e "setting wine DPI to $dpi_to_set\n"
 
-    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
-    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
-    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+      "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+
+    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+      "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+
+    sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+      "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
     ;;
   esac
 }
