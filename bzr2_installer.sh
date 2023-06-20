@@ -28,7 +28,7 @@ set -e
 
 main() {
 
-  if [ $(id -u) -ne 0 ]; then
+  if [ "$(id -u)" -ne 0 ]; then
     echo "Root privileges are required"
     exit 1
   fi
@@ -151,7 +151,8 @@ get_bzr2_version() {
   local bzr2_version_pattern="^[2]{1}(\.){1}+[0-9]+(\.){1}+[0-9]+((\.){1}+(Alpha|alpha|Beta|beta))?$"
 
   while :; do
-    local input=$(show_message_and_read_input "select the bzr2 version to manage" ${bzr2_version_default})
+    local input
+    input=$(show_message_and_read_input "select the bzr2 version to manage" ${bzr2_version_default})
 
     if ! [[ "$input" =~ $bzr2_version_pattern ]]; then
       echo -e "\n$invalid_value_inserted_message"
@@ -165,19 +166,18 @@ get_bzr2_version() {
 
 get_winearch() {
   while :; do
-    local input=$(show_message_and_read_input "select the 32/64 bit ${bold}win32${bold_reset} or ${bold}win64${bold_reset} wine environment (multilib pkgs could be required)" ${winearch_default})
+    local input
+    input=$(show_message_and_read_input "select the 32/64 bit ${bold}win32${bold_reset} or ${bold}win64${bold_reset} wine environment (multilib pkgs could be required)" ${winearch_default})
 
     case $input in
     "win32")
       bzr2_exe_win='c:\Program Files\BZR Player 2\'"$bzr2_exe_filename"
-      bzr2_dir_unversioned="$bzr2_wineprefix_dir_unversioned"'/drive_c/Program Files/BZR Player 2'
       bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned"-"$bzr2_version"-"$input"
       bzr2_dir="$bzr2_wineprefix_dir"'/drive_c/Program Files/BZR Player 2'
       break
       ;;
     "win64")
       bzr2_exe_win='c:\Program Files (x86)\BZR Player 2\'"$bzr2_exe_filename"
-      bzr2_dir_unversioned="$bzr2_wineprefix_dir_unversioned"'/drive_c/Program Files (x86)/BZR Player 2'
       bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned"-"$bzr2_version"-"$input"
       bzr2_dir="$bzr2_wineprefix_dir"'/drive_c/Program Files (x86)/BZR Player 2'
       break
@@ -193,7 +193,8 @@ get_winearch() {
 
 get_force_reinstall() {
   while :; do
-    local input=$(show_message_and_read_input "force to reinstall bzr2 (fresh installation, does not keep settings) and the entire wine env, otherwise only the configuration will be performed" ${force_reinstall_default})
+    local input
+    input=$(show_message_and_read_input "force to reinstall bzr2 (fresh installation, does not keep settings) and the entire wine env, otherwise only the configuration will be performed" ${force_reinstall_default})
 
     case $input in
     y | n)
@@ -209,11 +210,14 @@ get_force_reinstall() {
 }
 
 get_bzr2_zip_dir() {
+  local bzr2_zip_filename
+
   #TODO handle alpha/beta/stable versions range (their first and last version number) in order to avoid overlapping
-  local bzr2_zip_filename=$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/.Beta//;s/.beta//;s/$/.zip/')
+  bzr2_zip_filename=$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/.Beta//;s/.beta//;s/$/.zip/')
 
   while :; do
-    local bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" "$(realpath -s "$bzr2_zip_dir_default")")
+    local bzr2_zip_dir
+    bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" "$(realpath -s "$bzr2_zip_dir_default")")
 
     bzr2_zip="$bzr2_zip_dir"/"$bzr2_zip_filename"
 
@@ -230,7 +234,8 @@ get_dpi() {
   local dpi_pattern="^[1-9][0-9]*$"
 
   while :; do
-    local input=$(show_message_and_read_input "select the DPI, ${bold}auto${bold_reset} for using the current from xorg screen 0 or ${bold}default${bold_reset} for using the default one" ${dpi_default})
+    local input
+    input=$(show_message_and_read_input "select the DPI, ${bold}auto${bold_reset} for using the current from xorg screen 0 or ${bold}default${bold_reset} for using the default one" ${dpi_default})
 
     case $input in
     default | auto)
@@ -251,7 +256,8 @@ get_dpi() {
 
 get_mime_types_association() {
   while :; do
-    local input=$(show_message_and_read_input "associate bzr2 to all suppported MIME types (enter ${bold}list${bold_reset} for listing all)" ${mime_types_association_default})
+    local input
+    input=$(show_message_and_read_input "associate bzr2 to all suppported MIME types (enter ${bold}list${bold_reset} for listing all)" ${mime_types_association_default})
 
     case $input in
     y | n)
@@ -284,10 +290,11 @@ setup_dpi() {
   "default") ;;
 
   *)
+    local dpi_to_set
     if [ "$dpi" == "auto" ]; then
-      local dpi_to_set=$(sudo -u $USER xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
+      dpi_to_set=$(sudo -u $USER xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     else
-      local dpi_to_set='0x'$(printf '%x\n' "$dpi")
+      dpi_to_set='0x'$(printf '%x\n' "$dpi")
     fi
 
     echo -e "setting wine DPI to $dpi_to_set\n"
@@ -338,7 +345,7 @@ setup_desktop_entry() {
     desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
   done
 
-  sudo -u $USER cat <<EOF >$bzr2_desktop
+  sudo -u $USER cat <<EOF >"$bzr2_desktop"
 [Desktop Entry]
 Type=Application
 Name=BZR Player 2
