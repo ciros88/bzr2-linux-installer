@@ -42,11 +42,12 @@ main() {
   dpi_default="auto"
   mime_types_association_default="y"
   mime_types=(
-    audio/flac audio/midi audio/mp2 audio/mpeg audio/ogg audio/prs.sid audio/x-ahx audio/x-bp audio/x-cust audio/x-dmf
-    audio/x-dw audio/x-fc audio/x-fp audio/x-hip audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mod audio/x-mp3
-    audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3 audio/x-s3m audio/x-sc2 audio/x-sc68
-    audio/x-scl audio/x-sid2 audio/x-sndh audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox
-    audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm audio/x-wav audio/x-xm
+    application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/x-ahx audio/x-bp audio/x-cust
+    audio/x-dmf audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-it audio/x-lds audio/x-m2
+    audio/x-mdx audio/x-mod audio/x-mp3 audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
+    audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2 audio/x-sndh audio/x-spc audio/x-spl audio/x-stk
+    audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm
+    audio/x-vorbis+ogg audio/x-wav audio/x-xm
   )
 
   bold=$'\e[1m'
@@ -400,39 +401,6 @@ setup_mime_types() {
 create_mime_type_xml_files() {
   local system_mime_packages_dir="$system_mime_dir/packages"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-flac.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/flac">
-    <comment>Free Lossless Audio Codec</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match value="fLaC" type="string" offset="0"/>
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.flac"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-midi.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/midi">
-    <comment>MIDI audio</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="string" value="MThd" offset="0"/>
-<!--  <match type="string" value="RIFF" offset="0"/>-->
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.kar"/>
-    <glob pattern="*.mid"/>
-    <glob pattern="*.midi"/>
-  </mime-type>
-</mime-info>
-EOF
-
   cat <<'EOF' >"$system_mime_packages_dir/audio-mp2.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
@@ -463,23 +431,6 @@ EOF
     <glob-deleteall/>
     <glob pattern="*.mp3"/>
     <glob pattern="*.mpga"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-ogg.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/ogg">
-    <comment>Ogg audio</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="string" value="OggS" offset="0"/>
-    </magic>
-    <glob-deleteall/>
-<!--<glob pattern="*.oga"/>-->
-    <glob pattern="*.ogg"/>
-<!--<glob pattern="*.opus"/>-->
   </mime-type>
 </mime-info>
 EOF
@@ -1130,3 +1081,24 @@ EOF
 }
 
 main "$@" exit
+
+#TODO actually unsupported:
+#audio/ogg audio/x-opus+ogg audio/rmid
+
+#  cat <<'EOF' >"$system_mime_packages_dir/audio-rmid.xml"
+#<?xml version="1.0" encoding="utf-8"?>
+#<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+#  <mime-type type="audio/rmid">
+#    <comment>RIFF MIDI (RMID)</comment>
+#    <icon name="audio-x-generic"/>
+#    <magic>
+#      <match type="string" value="RIFF" offset="0">
+#        <match type="string" value="RMIDdata" offset="8"/>
+#      </match>
+#    </magic>
+#    <glob-deleteall/>
+#    <glob pattern="*.mid"/>
+#    <glob pattern="*.midi"/>
+#  </mime-type>
+#</mime-info>
+#EOF
