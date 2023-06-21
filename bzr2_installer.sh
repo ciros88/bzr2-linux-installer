@@ -290,17 +290,24 @@ setup_bzr2() {
 
 setup_dpi() {
   case "$dpi" in
-  "default") ;;
+  "default") return ;;
 
   *)
     local dpi_to_set
     if [ "$dpi" == "auto" ]; then
       dpi_to_set=$(sudo -u "$USER" xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     else
-      dpi_to_set='0x'$(printf '%x\n' "$dpi")
+      dpi_to_set=$dpi
+    fi
+
+    if [ -z "$dpi_to_set" ]; then
+      echo "unable to retrieve the screen DPI: the default will be used"
+      return
     fi
 
     echo -e "setting wine DPI to $dpi_to_set\n"
+
+    dpi_to_set='0x'$(printf '%x\n' "$dpi_to_set")
 
     sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
       "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
