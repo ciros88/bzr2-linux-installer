@@ -395,7 +395,8 @@ setup_launcher_icon() {
 }
 
 setup_mime_types() {
-  local system_mime_dir=/usr/share/mime
+  local mime_dir_system=/usr/share/mime
+  local mime_dir_user=$HOME/.local/share/mime
 
   create_mime_type_xml_files
 
@@ -404,15 +405,20 @@ setup_mime_types() {
 
   sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
 
-  update-mime-database "$system_mime_dir"
+  update-mime-database "$mime_dir_system"
+  sudo -u "$USER" update-mime-database "$mime_dir_user"
 
+  #TODO
   update-desktop-database /usr/share/applications/
 }
 
 create_mime_type_xml_files() {
-  local system_mime_packages_dir="$system_mime_dir/packages"
+  local mime_packages_dir_system="$mime_dir_system/packages"
+  local mime_packages_dir_user="$mime_dir_user/packages"
+  local mime_type_xml_file
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-ahx.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-ahx">
@@ -429,8 +435,12 @@ create_mime_type_xml_files() {
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-ahx.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-ahx.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-bp.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-bp">
@@ -444,8 +454,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-bp.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-bp.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-cust.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-cust">
@@ -457,8 +471,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-cust.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-cust.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-dmf.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-dmf">
@@ -470,8 +488,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-dmf.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-dmf.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-dw.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-dw">
@@ -483,8 +505,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-dw.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-dw.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-fc.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-fc">
@@ -504,8 +530,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-fc.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-fc.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-fp.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-fp">
@@ -517,8 +547,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-fp.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-fp.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-hip.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-hip">
@@ -532,8 +566,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-hip.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-hip.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-it.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-it">
@@ -548,8 +586,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-it.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-it.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-lds.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-lds">
@@ -560,8 +602,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-lds.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-lds.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-m2.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-m2">
@@ -577,8 +623,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-m2.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-m2.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-mdx.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mdx">
@@ -589,8 +639,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-mdx.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mdx.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-mod.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mod">
@@ -669,8 +723,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-mod.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mod.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-mptm.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mptm">
@@ -681,8 +739,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-mptm.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mptm.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-okt.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-okt">
@@ -694,8 +756,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-okt.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-okt.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-prun.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-prun">
@@ -709,8 +775,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-prun.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-prun.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-psm.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-psm">
@@ -721,8 +791,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-psm.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-psm.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-pt3.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-pt3">
@@ -733,8 +807,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-pt3.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-pt3.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-s3m.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-s3m">
@@ -749,8 +827,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-s3m.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-s3m.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-sc2.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sc2">
@@ -762,8 +844,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sc2.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sc2.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-sc68.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sc68">
@@ -775,8 +861,12 @@ EOF
    </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sc68.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sc68.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-scl.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-scl">
@@ -788,8 +878,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-scl.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-scl.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-sid2.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sid2">
@@ -801,8 +895,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sid2.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sid2.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-sndh.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sndh">
@@ -814,8 +912,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sndh.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sndh.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-spc.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-spc">
@@ -829,8 +931,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-spc.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-spc.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-spl.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-spl">
@@ -851,8 +957,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-spl.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-spl.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-stk.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-stk">
@@ -864,8 +974,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-stk.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-stk.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-stm.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-stm">
@@ -882,8 +996,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-stm.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-stm.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-sun.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sun">
@@ -895,8 +1013,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sun.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sun.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-sunvox.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sunvox">
@@ -908,8 +1030,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sunvox.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sunvox.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-symmod.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-symmod">
@@ -921,8 +1047,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-symmod.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-symmod.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-tfmx.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-tfmx">
@@ -936,8 +1066,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-tfmx.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-tfmx.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-umx.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-umx">
@@ -948,8 +1082,12 @@ EOF
    </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-umx.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-umx.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-v2m.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-v2m">
@@ -961,8 +1099,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-v2m.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-v2m.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-vgm.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-vgm">
@@ -974,8 +1116,12 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-vgm.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-vgm.xml"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-xm.xml"
+  mime_type_xml_file=$(
+    cat <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-xm">
@@ -990,6 +1136,9 @@ EOF
   </mime-type>
 </mime-info>
 EOF
+  )
+  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-xm.xml"
+  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-xm.xml"
 }
 
 main "$@" exit
@@ -997,7 +1146,7 @@ main "$@" exit
 #TODO actually unsupported:
 #audio/ogg audio/x-opus+ogg audio/rmid
 
-#  cat <<'EOF' >"$system_mime_packages_dir/audio-rmid.xml"
+#  cat <<'EOF' >"$mime_packages_dir_system/audio-rmid.xml"
 #<?xml version="1.0" encoding="utf-8"?>
 #<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
 #  <mime-type type="audio/rmid">
