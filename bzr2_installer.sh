@@ -381,6 +381,11 @@ setup_launcher_icon() {
   done
 
   xdg-icon-resource forceupdate
+
+  if type gtk-update-icon-cache &>/dev/null; then
+    echo ;
+    gtk-update-icon-cache -t -f /usr/share/icons/hicolor
+  fi
 }
 
 setup_mime_types() {
