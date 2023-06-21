@@ -300,7 +300,7 @@ setup_dpi() {
       dpi_to_set=$dpi
     fi
 
-    if [ ! -z "$dpi_to_set" ]; then
+    if [ -z "$dpi_to_set" ]; then
       echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used in wine"
       return
     fi
