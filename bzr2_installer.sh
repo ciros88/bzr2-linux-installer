@@ -127,7 +127,7 @@ check_requirements() {
   )
 
   for requirement in "${requirements[@]}"; do
-    if [[ ! $(command -v "$requirement") > /dev/null ]]; then
+    if ! type "$requirement" &>/dev/null; then
       echo -e "\nplease install ${bold}$requirement${bold_reset}"
       exit 1
     fi
