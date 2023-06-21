@@ -419,6 +419,10 @@ create_mime_type_xml_files() {
     <comment>Abyss' Highest eXperience</comment>
     <generic-icon name="audio-x-generic"/>
     <icon name="audio-x-generic"/>
+      <magic>
+        <match type="big32" value="0x54485800" offset="0"/>
+        <match type="big32" value="0x54485801" offset="0"/>
+      </magic>
     <glob-deleteall/>
     <glob pattern="ahx.*"/>
     <glob pattern="*.ahx"/>
