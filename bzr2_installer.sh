@@ -102,8 +102,8 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
 
   sudo -u "$USER" ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
 
-  echo -e "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> \
-${bold}$bzr2_wineprefix_dir${bold_reset} has been created\n"
+  echo "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> \
+${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 
   setup_dpi
   setup_launcher_script
@@ -300,12 +300,12 @@ setup_dpi() {
       dpi_to_set=$dpi
     fi
 
-    if [ -z "$dpi_to_set" ]; then
-      echo "unable to retrieve the screen DPI: the default will be used"
+    if [ ! -z "$dpi_to_set" ]; then
+      echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used in wine"
       return
     fi
 
-    echo -e "setting wine DPI to $dpi_to_set\n"
+    echo -e "\nsetting wine ${bold}DPI${bold_reset} to ${bold}$dpi_to_set${bold_reset}\n"
 
     dpi_to_set='0x'$(printf '%x\n' "$dpi_to_set")
 
@@ -353,8 +353,7 @@ EOF
 }
 
 setup_desktop_entry() {
-  echo
-  echo "installing bzr2 desktop menu entry"
+  echo -e "\ninstalling bzr2 desktop menu entry"
   local desktop_entry_mime_types=""
   for mime_type in "${mime_types[@]}"; do
     desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
