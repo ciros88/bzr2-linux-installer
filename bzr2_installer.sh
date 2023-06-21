@@ -44,7 +44,7 @@ main() {
   mime_types=(
     application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/x-ahx audio/x-bp audio/x-cust
     audio/x-dmf audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-it audio/x-lds audio/x-m2
-    audio/x-mdx audio/x-mod audio/x-mp3 audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
+    audio/x-mdx audio/x-mo3 audio/x-mod audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
     audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2 audio/x-sndh audio/x-spc audio/x-spl audio/x-stk
     audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm
     audio/x-vorbis+ogg audio/x-wav audio/x-xm
@@ -412,56 +412,6 @@ setup_mime_types() {
 create_mime_type_xml_files() {
   local system_mime_packages_dir="$system_mime_dir/packages"
 
-  cat <<'EOF' >"$system_mime_packages_dir/audio-mp2.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/mp2">
-    <comment>MP2 audio</comment>
-    <icon name="audio-x-generic"/>
-    <glob-deleteall/>
-    <glob pattern="*.mp2"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-mpeg.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/mpeg">
-    <comment>MP3 audio</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="big16" value="0xfffa" offset="0"/>
-      <match type="big16" value="0xfffb" offset="0"/>
-      <match type="big16" value="0xfff3" offset="0"/>
-      <match type="big16" value="0xfff2" offset="0"/>
-      <match type="big16" value="0xffe3" offset="0"/>
-      <match type="big16" value="0xffe2" offset="0"/>
-      <match type="string" value="ID3" offset="0"/>
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.mp3"/>
-    <glob pattern="*.mpga"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-prs.sid.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/prs.sid">
-    <comment>Commodore 64 audio</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="string" value="PSID" offset="0"/>
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.psid"/>
-    <glob pattern="*.sid"/>
-  </mime-type>
-</mime-info>
-EOF
-
   cat <<'EOF' >"$system_mime_packages_dir/audio-x-ahx.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
@@ -712,43 +662,6 @@ EOF
     <glob pattern="*.mtm"/>
     <glob pattern="*.ult"/>
     <glob pattern="*.uni"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-mp3.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/x-mp3">
-    <comment>mp3 file</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="big16" value="0xfffa" offset="0"/>
-      <match type="big16" value="0xfffb" offset="0"/>
-      <match type="big16" value="0xfff3" offset="0"/>
-      <match type="big16" value="0xfff2" offset="0"/>
-      <match type="big16" value="0xffe3" offset="0"/>
-      <match type="big16" value="0xffe2" offset="0"/>
-      <match type="string" value="ID3" offset="0"/>
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.mp3"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-mpegurl.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/x-mpegurl">
-    <comment>Media playlist</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="string" value="#EXTM3U" offset="0"/>
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.m3u"/>
-    <glob pattern="*.m3u8"/>
   </mime-type>
 </mime-info>
 EOF
@@ -1054,22 +967,6 @@ EOF
     <glob-deleteall/>
     <glob pattern="vgm.*"/>
     <glob pattern="*.vgm"/>
-  </mime-type>
-</mime-info>
-EOF
-
-  cat <<'EOF' >"$system_mime_packages_dir/audio-x-wav.xml"
-<?xml version="1.0" encoding="utf-8"?>
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="audio/x-wav">
-    <comment>WAV audio</comment>
-    <icon name="audio-x-generic"/>
-    <magic>
-      <match type="string" value="WAVE" offset="8"/>
-      <match type="string" value="WAV " offset="8"/>
-    </magic>
-    <glob-deleteall/>
-    <glob pattern="*.wav"/>
   </mime-type>
 </mime-info>
 EOF
