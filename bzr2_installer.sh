@@ -400,8 +400,7 @@ setup_mime_types() {
 
   create_mime_type_xml_files
 
-  echo
-  echo "associating bzr2 to all supported MIME types"
+  echo -e "\nassociating bzr2 to all supported MIME types"
 
   sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
 
