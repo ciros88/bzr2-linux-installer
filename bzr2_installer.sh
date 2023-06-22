@@ -375,7 +375,7 @@ NoDisplay=false
 #StartupNotify=
 EOF
 
-  xdg-desktop-menu install --novendor --mode system "$bzr2_desktop"
+  sudo -u "$USER" xdg-desktop-menu install --novendor --mode user "$bzr2_desktop"
 }
 
 setup_launcher_icon() {
@@ -383,19 +383,18 @@ setup_launcher_icon() {
   echo "installing bzr2 icon for bzr2 launcher"
 
   for size in 16 22 24 32 48 64 128 256 512; do
-    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon_unversioned"
+    sudo -u "$USER" xdg-icon-resource install --noupdate --novendor --context apps --mode user --size ${size} "$bzr2_icon_unversioned"
   done
 
-  xdg-icon-resource forceupdate
+  sudo -u "$USER" xdg-icon-resource forceupdate
 
   if type gtk-update-icon-cache &>/dev/null; then
     echo
-    gtk-update-icon-cache -t -f /usr/share/icons/hicolor
+    sudo -u "$USER" gtk-update-icon-cache -t -f "$HOME/.local/share/icons/hicolor"
   fi
 }
 
 setup_mime_types() {
-  local mime_dir_system=/usr/share/mime
   local mime_dir_user=$HOME/.local/share/mime
 
   create_mime_type_xml_files
@@ -404,15 +403,13 @@ setup_mime_types() {
 
   sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
 
-  update-mime-database "$mime_dir_system"
+  #update-mime-database "$mime_dir_system"
   sudo -u "$USER" update-mime-database "$mime_dir_user"
 
-  #TODO
-  update-desktop-database /usr/share/applications/
+  sudo -u "$USER" update-desktop-database "$HOME/.local/share/applications"
 }
 
 create_mime_type_xml_files() {
-  local mime_packages_dir_system="$mime_dir_system/packages"
   local mime_packages_dir_user="$mime_dir_user/packages"
   local mime_type_xml_file
 
@@ -435,7 +432,6 @@ create_mime_type_xml_files() {
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-ahx.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-ahx.xml"
 
   mime_type_xml_file=$(
@@ -454,7 +450,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-bp.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-bp.xml"
 
   mime_type_xml_file=$(
@@ -471,7 +466,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-cust.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-cust.xml"
 
   mime_type_xml_file=$(
@@ -488,7 +482,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-dmf.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-dmf.xml"
 
   mime_type_xml_file=$(
@@ -505,7 +498,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-dw.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-dw.xml"
 
   mime_type_xml_file=$(
@@ -530,7 +522,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-fc.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-fc.xml"
 
   mime_type_xml_file=$(
@@ -547,7 +538,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-fp.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-fp.xml"
 
   mime_type_xml_file=$(
@@ -566,7 +556,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-hip.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-hip.xml"
 
   mime_type_xml_file=$(
@@ -586,7 +575,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-it.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-it.xml"
 
   mime_type_xml_file=$(
@@ -602,7 +590,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-lds.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-lds.xml"
 
   mime_type_xml_file=$(
@@ -623,7 +610,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-m2.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-m2.xml"
 
   mime_type_xml_file=$(
@@ -646,7 +632,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-mdx.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mdx.xml"
 
   mime_type_xml_file=$(
@@ -730,7 +715,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-mod.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mod.xml"
 
   mime_type_xml_file=$(
@@ -746,7 +730,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-mptm.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mptm.xml"
 
   mime_type_xml_file=$(
@@ -763,7 +746,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-okt.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-okt.xml"
 
   mime_type_xml_file=$(
@@ -782,7 +764,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-prun.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-prun.xml"
 
   mime_type_xml_file=$(
@@ -798,7 +779,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-psm.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-psm.xml"
 
   mime_type_xml_file=$(
@@ -814,7 +794,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-pt3.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-pt3.xml"
 
   mime_type_xml_file=$(
@@ -834,7 +813,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-s3m.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-s3m.xml"
 
   mime_type_xml_file=$(
@@ -851,7 +829,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sc2.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sc2.xml"
 
   mime_type_xml_file=$(
@@ -868,7 +845,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sc68.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sc68.xml"
 
   mime_type_xml_file=$(
@@ -885,7 +861,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-scl.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-scl.xml"
 
   mime_type_xml_file=$(
@@ -902,7 +877,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sid2.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sid2.xml"
 
   mime_type_xml_file=$(
@@ -919,7 +893,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sndh.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sndh.xml"
 
   mime_type_xml_file=$(
@@ -938,7 +911,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-spc.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-spc.xml"
 
   mime_type_xml_file=$(
@@ -964,7 +936,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-spl.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-spl.xml"
 
   mime_type_xml_file=$(
@@ -981,7 +952,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-stk.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-stk.xml"
 
   mime_type_xml_file=$(
@@ -1003,7 +973,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-stm.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-stm.xml"
 
   mime_type_xml_file=$(
@@ -1020,7 +989,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sun.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sun.xml"
 
   mime_type_xml_file=$(
@@ -1037,7 +1005,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-sunvox.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sunvox.xml"
 
   mime_type_xml_file=$(
@@ -1054,7 +1021,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-symmod.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-symmod.xml"
 
   mime_type_xml_file=$(
@@ -1073,7 +1039,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-tfmx.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-tfmx.xml"
 
   mime_type_xml_file=$(
@@ -1089,7 +1054,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-umx.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-umx.xml"
 
   mime_type_xml_file=$(
@@ -1106,7 +1070,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-v2m.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-v2m.xml"
 
   mime_type_xml_file=$(
@@ -1129,7 +1092,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-vgm.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-vgm.xml"
 
   mime_type_xml_file=$(
@@ -1149,7 +1111,6 @@ EOF
 </mime-info>
 EOF
   )
-  cat <<<"$mime_type_xml_file" >"$mime_packages_dir_system/audio-x-xm.xml"
   sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-xm.xml"
 }
 
