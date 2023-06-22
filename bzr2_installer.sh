@@ -27,14 +27,6 @@
 set -e
 
 main() {
-  if [ "$(id -u)" -ne 0 ]; then
-    echo "Root privileges are required"
-    exit 1
-  fi
-
-  USER=${SUDO_USER}
-  HOME=$(eval echo ~"$SUDO_USER")
-
   bzr2_version_default="2.0.53.Alpha"
   winearch_default="win64"
   force_reinstall_default="n"
@@ -100,7 +92,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
     setup_bzr2
   fi
 
-  sudo -u "$USER" ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
+  ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
 
   echo "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> \
 ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
@@ -108,7 +100,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
   setup_dpi
   setup_launcher_script
 
-  sudo -u "$USER" ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
+  ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
 
   setup_desktop_entry
   setup_launcher_icon
@@ -122,7 +114,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 
 check_requirements() {
   local requirements=(
-    "eval" "realpath" "cat" "sed" "sudo" "unzip" "update-desktop-database" "update-mime-database" "wine" "winetricks"
+    "eval" "realpath" "cat" "sed" "unzip" "update-desktop-database" "update-mime-database" "wine" "winetricks"
     "xdg-desktop-menu" "xdg-icon-resource" "xdg-mime" "xrdb"
   )
 
@@ -282,9 +274,9 @@ for listing all)" ${mime_types_association_default})
 }
 
 setup_bzr2() {
-  sudo -u "$USER" mkdir -p "$bzr2_dir"
-  sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog \
+  mkdir -p "$bzr2_dir"
+  unzip -oq "$bzr2_zip" -d "$bzr2_dir"
+  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog \
     autostart_winedbg=disabled
 }
 
@@ -295,7 +287,7 @@ setup_dpi() {
   "default") return ;;
 
   "auto")
-    dpi_to_set=$(sudo -u "$USER" xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
+    dpi_to_set=$(xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     if [ -z "$dpi_to_set" ]; then
       echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used in wine"
       return
@@ -311,19 +303,19 @@ setup_dpi() {
 
   dpi_to_set='0x'$(printf '%x\n' "$dpi_to_set")
 
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
     "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
     "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
     "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 }
 
 setup_launcher_script() {
 
-  sudo -u "$USER" cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
+  cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
 #!/bin/bash
 #
 # NAME
@@ -347,9 +339,9 @@ export WINEDEBUG=-all
 WINEPREFIX="$bzr2_wineprefix_dir_unversioned" WINEARCH="$winearch" wine "$bzr2_exe_win"
 EOF
 
-  sudo -u "$USER" sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
 
-  sudo -u "$USER" chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
 }
 
 setup_desktop_entry() {
@@ -359,7 +351,7 @@ setup_desktop_entry() {
     desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
   done
 
-  sudo -u "$USER" cat <<EOF >"$bzr2_desktop"
+  cat <<EOF >"$bzr2_desktop"
 [Desktop Entry]
 Type=Application
 Name=BZR Player 2
@@ -375,7 +367,7 @@ NoDisplay=false
 #StartupNotify=
 EOF
 
-  sudo -u "$USER" xdg-desktop-menu install --novendor --mode user "$bzr2_desktop"
+  xdg-desktop-menu install --novendor --mode user "$bzr2_desktop"
 }
 
 setup_launcher_icon() {
@@ -383,14 +375,14 @@ setup_launcher_icon() {
   echo "installing bzr2 icon for bzr2 launcher"
 
   for size in 16 22 24 32 48 64 128 256 512; do
-    sudo -u "$USER" xdg-icon-resource install --noupdate --novendor --context apps --mode user --size ${size} "$bzr2_icon_unversioned"
+    xdg-icon-resource install --noupdate --novendor --context apps --mode user --size ${size} "$bzr2_icon_unversioned"
   done
 
-  sudo -u "$USER" xdg-icon-resource forceupdate
+  xdg-icon-resource forceupdate
 
   if type gtk-update-icon-cache &>/dev/null; then
     echo
-    sudo -u "$USER" gtk-update-icon-cache -t -f "$HOME/.local/share/icons/hicolor"
+    gtk-update-icon-cache -t -f "$HOME/.local/share/icons/hicolor"
   fi
 }
 
@@ -401,20 +393,17 @@ setup_mime_types() {
 
   echo -e "\nassociating bzr2 to all supported MIME types"
 
-  sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
+  xdg-mime default $bzr2_desktop_filename "${mime_types[@]}"
 
-  #update-mime-database "$mime_dir_system"
-  sudo -u "$USER" update-mime-database "$mime_dir_user"
+  update-mime-database "$mime_dir_user"
 
-  sudo -u "$USER" update-desktop-database "$HOME/.local/share/applications"
+  update-desktop-database "$HOME/.local/share/applications"
 }
 
 create_mime_type_xml_files() {
   local mime_packages_dir_user="$mime_dir_user/packages"
-  local mime_type_xml_file
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-ahx.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-ahx">
@@ -431,11 +420,8 @@ create_mime_type_xml_files() {
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-ahx.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-bp.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-bp">
@@ -449,11 +435,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-bp.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-cust.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-cust">
@@ -465,11 +448,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-cust.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-dmf.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-dmf">
@@ -481,11 +461,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-dmf.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-dw.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-dw">
@@ -497,11 +474,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-dw.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-fc.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-fc">
@@ -521,11 +495,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-fc.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-fp.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-fp">
@@ -537,11 +508,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-fp.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-hip.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-hip">
@@ -555,11 +523,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-hip.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-it.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-it">
@@ -574,11 +539,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-it.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-lds.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-lds">
@@ -589,11 +551,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-lds.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-m2.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-m2">
@@ -609,11 +568,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-m2.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-mdx.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mdx">
@@ -631,11 +587,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mdx.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-mod.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mod">
@@ -714,11 +667,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mod.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-mptm.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mptm">
@@ -729,11 +679,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-mptm.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-okt.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-okt">
@@ -745,11 +692,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-okt.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-prun.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-prun">
@@ -763,11 +707,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-prun.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-psm.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-psm">
@@ -778,11 +719,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-psm.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-pt3.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-pt3">
@@ -793,11 +731,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-pt3.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-s3m.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-s3m">
@@ -812,11 +747,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-s3m.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-sc2.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sc2">
@@ -828,11 +760,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sc2.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-sc68.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sc68">
@@ -844,11 +773,8 @@ EOF
    </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sc68.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-scl.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-scl">
@@ -860,11 +786,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-scl.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-sid2.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sid2">
@@ -876,11 +799,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sid2.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-sndh.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sndh">
@@ -892,11 +812,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sndh.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-spc.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-spc">
@@ -910,11 +827,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-spc.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-spl.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-spl">
@@ -935,11 +849,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-spl.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-stk.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-stk">
@@ -951,11 +862,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-stk.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-stm.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-stm">
@@ -972,11 +880,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-stm.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-sun.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sun">
@@ -988,11 +893,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sun.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-sunvox.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sunvox">
@@ -1004,11 +906,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-sunvox.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-symmod.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-symmod">
@@ -1020,11 +919,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-symmod.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-tfmx.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-tfmx">
@@ -1038,11 +934,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-tfmx.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-umx.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-umx">
@@ -1053,11 +946,8 @@ EOF
    </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-umx.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-v2m.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-v2m">
@@ -1069,11 +959,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-v2m.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-vgm.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-vgm">
@@ -1091,11 +978,8 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-vgm.xml"
 
-  mime_type_xml_file=$(
-    cat <<-EOF
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-xm.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-xm">
@@ -1110,8 +994,6 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-  )
-  sudo -u "$USER" cat <<<"$mime_type_xml_file" >"$mime_packages_dir_user/audio-x-xm.xml"
 }
 
 main "$@" exit
@@ -1119,7 +1001,7 @@ main "$@" exit
 #TODO actually unsupported:
 #audio/ogg audio/x-opus+ogg audio/rmid
 
-#  cat <<'EOF' >"$mime_packages_dir_system/audio-rmid.xml"
+#  cat <<'EOF' >"$mime_packages_dir_user/audio-rmid.xml"
 #<?xml version="1.0" encoding="utf-8"?>
 #<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
 #  <mime-type type="audio/rmid">
