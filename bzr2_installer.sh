@@ -1107,11 +1107,17 @@ EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-vgm">
-    <comment>vgm file</comment>
+    <comment>Video Game Music</comment>
     <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="Vgm " offset="0"/>
+      <match type="big16" value="0x1f8b" offset="0"/>
+    </magic>
     <glob-deleteall/>
     <glob pattern="vgm.*"/>
+    <glob pattern="vgz.*"/>
     <glob pattern="*.vgm"/>
+    <glob pattern="*.vgz"/>
   </mime-type>
 </mime-info>
 EOF
