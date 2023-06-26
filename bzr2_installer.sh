@@ -633,6 +633,13 @@ EOF
   <mime-type type="audio/x-mdx">
     <comment>Sharp X68000 MDX</comment>
     <icon name="audio-x-generic"/>
+    <magic>
+      <match value="0x0d" type="byte" offset="0:2047">
+        <match value="0x0a" type="byte" offset="1:2048">
+          <match value="0x1a" type="byte" offset="2:2049"/>
+        </match>
+      </match>
+    </magic>
     <glob-deleteall/>
     <glob pattern="*.mdx"/>
   </mime-type>
