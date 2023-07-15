@@ -598,6 +598,8 @@ EOF
       <match type="string" value="MTM" offset="0"/>
       <match type="string" value="MMD0" offset="0"/>
       <match type="string" value="MMD1" offset="0"/>
+      <match type="string" value="MMD2" offset="0"/>
+      <match type="string" value="MMD3" offset="0"/>
       <!-- 669 composer files: "if" and "JN" -->
       <match type="byte" value="0x0" mask="0x80" offset="112">
         <match type="string" value="if" offset="0">
@@ -653,6 +655,10 @@ EOF
     <glob pattern="669.*"/>
     <glob pattern="m15.*"/>
     <glob pattern="med.*"/>
+    <glob pattern="mmd0.*"/>
+    <glob pattern="mmd1.*"/>
+    <glob pattern="mmd2.*"/>
+    <glob pattern="mmd3.*"/>
     <glob pattern="mod.*"/>
     <glob pattern="mtm.*"/>
     <glob pattern="ult.*"/>
@@ -660,6 +666,10 @@ EOF
     <glob pattern="*.669"/>
     <glob pattern="*.m15"/>
     <glob pattern="*.med"/>
+    <glob pattern="*.mmd0"/>
+    <glob pattern="*.mmd1"/>
+    <glob pattern="*.mmd2"/>
+    <glob pattern="*.mmd3"/>
     <glob pattern="*.mod"/>
     <glob pattern="*.mtm"/>
     <glob pattern="*.ult"/>
