@@ -35,11 +35,11 @@ main() {
   mime_types_association_default="y"
   mime_types=(
     application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/x-ahx audio/x-bp audio/x-cust
-    audio/x-dmf audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-it audio/x-lds audio/x-m2
-    audio/x-mdx audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
-    audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2 audio/x-sndh audio/x-spc audio/x-spl audio/x-stk
-    audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm
-    audio/x-vorbis+ogg audio/x-wav audio/x-xm
+    audio/x-dmf audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-hip-7v audio/x-hip-coso
+    audio/x-hip-st audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl
+    audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3 audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl
+    audio/x-sid2 audio/x-sndh audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod
+    audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-wav audio/x-xm
   )
 
   bold=$'\e[1m'
@@ -513,13 +513,107 @@ EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-hip">
-    <comment>Hippel</comment>
+    <comment>Jochen Hippel</comment>
     <icon name="audio-x-generic"/>
+    <magic>
+      <match type="byte" value="0x60" offset="0">
+        <match type="byte" value="0x60" offset="2"/>
+        <match type="byte" value="0x00" offset="2"/>
+      </match>
+    </magic>
     <glob-deleteall/>
     <glob pattern="hip.*"/>
-    <glob pattern="hipc.*"/>
     <glob pattern="*.hip"/>
+  </mime-type>
+</mime-info>
+EOF
+
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-hip-7v.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-hip-7v">
+    <comment>Jochen Hippel 7V</comment>
+    <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="**** Player by Jochen Hippel 1990 ***" offset="5"/>
+      <match type="big16" value="0x6000" offset="0">
+        <match type="byte" value="0x00" offset="2"/>
+      </match>
+      <match type="string" value="TFMX" offset="0:1048576"/>
+    </magic>
+    <glob-deleteall/>
+    <glob pattern="hip7.*"/>
+    <glob pattern="s7g.*"/>
+    <glob pattern="*.hip7"/>
+    <glob pattern="*.s7g"/>
+  </mime-type>
+</mime-info>
+EOF
+
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-hip-coso.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-hip-coso">
+    <comment>Jochen Hippel CoSo</comment>
+    <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="COSO" offset="0">
+        <match type="string" value="MMME" offset="32"/>
+        <match type="string" value="TFMX" offset="32"/>
+      </match>
+    </magic>
+    <glob-deleteall/>
+    <glob pattern="hipc.*"/>
+    <glob pattern="soc.*"/>
     <glob pattern="*.hipc"/>
+    <glob pattern="*.soc"/>
+  </mime-type>
+</mime-info>
+EOF
+
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-hip-st.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-hip-st">
+    <comment>Jochen Hippel ST</comment>
+    <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="MMME" offset="0"/>
+      <match type="string" value="TFMX" offset="0"/>
+      <match type="byte" value="0x60" offset="0">
+        <match type="byte" value="0x60" offset="2">
+          <match type="byte" value="0x48" offset="4">
+            <match type="byte" value="0xe7" offset="5"/>
+          </match>
+          <match type="byte" value="0x41" offset="4">
+            <match type="byte" value="0xfa" offset="5"/>
+          </match>
+        </match>
+        <match type="byte" value="0x00" offset="1">
+          <match type="byte" value="0x60" offset="4">
+            <match type="byte" value="0x00" offset="5">
+              <match type="byte" value="0x48" offset="8">
+                <match type="byte" value="0xe7" offset="9"/>
+              </match>
+              <match type="byte" value="0x60" offset="8">
+                <match type="byte" value="0x00" offset="9">
+                  <match type="byte" value="0x60" offset="12">
+                    <match type="byte" value="0x00" offset="13">
+                      <match type="byte" value="0x48" offset="16">
+                        <match type="byte" value="0xe7" offset="17"/>
+                      </match>
+                    </match>
+                  </match>
+                </match>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+    </magic>
+    <glob-deleteall/>
+    <glob pattern="sog.*"/>
+    <glob pattern="*.sog"/>
   </mime-type>
 </mime-info>
 EOF
@@ -576,9 +670,9 @@ EOF
     <comment>Sharp X68000 MDX</comment>
     <icon name="audio-x-generic"/>
     <magic>
-      <match value="0x0d" type="byte" offset="0:2047">
-        <match value="0x0a" type="byte" offset="1:2048">
-          <match value="0x1a" type="byte" offset="2:2049"/>
+      <match type="byte" value="0x0d" offset="0:2047">
+        <match type="byte" value="0x0a" offset="1:2048">
+          <match type="byte" value="0x1a" offset="2:2049"/>
         </match>
       </match>
     </magic>
@@ -765,7 +859,7 @@ EOF
     <comment>Scream Tracker 3 audio</comment>
     <icon name="audio-x-generic"/>
     <magic>
-      <match value="SCRM" type="string" offset="44"/>
+      <match type="string" value="SCRM" offset="44"/>
     </magic>
     <glob-deleteall/>
     <glob pattern="s3m.*"/>
@@ -1012,7 +1106,7 @@ EOF
     <comment>FastTracker II audio</comment>
     <icon name="audio-x-generic"/>
     <magic>
-      <match value="Extended Module:" type="string" offset="0"/>
+      <match type="string" value="Extended Module:" offset="0"/>
     </magic>
     <glob-deleteall/>
     <glob pattern="xm.*"/>
