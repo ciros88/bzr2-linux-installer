@@ -472,11 +472,13 @@ EOF
     <comment>Future Composer</comment>
     <icon name="audio-x-generic"/>
     <glob-deleteall/>
+    <glob pattern="bsi.*"/>
     <glob pattern="fc.*"/>
     <glob pattern="fc13.*"/>
     <glob pattern="fc14.*"/>
     <glob pattern="smc.*"/>
     <glob pattern="smod.*"/>
+    <glob pattern="*.bsi"/>
     <glob pattern="*.fc"/>
     <glob pattern="*.fc13"/>
     <glob pattern="*.fc14"/>
