@@ -944,7 +944,7 @@ EOF
     <comment>SNES SPC700</comment>
     <icon name="audio-x-generic"/>
     <magic>
-      <match type="string" value="SNES-SPC700" offset="0"/>
+      <match type="string" value="SNES-SPC700 Sound File Data" offset="0"/>
     </magic>
     <glob-deleteall/>
     <glob pattern="*.spc"/>
