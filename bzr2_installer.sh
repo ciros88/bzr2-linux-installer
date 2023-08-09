@@ -943,7 +943,7 @@ EOF
   <mime-type type="audio/x-spc">
     <comment>SNES SPC700</comment>
     <icon name="audio-x-generic"/>
-    <magic>
+    <magic priority="60">
       <match type="string" value="SNES-SPC700 Sound File Data" offset="0"/>
     </magic>
     <glob-deleteall/>
