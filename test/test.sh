@@ -9,7 +9,7 @@
 # AUTHOR
 #     Ciro Scognamiglio
 
-showPasses=true
+showPasses=false
 dirParent="samples"
 
 testQueryFiletype() {
