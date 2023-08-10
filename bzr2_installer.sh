@@ -648,9 +648,13 @@ EOF
     <glob pattern="m2.*"/>
     <glob pattern="mii.*"/>
     <glob pattern="mk2.*"/>
+    <glob pattern="mkii.*"/>
+    <glob pattern="smp.*"/>
     <glob pattern="*.m2"/>
     <glob pattern="*.mii"/>
     <glob pattern="*.mk2"/>
+    <glob pattern="*.mkii"/>
+    <glob pattern="*.smp"/>
   </mime-type>
 </mime-info>
 EOF
