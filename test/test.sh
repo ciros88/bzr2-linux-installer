@@ -10,7 +10,7 @@
 #     Ciro Scognamiglio
 
 showPasses=false
-dirParent="samples"
+dirSamples="$(dirname "$0")/samples"
 
 testQueryFiletype() {
   for file; do
@@ -49,6 +49,6 @@ testQueryDefault() {
 
 export -f testQueryFiletype
 export showPasses=$showPasses
-cd $dirParent &&
+cd "$dirSamples" &&
   find . -type f -exec bash -c 'testQueryFiletype "$0"' {} \; &&
   testQueryDefault
