@@ -36,7 +36,7 @@ main() {
   mime_types=(
     application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/x-ahx audio/x-cust
     audio/x-ddmf audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-hip-7v audio/x-hip-coso
-    audio/x-hip-st audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl
+    audio/x-hip-st audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl
     audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3 audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl
     audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod
     audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-wav audio/x-xm
@@ -550,15 +550,12 @@ EOF
     <icon name="audio-x-generic"/>
     <magic>
       <match type="string" value="COSO" offset="0">
-        <match type="string" value="MMME" offset="32"/>
         <match type="string" value="TFMX" offset="32"/>
       </match>
     </magic>
     <glob-deleteall/>
     <glob pattern="hipc.*"/>
-    <glob pattern="soc.*"/>
     <glob pattern="*.hipc"/>
-    <glob pattern="*.soc"/>
   </mime-type>
 </mime-info>
 EOF
@@ -606,6 +603,25 @@ EOF
     <glob-deleteall/>
     <glob pattern="sog.*"/>
     <glob pattern="*.sog"/>
+  </mime-type>
+</mime-info>
+EOF
+
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-hip-st-coso.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-hip-st-coso">
+    <comment>Jochen Hippel ST CoSo</comment>
+    <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="COSO" offset="0">
+        <match type="string" value="TFMX" offset="32"/>
+        <match type="string" value="MMME" offset="32"/>
+      </match>
+    </magic>
+    <glob-deleteall/>
+    <glob pattern="soc.*"/>
+    <glob pattern="*.soc"/>
   </mime-type>
 </mime-info>
 EOF
