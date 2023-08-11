@@ -34,12 +34,13 @@ main() {
   dpi_default="auto"
   mime_types_association_default="y"
   mime_types=(
-    application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/x-ahx audio/x-cust
-    audio/x-ddmf audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-hip-7v audio/x-hip-coso
-    audio/x-hip-st audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl
-    audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3 audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl
-    audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod
-    audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-wav audio/x-xm
+    application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/x-ahx audio/x-cust audio/x-ddmf
+    audio/x-dw audio/x-fc audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-hip-7v audio/x-hip-coso audio/x-hip-st
+    audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mcmd audio/x-mdx audio/x-mmdc audio/x-mo3 audio/x-mod
+    audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3 audio/x-s3m audio/x-sc2 audio/x-sc68
+    audio/x-scl audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl audio/x-stk audio/x-stm audio/x-sun
+    audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-wav
+    audio/x-xm
   )
 
   bold=$'\e[1m'
@@ -671,6 +672,22 @@ EOF
     <glob pattern="*.mk2"/>
     <glob pattern="*.mkii"/>
     <glob pattern="*.smp"/>
+  </mime-type>
+</mime-info>
+EOF
+
+ cat <<'EOF' >"$mime_packages_dir_user/audio-x-mcmd.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-mcmd">
+    <comment>MCMD module (unofficial Hippel clone)</comment>
+    <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="MCMD" offset="0"/>
+    </magic>
+    <glob-deleteall/>
+    <glob pattern="mcmd.*"/>
+    <glob pattern="*.mcmd"/>
   </mime-type>
 </mime-info>
 EOF
