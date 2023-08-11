@@ -696,6 +696,24 @@ EOF
   <mime-type type="audio/x-m2">
     <comment>Mark II Sound-System</comment>
     <icon name="audio-x-generic"/>
+    <magic>
+      <match type="byte" value="0x48" offset="0">
+        <match type="byte" value="0xe7" offset="1">
+          <match type="byte" value="0x00" offset="2">
+            <match type="byte" value="0xf0" offset="3">
+              <match type="byte" value="0x41" offset="4">
+                <match type="byte" value="0xfa" offset="5">
+                  <match type="byte" value="0x4c" offset="8">
+                    <match type="byte" value="0xd8" offset="9"/>
+                  </match>
+                </match>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+      <match type="string" value=".ZADS89." offset="768:1024"/>
+    </magic>
     <glob-deleteall/>
     <glob pattern="m2.*"/>
     <glob pattern="mii.*"/>
