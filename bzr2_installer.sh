@@ -1066,7 +1066,9 @@ EOF
       <match type="big32" value="0x000003f3" offset="0">
         <match type="big32" value="0x00000000" offset="4">
           <match type="big32" value="0x00000001" offset="8">
-            <match type="big32" value="0x00000000" offset="12"/>
+            <match type="big32" value="0x00000000" offset="12">
+              <match type="string" value="Nu!SOPROL!" offset="34"/>
+            </match>
           </match>
         </match>
       </match>
