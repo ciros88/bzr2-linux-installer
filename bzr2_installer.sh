@@ -426,10 +426,17 @@ EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-cust">
-    <comment>Custom</comment>
+    <comment>DeliTracker Custom</comment>
     <icon name="audio-x-generic"/>
+    <magic>
+      <match type="big32" value="0x000003f3" offset="0">
+        <match type="string" value="NuDELIRIUM" offset="0:256"/>
+      </match>
+    </magic>
     <glob-deleteall/>
+    <glob pattern="cus.*"/>
     <glob pattern="cust.*"/>
+    <glob pattern="*.cus"/>
     <glob pattern="*.cust"/>
   </mime-type>
 </mime-info>
