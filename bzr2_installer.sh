@@ -1029,14 +1029,21 @@ EOF
     <comment>SoundMon</comment>
     <icon name="audio-x-generic"/>
     <magic>
+      <match type="string" value="BPSM" offset="26"/>
       <match type="string" value="V.2" offset="26"/>
       <match type="string" value="V.3" offset="26"/>
     </magic>
     <glob-deleteall/>
     <glob pattern="bp.*"/>
+    <glob pattern="bp2.*"/>
     <glob pattern="bp3.*"/>
+    <glob pattern="bs.*"/>
+    <glob pattern="sndmon.*"/>
     <glob pattern="*.bp"/>
+    <glob pattern="*.bp2"/>
     <glob pattern="*.bp3"/>
+    <glob pattern="*.bs"/>
+    <glob pattern="*.sndmon"/>
   </mime-type>
 </mime-info>
 EOF
