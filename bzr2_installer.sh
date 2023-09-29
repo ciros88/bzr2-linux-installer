@@ -1039,11 +1039,13 @@ EOF
     <glob pattern="bp3.*"/>
     <glob pattern="bs.*"/>
     <glob pattern="sndmon.*"/>
+    <glob pattern="synth.*"/>
     <glob pattern="*.bp"/>
     <glob pattern="*.bp2"/>
     <glob pattern="*.bp3"/>
     <glob pattern="*.bs"/>
     <glob pattern="*.sndmon"/>
+    <glob pattern="*.synth"/>
   </mime-type>
 </mime-info>
 EOF
