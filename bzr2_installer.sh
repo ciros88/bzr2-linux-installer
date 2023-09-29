@@ -27,7 +27,7 @@
 set -e
 
 main() {
-  bzr2_version_default="2.0.58.Alpha"
+  bzr2_version_default="2.0.59.Alpha"
   winearch_default="win64"
   force_reinstall_default="n"
   bzr2_zip_dir_default="."
