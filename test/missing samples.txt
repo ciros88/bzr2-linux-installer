@@ -1,2 +1,3 @@
 audio-x-dz: mkiio.*, *.mkiio
+audio-x-fc: fc13.*, *.fc13, *.smc, smc.*
 audio-x-soundmon: bp2.*, *.bp2, sndmon.*, *.sndmon
