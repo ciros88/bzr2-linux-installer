@@ -1272,6 +1272,7 @@ main "$@" exit
 #    <glob-deleteall/>
 #    <glob pattern="*.mid"/>
 #    <glob pattern="*.midi"/>
+#    <glob pattern="*.rmi"/>
 #  </mime-type>
 #</mime-info>
 #EOF
