@@ -69,17 +69,17 @@ main() {
   bzr2_icon="$bzr2_wineprefix_dir"/bzr2.png
 
   if [ -f "$bzr2_exe" ]; then
-    already_installed=1
+    already_installed=true
 
     echo -e "\nbzr2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation has been detected in \
 ${bold}$bzr2_wineprefix_dir${bold_reset}"
     get_force_reinstall
   else
-    already_installed=0
+    already_installed=false
     force_reinstall="$force_reinstall_default"
   fi
 
-  if [ "$already_installed" -eq 0 ] || [ "$force_reinstall" = y ]; then
+  if [ $already_installed = false ] || [ "$force_reinstall" = y ]; then
     get_bzr2_zip_dir
   fi
 
@@ -88,7 +88,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
 
   echo
 
-  if [ "$already_installed" -eq 0 ] || [ "$force_reinstall" = y ]; then
+  if [ $already_installed = false ] || [ "$force_reinstall" = y ]; then
     if [ "$force_reinstall" = y ]; then
       rm -rf "$bzr2_wineprefix_dir"
     fi
