@@ -55,6 +55,9 @@ main() {
   bzr2_icon_unversioned="$bzr2_wineprefix_dir_unversioned"/bzr2.png
 
   check_requirements
+
+  has_matched_versioning_pattern_old=false
+
   get_bzr2_version
 
   bzr2_version="${bzr2_version,,}"
@@ -137,17 +140,26 @@ show_message_and_read_input() {
 }
 
 get_bzr2_version() {
-  local bzr2_version_pattern="^[2]{1}(\.){1}+[0-9]+(\.){1}+[0-9]+((\.){1}+(Alpha|alpha|Beta|beta))?$"
+  #matches 2. >=0 AND <=9 . >=61 AND <=999
+  local versioning_pattern="^[2]{1}(\.){1}+[0-9]+(\.){1}+(6[1-9]|[7-9][0-9]|[1-9][0-9]{2})$"
+
+  #matches 2.0. >=19 AND <=60 . Alpha OR alpha
+  local versioning_pattern_old="^[2]{1}(\.)[0]{1}+(\.){1}+(19|[2-5][0-9]|60){1}+(\.){1}+(Alpha|alpha)$"
 
   while :; do
     local input
     input=$(show_message_and_read_input "select the bzr2 version to manage" ${bzr2_version_default})
 
-    if ! [[ "$input" =~ $bzr2_version_pattern ]]; then
-      echo -e "\n$invalid_value_inserted_message"
-    else
+    if [[ "$input" =~ $versioning_pattern ]]; then
       break
     fi
+
+    if [[ "$input" =~ $versioning_pattern_old ]]; then
+      has_matched_versioning_pattern_old=true
+      break
+    fi
+
+    echo -e "\n$invalid_value_inserted_message"
   done
 
   bzr2_version="$input"
@@ -203,8 +215,11 @@ entire wine env, otherwise only the configuration will be performed" ${force_rei
 get_bzr2_zip_dir() {
   local bzr2_zip_filename
 
-  #TODO handle alpha/beta/stable versions range (their first and last version number) in order to avoid overlapping
-  bzr2_zip_filename=$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/.Beta//;s/.beta//;s/$/.zip/')
+  if $has_matched_versioning_pattern_old; then
+    bzr2_zip_filename=$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/$/.zip/')
+  else
+    bzr2_zip_filename="$bzr2_version.zip"
+  fi
 
   while :; do
     local bzr2_zip_dir
