@@ -263,6 +263,18 @@ screen 0 or ${bold}default${bold_reset} for using the default one" ${dpi_default
   dpi="$input"
 }
 
+get_size_of_longer_array_entry() {
+  local array=("$@")
+  local longer_size=-1
+
+  for entry in "${array[@]}"; do
+    local len=${#entry}
+    ((len > longer_size)) && longer_size=$len
+  done
+
+  echo "$longer_size"
+}
+
 get_mime_types_association() {
   while :; do
     local input
@@ -275,23 +287,34 @@ for listing all)" ${mime_types_association_default})
       ;;
 
     list)
-      mime_length_max=-1
-      for key in "${mime_types[@]}"; do
-        len=${#key}
-        ((len > mime_length_max)) && mime_length_max=$len
-      done
+      local mime_comments=()
+      local mime_comments=()
+      local mime_length_max=-1
 
-      printf_format="%${mime_length_max}s     %s\n"
+      mime_length_max=$(get_size_of_longer_array_entry "${mime_types[@]}")
 
-      echo -e "\nbzr2 supports following MIME types:\n"
       for mime_type in "${mime_types[@]}"; do
-        mime_infos=$(grep -A1 "<mime-type type=\"$mime_type\">" "$0" | grep -v "<mime-type type=\"$mime_type\">" | sed 's:<comment>::;s:</comment>::;s:    ::')
+        local mime_single
+        local sed_pattern="\|<mime-type type=\"$mime_type\">| , \|</mime-type>|{p; \|</mime-type>|q}"
+        mime_single=$(sed -n "$sed_pattern" "$0")
 
-        if [ -z "$mime_infos" ]; then
-          mime_infos=$(grep -A1 "<mime-type type=\"$mime_type\">" "/usr/share/mime/packages/freedesktop.org.xml" | grep -v "<mime-type type=\"$mime_type\">" | sed 's:<comment>::;s:</comment>::;s:    ::')
+        if [ -z "$mime_single" ]; then
+          mime_single=$(sed -n "$sed_pattern" "/usr/share/mime/packages/freedesktop.org.xml")
         fi
 
-        printf_command="printf \"$printf_format\" \"$mime_type\" \"$mime_infos\""
+        mime_comments+=("$(echo "$mime_single" | grep "<comment>" | sed 's:<comment>::;s:</comment>::;s:    ::')")
+        mime_patterns+=("$(echo "$mime_single" | grep "<glob pattern=" | tr '\n' ' ' | sed -e 's:<glob pattern="::g' -e 's:"/> :|:g' -e 's:*::g' -e 's:    ::g' -e 's:     ::g' -e 's:|$::')")
+      done
+
+      local mime_comment_length_max=-1
+      local mime_pattern_length_max=-1
+      mime_comment_length_max=$(get_size_of_longer_array_entry "${mime_comments[@]}")
+      mime_pattern_length_max=$(get_size_of_longer_array_entry "${mime_patterns[@]}")
+      local printf_format="%${mime_length_max}s  %-${mime_comment_length_max}s  %-${mime_pattern_length_max}s\n"
+      echo -e "\nbzr2 supports following MIME types:\n"
+
+      for i in "${!mime_types[@]}"; do
+        printf_command="printf \"$printf_format\" \"${mime_types[$i]}\" \"${mime_comments[$i]}\" \"${mime_patterns[$i]}\""
         eval "$printf_command"
       done
       ;;
