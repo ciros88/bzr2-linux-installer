@@ -275,9 +275,24 @@ for listing all)" ${mime_types_association_default})
       ;;
 
     list)
+      mime_length_max=-1
+      for key in "${mime_types[@]}"; do
+        len=${#key}
+        ((len > mime_length_max)) && mime_length_max=$len
+      done
+
+      printf_format="%${mime_length_max}s     %s\n"
+
       echo -e "\nbzr2 supports following MIME types:\n"
       for mime_type in "${mime_types[@]}"; do
-        echo "$mime_type"
+        mime_infos=$(grep -A1 "<mime-type type=\"$mime_type\">" "$0" | grep -v "<mime-type type=\"$mime_type\">" | sed 's:<comment>::;s:</comment>::;s:    ::')
+
+        if [ -z "$mime_infos" ]; then
+          mime_infos=$(grep -A1 "<mime-type type=\"$mime_type\">" "/usr/share/mime/packages/freedesktop.org.xml" | grep -v "<mime-type type=\"$mime_type\">" | sed 's:<comment>::;s:</comment>::;s:    ::')
+        fi
+
+        printf_command="printf \"$printf_format\" \"$mime_type\" \"$mime_infos\""
+        eval "$printf_command"
       done
       ;;
     *)
