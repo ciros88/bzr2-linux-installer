@@ -268,8 +268,8 @@ get_size_of_longer_array_entry() {
   local longer_size=-1
 
   for entry in "${array[@]}"; do
-    local len=${#entry}
-    ((len > longer_size)) && longer_size=$len
+    local length=${#entry}
+    ((length > longer_size)) && longer_size=$length
   done
 
   echo "$longer_size"
@@ -287,15 +287,14 @@ for listing all)" ${mime_types_association_default})
       ;;
 
     list)
-      local mime_comments=()
-      local mime_comments=()
-      local mime_length_max=-1
-
+      local mime_length_max
       mime_length_max=$(get_size_of_longer_array_entry "${mime_types[@]}")
+      local mime_comments=()
+      local mime_patterns=()
 
       for mime_type in "${mime_types[@]}"; do
-        local mime_single
         local sed_pattern="\|<mime-type type=\"$mime_type\">| , \|</mime-type>|{p; \|</mime-type>|q}"
+        local mime_single
         mime_single=$(sed -n "$sed_pattern" "$0")
 
         if [ -z "$mime_single" ]; then
@@ -303,19 +302,54 @@ for listing all)" ${mime_types_association_default})
         fi
 
         mime_comments+=("$(echo "$mime_single" | grep "<comment>" | sed 's:<comment>::;s:</comment>::;s:    ::')")
-        mime_patterns+=("$(echo "$mime_single" | grep "<glob pattern=" | tr '\n' ' ' | sed -e 's:<glob pattern="::g' -e 's:"/> :|:g' -e 's:*::g' -e 's:    ::g' -e 's:     ::g' -e 's:|$::')")
+        local mime_pattern
+        mime_pattern=$(echo "$mime_single" | grep "<glob pattern=" | sed -e 's:<glob pattern="::g' -e 's:"/>::g')
+        local mime_pattern_split=()
+
+        while read -r line; do
+          mime_pattern_split+=("$line")
+        done <<<"$mime_pattern"
+
+        local mime_comment_length_max
+        mime_comment_length_max=$(get_size_of_longer_array_entry "${mime_comments[@]}")
+        local delimiter="  "
+        local padding_size=$((mime_length_max + mime_comment_length_max + ${#delimiter} + ${#delimiter}))
+        local padding_string=""
+
+        for ((i = 0; i < "$padding_size"; i++)); do
+          padding_string+=" "
+        done
+
+        local max_patterns_per_chunk=4
+        local mime_pattern_chunks=()
+
+        for ((i = 0; i < ${#mime_pattern_split[@]}; i++)); do
+          local div=$((i / max_patterns_per_chunk))
+          if [ $div -gt 0 ] && [ $((i % max_patterns_per_chunk)) -eq 0 ]; then
+            mime_pattern_chunks[$div]=${mime_pattern_chunks[div]}$padding_string"["${mime_pattern_split[$i]}]
+          else
+            if [ "$i" -eq 0 ]; then
+              mime_pattern_chunks[$div]="${mime_pattern_chunks[div]}[${mime_pattern_split[$i]}]"
+            else
+              mime_pattern_chunks[$div]="${mime_pattern_chunks[div]}[${mime_pattern_split[$i]}]"
+            fi
+          fi
+        done
+
+        mime_pattern=""
+
+        for ((i = 0; i < ${#mime_pattern_chunks[@]}; i++)); do
+          mime_pattern="$mime_pattern${mime_pattern_chunks[$i]}"$'\n'
+        done
+
+        mime_pattern=$(sed -z 's/.$//' <<<"$mime_pattern")
+        mime_patterns+=("$mime_pattern")
       done
 
-      local mime_comment_length_max=-1
-      local mime_pattern_length_max=-1
-      mime_comment_length_max=$(get_size_of_longer_array_entry "${mime_comments[@]}")
-      mime_pattern_length_max=$(get_size_of_longer_array_entry "${mime_patterns[@]}")
-      local printf_format="%${mime_length_max}s  %-${mime_comment_length_max}s  %-${mime_pattern_length_max}s\n"
       echo -e "\nbzr2 supports following MIME types:\n"
 
       for i in "${!mime_types[@]}"; do
-        printf_command="printf \"$printf_format\" \"${mime_types[$i]}\" \"${mime_comments[$i]}\" \"${mime_patterns[$i]}\""
-        eval "$printf_command"
+        printf "%${mime_length_max}s$delimiter%${mime_comment_length_max}s$delimiter%s\n" "${mime_types[$i]}" "${mime_comments[$i]}" "${mime_patterns[$i]}"
       done
       ;;
     *)
