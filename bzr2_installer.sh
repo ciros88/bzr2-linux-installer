@@ -343,7 +343,8 @@ setup_dpi() {
   "auto")
     dpi_to_set=$(xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     if [ -z "$dpi_to_set" ]; then
-      echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used in wine"
+      echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used \
+in wine"
       return
     fi
     ;;
@@ -807,7 +808,7 @@ EOF
 </mime-info>
 EOF
 
- cat <<'EOF' >"$mime_packages_dir_user/audio-x-mcmd.xml"
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-mcmd.xml"
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-mcmd">
