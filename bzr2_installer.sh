@@ -118,7 +118,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 
 check_requirements() {
   local requirements=(
-    "eval" "realpath" "cat" "sed" "unzip" "update-desktop-database" "update-mime-database" "wine" "winetricks"
+    "realpath" "cat" "sed" "unzip" "update-desktop-database" "update-mime-database" "wine" "winetricks"
     "xdg-desktop-menu" "xdg-icon-resource" "xdg-mime" "xrdb"
   )
 
