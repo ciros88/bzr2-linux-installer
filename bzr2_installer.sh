@@ -349,7 +349,8 @@ for listing all)" ${mime_types_association_default})
       echo -e "\nbzr2 supports following MIME types:\n"
 
       for i in "${!mime_types[@]}"; do
-        printf "%${mime_length_max}s$delimiter%${mime_comment_length_max}s$delimiter%s\n" "${mime_types[$i]}" "${mime_comments[$i]}" "${mime_patterns[$i]}"
+        printf "%${mime_length_max}s$delimiter%${mime_comment_length_max}s$delimiter%s\n" "${mime_types[$i]}" \
+          "${mime_comments[$i]}" "${mime_patterns[$i]}"
       done
       ;;
     *)
