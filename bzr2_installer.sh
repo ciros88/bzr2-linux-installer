@@ -291,11 +291,13 @@ for listing all)" ${mime_types_association_default})
       mime_length_max=$(get_size_of_longer_array_entry "${mime_types[@]}")
       local mime_comments=()
       local mime_patterns=()
+      local bzr2_installer_mimes_segment
+      bzr2_installer_mimes_segment=$(sed -n '/create_mime_type_xml_files()/,$p' "$0")
 
       for mime_type in "${mime_types[@]}"; do
         local sed_pattern="\|<mime-type type=\"$mime_type\">| , \|</mime-type>|{p; \|</mime-type>|q}"
         local mime_single
-        mime_single=$(sed -n "$sed_pattern" "$0")
+        mime_single=$(echo "$bzr2_installer_mimes_segment" | sed -n "$sed_pattern")
 
         if [ -z "$mime_single" ]; then
           mime_single=$(sed -n "$sed_pattern" "/usr/share/mime/packages/freedesktop.org.xml")
@@ -1344,7 +1346,7 @@ EOF
 
 main "$@" exit
 
-#TODO actually unsupported:
+#TODO currently unsupported:
 #audio/ogg audio/x-opus+ogg audio/rmid
 
 #  cat <<'EOF' >"$mime_packages_dir_user/audio-rmid.xml"
