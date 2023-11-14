@@ -39,8 +39,8 @@ main() {
     audio/x-hip-coso audio/x-hip-st audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mcmd audio/x-mdx
     audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
     audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl
-    audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-umx audio/x-v2m audio/x-vgm
-    audio/x-vorbis+ogg audio/x-xm
+    audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-tfmx-st
+    audio/x-umx audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-xm
   )
 
   bold=$'\e[1m'
@@ -1276,8 +1276,19 @@ EOF
     <icon name="audio-x-generic"/>
     <glob-deleteall/>
     <glob pattern="mdat.*"/>
-    <glob pattern="mdst.*"/>
     <glob pattern="*.mdat"/>
+  </mime-type>
+</mime-info>
+EOF
+
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-tfmx-st.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-tfmx-st">
+    <comment>TFMX ST</comment>
+    <icon name="audio-x-generic"/>
+    <glob-deleteall/>
+    <glob pattern="mdst.*"/>
     <glob pattern="*.mdst"/>
   </mime-type>
 </mime-info>
