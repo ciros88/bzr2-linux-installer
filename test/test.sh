@@ -65,7 +65,7 @@ mime_types_scan() {
   mapfile -t mime_types_found < <(ls -d -1 "$samples_path"/*/)
 
   for i in "${!mime_types_found[@]}"; do
-    mime_types_found[$i]=$(basename "${mime_types_found[$i]}")
+    mime_types_found[i]=$(basename "${mime_types_found[$i]}")
   done
 
   mime_types_found=("${mime_types_found[@]///}")
@@ -145,7 +145,7 @@ test_query_filetype() {
   local mime_type_dir_filenames=()
 
   for i in "${!mime_type_dir_files[@]}"; do
-    mime_type_dir_filenames[$i]=$(basename "${mime_type_dir_files[$i]}")
+    mime_type_dir_filenames[i]=$(basename "${mime_type_dir_files[$i]}")
   done
 
   local mime_pattern_split=()

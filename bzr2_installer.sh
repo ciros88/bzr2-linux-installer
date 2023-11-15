@@ -328,12 +328,12 @@ for listing all)" ${mime_types_association_default})
         for ((i = 0; i < ${#mime_pattern_split[@]}; i++)); do
           local div=$((i / max_patterns_per_chunk))
           if [ $div -gt 0 ] && [ $((i % max_patterns_per_chunk)) -eq 0 ]; then
-            mime_pattern_chunks[$div]=${mime_pattern_chunks[div]}$padding_string"["${mime_pattern_split[$i]}]
+            mime_pattern_chunks[div]=${mime_pattern_chunks[div]}$padding_string"["${mime_pattern_split[$i]}]
           else
             if [ "$i" -eq 0 ]; then
-              mime_pattern_chunks[$div]="${mime_pattern_chunks[div]}[${mime_pattern_split[$i]}]"
+              mime_pattern_chunks[div]="${mime_pattern_chunks[div]}[${mime_pattern_split[$i]}]"
             else
-              mime_pattern_chunks[$div]="${mime_pattern_chunks[div]}[${mime_pattern_split[$i]}]"
+              mime_pattern_chunks[div]="${mime_pattern_chunks[div]}[${mime_pattern_split[$i]}]"
             fi
           fi
         done
