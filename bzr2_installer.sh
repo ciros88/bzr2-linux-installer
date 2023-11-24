@@ -557,9 +557,79 @@ EOF
   <mime-type type="audio/x-dw">
     <comment>David Whittaker</comment>
     <icon name="audio-x-generic"/>
+    <magic>
+      <match type="byte" value="0x48" offset="0">
+        <match type="byte" value="0xe7" offset="1">
+          <match type="byte" value="0xf1" offset="2">
+            <match type="byte" value="0xfe" offset="3">
+              <match type="byte" value="0x61" offset="4">
+                <match type="byte" value="0x00" offset="5"/>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+      <match type="byte" value="0x47" offset="0">
+        <match type="byte" value="0xfa" offset="1">
+          <match type="byte" value="0xff" offset="2">
+            <match type="byte" value="0xfe" offset="3">
+              <match type="byte" value="0x61" offset="4">
+                <match type="byte" value="0x00" offset="5"/>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+      <match type="byte" value="0x08" offset="0">
+        <match type="byte" value="0xf9" offset="1">
+          <match type="byte" value="0x00" offset="2">
+            <match type="byte" value="0x01" offset="3">
+              <match type="byte" value="0x00" offset="4">
+                <match type="byte" value="0xbf" offset="5"/>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+      <match type="byte" value="0x20" offset="0">
+        <match type="byte" value="0x2f" offset="1">
+          <match type="byte" value="0x00" offset="2">
+            <match type="byte" value="0x04" offset="3">
+              <match type="byte" value="0x48" offset="4">
+                <match type="byte" value="0xe7" offset="5"/>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+      <match type="byte" value="0x30" offset="0">
+        <match type="byte" value="0x3c" offset="1">
+          <match type="byte" value="0x00" offset="2">
+            <match type="byte" value="0x00" offset="3">
+              <match type="byte" value="0x47" offset="4">
+                <match type="byte" value="0xfa" offset="5"/>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+      <match type="byte" value="0x70" offset="0">
+        <match type="byte" value="0x00" offset="1">
+          <match type="byte" value="0x47" offset="2">
+            <match type="byte" value="0xfa" offset="3">
+              <match type="byte" value="0xff" offset="4">
+                <match type="byte" value="0xfc" offset="5"/>
+              </match>
+            </match>
+          </match>
+        </match>
+      </match>
+    </magic>
     <glob-deleteall/>
     <glob pattern="dw.*"/>
+    <glob pattern="dwold.*"/>
     <glob pattern="*.dw"/>
+    <glob pattern="*.dwold"/>
   </mime-type>
 </mime-info>
 EOF
