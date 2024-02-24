@@ -38,8 +38,8 @@ main() {
     audio/x-ddmf audio/x-dw audio/x-dz audio/x-fc audio/x-fc-bsi audio/x-flac+ogg audio/x-fp audio/x-hip audio/x-hip-7v
     audio/x-hip-coso audio/x-hip-st audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mcmd audio/x-mdx
     audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl audio/x-mptm audio/x-okt audio/x-prun audio/x-psm audio/x-pt3
-    audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl
-    audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-tfmx-st
+    audio/x-ptk audio/x-s3m audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc
+    audio/x-spl audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-tfmx-st
     audio/x-umx audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-xm
   )
 
@@ -1116,6 +1116,24 @@ EOF
     <icon name="audio-x-generic"/>
     <glob-deleteall/>
     <glob pattern="*.pt3"/>
+  </mime-type>
+</mime-info>
+EOF
+
+  cat <<'EOF' >"$mime_packages_dir_user/audio-x-ptk.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="audio/x-ptk">
+    <comment>ProTrekkr module</comment>
+    <icon name="audio-x-generic"/>
+    <magic>
+      <match type="string" value="TWNNSNG6" offset="0"/>
+      <match type="string" value="TWNNSNGI" offset="0"/>
+      <match type="string" value="TWNNSNGG" offset="0"/>
+      <match type="string" value="PROTREK" offset="0"/>
+    </magic>
+    <glob-deleteall/>
+    <glob pattern="*.ptk"/>
   </mime-type>
 </mime-info>
 EOF
