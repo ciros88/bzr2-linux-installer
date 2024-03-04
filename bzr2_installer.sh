@@ -939,9 +939,9 @@ EOF
     <comment>Sharp X68000 MDX</comment>
     <icon name="audio-x-generic"/>
     <magic>
-      <match type="byte" value="0x0d" offset="0:2047">
-        <match type="byte" value="0x0a" offset="1:2048">
-          <match type="byte" value="0x1a" offset="2:2049"/>
+      <match type="byte" value="0x0d" offset="0:1024">
+        <match type="byte" value="0x0a" offset="1:1025">
+          <match type="byte" value="0x1a" offset="2:1026"/>
         </match>
       </match>
     </magic>
