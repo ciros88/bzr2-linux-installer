@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # NAME
-#     test.sh - test both XDG MIME 'query filetype' & 'query default'
+#     test_samples.sh - test both XDG MIME 'query filetype' & 'query default'
 #     against a selected set of sample files and MIME types
 #
 # SYNOPSIS
-#     ./test.sh
+#     ./test_samples.sh
 #
 # AUTHOR
 #     Ciro Scognamiglio
