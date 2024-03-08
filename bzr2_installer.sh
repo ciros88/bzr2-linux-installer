@@ -1259,10 +1259,17 @@ EOF
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="audio/x-sndh">
-    <comment>sndh file</comment>
+    <comment>Atari ST audio (SNDH)</comment>
     <icon name="audio-x-generic"/>
+    <magic priority="60">
+      <match type="string" value="Ice!" offset="0"/>
+      <match type="string" value="ICE!" offset="0"/>
+      <match type="string" value="SNDH" offset="12"/>
+    </magic>
     <glob-deleteall/>
+    <glob pattern="snd.*"/>
     <glob pattern="sndh.*"/>
+    <glob pattern="*.snd"/>
     <glob pattern="*.sndh"/>
   </mime-type>
 </mime-info>
