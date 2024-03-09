@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--TODO currently unsupported: audio/ogg audio/x-opus+ogg audio/rmid-->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="audio/rmid">
+        <comment>RIFF MIDI (RMID)</comment>
+        <generic-icon name="audio-x-generic"/>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="RIFF" offset="0">
+                <match type="string" value="RMIDdata" offset="8"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.mid"/>
+        <glob pattern="*.midi"/>
+        <glob pattern="*.rmi"/>
+    </mime-type>
+</mime-info>

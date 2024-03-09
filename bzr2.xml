@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="audio/x-ahx">
+        <comment>Abyss' Highest eXperience</comment>
+        <generic-icon name="audio-x-generic"/>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="big32" value="0x54485800" offset="0"/>
+            <match type="big32" value="0x54485801" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="ahx.*"/>
+        <glob pattern="*.ahx"/>
+    </mime-type>
+    <mime-type type="audio/x-cust">
+        <comment>DeliTracker Custom</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="big32" value="0x000003f3" offset="0">
+                <match type="string" value="NuDELIRIUM" offset="0:256"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="cus.*"/>
+        <glob pattern="cust.*"/>
+        <glob pattern="*.cus"/>
+        <glob pattern="*.cust"/>
+    </mime-type>
+    <mime-type type="audio/x-ddmf">
+        <comment>Delusion Digital Music Format (D-Lusion Music File)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="DDMF" offset="0">
+                <match type="string" value="CMSG" offset="66"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="dmf.*"/>
+        <glob pattern="*.dmf"/>
+    </mime-type>
+    <mime-type type="audio/x-dw">
+        <comment>David Whittaker</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="byte" value="0x48" offset="0">
+                <match type="byte" value="0xe7" offset="1">
+                    <match type="byte" value="0xf1" offset="2">
+                        <match type="byte" value="0xfe" offset="3">
+                            <match type="byte" value="0x61" offset="4">
+                                <match type="byte" value="0x00" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="byte" value="0x47" offset="0">
+                <match type="byte" value="0xfa" offset="1">
+                    <match type="byte" value="0xff" offset="2">
+                        <match type="byte" value="0xfe" offset="3">
+                            <match type="byte" value="0x61" offset="4">
+                                <match type="byte" value="0x00" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="byte" value="0x08" offset="0">
+                <match type="byte" value="0xf9" offset="1">
+                    <match type="byte" value="0x00" offset="2">
+                        <match type="byte" value="0x01" offset="3">
+                            <match type="byte" value="0x00" offset="4">
+                                <match type="byte" value="0xbf" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="byte" value="0x20" offset="0">
+                <match type="byte" value="0x2f" offset="1">
+                    <match type="byte" value="0x00" offset="2">
+                        <match type="byte" value="0x04" offset="3">
+                            <match type="byte" value="0x48" offset="4">
+                                <match type="byte" value="0xe7" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="byte" value="0x30" offset="0">
+                <match type="byte" value="0x3c" offset="1">
+                    <match type="byte" value="0x00" offset="2">
+                        <match type="byte" value="0x00" offset="3">
+                            <match type="byte" value="0x47" offset="4">
+                                <match type="byte" value="0xfa" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="byte" value="0x70" offset="0">
+                <match type="byte" value="0x00" offset="1">
+                    <match type="byte" value="0x47" offset="2">
+                        <match type="byte" value="0xfa" offset="3">
+                            <match type="byte" value="0xff" offset="4">
+                                <match type="byte" value="0xfc" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="dw.*"/>
+        <glob pattern="dwold.*"/>
+        <glob pattern="*.dw"/>
+        <glob pattern="*.dwold"/>
+    </mime-type>
+    <mime-type type="audio/x-dz">
+        <comment>Darius Zendeh Player</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="byte" value="0x48" offset="0">
+                <match type="byte" value="0xe7" offset="1">
+                    <match type="byte" value="0x00" offset="2">
+                        <match type="byte" value="0xf0" offset="3">
+                            <match type="byte" value="0x41" offset="4">
+                                <match type="byte" value="0xfa" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                    <match type="byte" value="0x78" offset="2">
+                        <match type="byte" value="0xf0" offset="3">
+                            <match type="byte" value="0x41" offset="4">
+                                <match type="byte" value="0xfa" offset="5"/>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="dz.*"/>
+        <glob pattern="mkiio.*"/>
+        <glob pattern="*.dz"/>
+        <glob pattern="*.mkiio"/>
+    </mime-type>
+    <mime-type type="audio/x-fc">
+        <comment>Future Composer</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="SMOD" offset="0"/>
+            <match type="string" value="FC14" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="fc.*"/>
+        <glob pattern="fc13.*"/>
+        <glob pattern="fc14.*"/>
+        <glob pattern="smc.*"/>
+        <glob pattern="smod.*"/>
+        <glob pattern="*.fc"/>
+        <glob pattern="*.fc13"/>
+        <glob pattern="*.fc14"/>
+        <glob pattern="*.smc"/>
+        <glob pattern="*.smod"/>
+    </mime-type>
+    <mime-type type="audio/x-fc-bsi">
+        <comment>Future Composer (BSI)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="FUCO" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="bsi.*"/>
+        <glob pattern="*.bsi"/>
+    </mime-type>
+    <mime-type type="audio/x-fp">
+        <comment>Future Player</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="fp.*"/>
+        <glob pattern="*.fp"/>
+    </mime-type>
+    <mime-type type="audio/x-hip">
+        <comment>Jochen Hippel</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="byte" value="0x60" offset="0">
+                <match type="byte" value="0x60" offset="2"/>
+                <match type="byte" value="0x00" offset="2"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="hip.*"/>
+        <glob pattern="*.hip"/>
+    </mime-type>
+    <mime-type type="audio/x-hip-7v">
+        <comment>Jochen Hippel 7V</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="**** Player by Jochen Hippel 1990 ***" offset="5"/>
+            <match type="big16" value="0x6000" offset="0">
+                <match type="byte" value="0x00" offset="2"/>
+            </match>
+            <match type="string" value="TFMX" offset="0:1048576"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="hip7.*"/>
+        <glob pattern="s7g.*"/>
+        <glob pattern="*.hip7"/>
+        <glob pattern="*.s7g"/>
+    </mime-type>
+    <mime-type type="audio/x-hip-coso">
+        <comment>Jochen Hippel CoSo</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="COSO" offset="0">
+                <match type="string" value="TFMX" offset="32"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="hipc.*"/>
+        <glob pattern="*.hipc"/>
+    </mime-type>
+    <mime-type type="audio/x-hip-st">
+        <comment>Jochen Hippel ST</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="MMME" offset="0"/>
+            <match type="string" value="TFMX" offset="0"/>
+            <match type="byte" value="0x60" offset="0">
+                <match type="byte" value="0x60" offset="2">
+                    <match type="byte" value="0x48" offset="4">
+                        <match type="byte" value="0xe7" offset="5"/>
+                    </match>
+                    <match type="byte" value="0x41" offset="4">
+                        <match type="byte" value="0xfa" offset="5"/>
+                    </match>
+                </match>
+                <match type="byte" value="0x00" offset="1">
+                    <match type="byte" value="0x60" offset="4">
+                        <match type="byte" value="0x00" offset="5">
+                            <match type="byte" value="0x48" offset="8">
+                                <match type="byte" value="0xe7" offset="9"/>
+                            </match>
+                            <match type="byte" value="0x60" offset="8">
+                                <match type="byte" value="0x00" offset="9">
+                                    <match type="byte" value="0x60" offset="12">
+                                        <match type="byte" value="0x00" offset="13">
+                                            <match type="byte" value="0x48" offset="16">
+                                                <match type="byte" value="0xe7" offset="17"/>
+                                            </match>
+                                        </match>
+                                    </match>
+                                </match>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="sog.*"/>
+        <glob pattern="*.sog"/>
+    </mime-type>
+    <mime-type type="audio/x-hip-st-coso">
+        <comment>Jochen Hippel ST CoSo</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="COSO" offset="0">
+                <match type="string" value="TFMX" offset="32"/>
+                <match type="string" value="MMME" offset="32"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="soc.*"/>
+        <glob pattern="*.soc"/>
+    </mime-type>
+    <mime-type type="audio/x-it">
+        <comment>Impulse Tracker audio</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="IMPM" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="it.*"/>
+        <glob pattern="*.it"/>
+    </mime-type>
+    <mime-type type="audio/x-lds">
+        <comment>LOUDNESS Sound System</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.lds"/>
+    </mime-type>
+    <mime-type type="audio/x-m2">
+        <comment>Mark II Sound-System</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="byte" value="0x48" offset="0">
+                <match type="byte" value="0xe7" offset="1">
+                    <match type="byte" value="0x00" offset="2">
+                        <match type="byte" value="0xf0" offset="3">
+                            <match type="byte" value="0x41" offset="4">
+                                <match type="byte" value="0xfa" offset="5">
+                                    <match type="byte" value="0x4c" offset="8">
+                                        <match type="byte" value="0xd8" offset="9"/>
+                                    </match>
+                                </match>
+                            </match>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="string" value=".ZADS89." offset="768:1024"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="m2.*"/>
+        <glob pattern="mii.*"/>
+        <glob pattern="mk2.*"/>
+        <glob pattern="mkii.*"/>
+        <glob pattern="smp.*"/>
+        <glob pattern="*.m2"/>
+        <glob pattern="*.mii"/>
+        <glob pattern="*.mk2"/>
+        <glob pattern="*.mkii"/>
+        <glob pattern="*.smp"/>
+    </mime-type>
+    <mime-type type="audio/x-mcmd">
+        <comment>MCMD module (unofficial Hippel clone)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="MCMD" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="mcmd.*"/>
+        <glob pattern="*.mcmd"/>
+    </mime-type>
+    <mime-type type="audio/x-mdx">
+        <comment>Sharp X68000 MDX</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="byte" value="0x0d" offset="0:1024">
+                <match type="byte" value="0x0a" offset="1:1025">
+                    <match type="byte" value="0x1a" offset="2:1026"/>
+                </match>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.mdx"/>
+    </mime-type>
+    <mime-type type="audio/x-minipsf">
+        <comment>Miniature Portable Sound Format</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="PSF" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.minipsf"/>
+        <glob pattern="*.minipsf2"/>
+    </mime-type>
+    <mime-type type="audio/x-mmdc">
+        <comment>MED Packer</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="MMDC" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="mmdc.*"/>
+        <glob pattern="*.mmdc"/>
+    </mime-type>
+    <mime-type type="audio/x-mod">
+        <comment>Amiga SoundTracker audio</comment>
+        <icon name="audio-x-generic"/>
+        <magic priority="40">
+            <match type="string" value="MTM" offset="0"/>
+            <match type="string" value="MMD0" offset="0"/>
+            <match type="string" value="MMD1" offset="0"/>
+            <match type="string" value="MMD2" offset="0"/>
+            <match type="string" value="MMD3" offset="0"/>
+            <!-- 669 composer files: "if" and "JN" -->
+            <match type="byte" value="0x0" mask="0x80" offset="112">
+                <match type="string" value="if" offset="0">
+                    <!-- tempo list last byte: 0-31 (0 = known false positive) -->
+                    <match type="byte" value="0x0" mask="0xe0" offset="368">
+                        <!-- number of samples: 0-63 -->
+                        <match type="byte" value="0x0" mask="0xc0" offset="110">
+                            <!-- number of patterns: 0-128 -->
+                            <match type="byte" value="0x0" mask="0x80" offset="111"/>
+                            <match type="byte" value="0x80" offset="111"/>
+                        </match>
+                        <!-- number of samples: 64 -->
+                        <match type="byte" value="0x40" offset="110">
+                            <match type="byte" value="0x0" mask="0x80" offset="111"/>
+                            <match type="byte" value="0x80" offset="111"/>
+                        </match>
+                    </match>
+                    <!-- tempo list last byte: 32 -->
+                    <match type="byte" value="0x20" offset="368">
+                        <!-- number of samples: 0-63 -->
+                        <match type="byte" value="0x0" mask="0xc0" offset="110">
+                            <!-- number of patterns: 0-128 -->
+                            <match type="byte" value="0x0" mask="0x80" offset="111"/>
+                            <match type="byte" value="0x80" offset="111"/>
+                        </match>
+                        <!-- number of samples: 64 -->
+                        <match type="byte" value="0x40" offset="110">
+                            <match type="byte" value="0x0" mask="0x80" offset="111"/>
+                            <match type="byte" value="0x80" offset="111"/>
+                        </match>
+                    </match>
+                </match>
+                <match type="string" value="JN" offset="0">
+                    <match type="byte" value="0x0" mask="0xe0" offset="368">
+                        <match type="byte" value="0x0" mask="0xc0" offset="110">
+                            <match type="byte" value="0x0" mask="0x80" offset="111"/>
+                            <match type="byte" value="0x80" offset="111"/>
+                        </match>
+                    </match>
+                    <match type="byte" value="0x20" offset="368">
+                        <match type="byte" value="0x40" offset="110">
+                            <match type="byte" value="0x0" mask="0x80" offset="111"/>
+                            <match type="byte" value="0x80" offset="111"/>
+                        </match>
+                    </match>
+                </match>
+            </match>
+            <match type="string" value="MAS_UTrack_V00" offset="0"/>
+            <match type="string" value="M.K." offset="1080"/>
+            <match type="string" value="M!K!" offset="1080"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="669.*"/>
+        <glob pattern="m15.*"/>
+        <glob pattern="med.*"/>
+        <glob pattern="mmd0.*"/>
+        <glob pattern="mmd1.*"/>
+        <glob pattern="mmd2.*"/>
+        <glob pattern="mmd3.*"/>
+        <glob pattern="mod.*"/>
+        <glob pattern="mtm.*"/>
+        <glob pattern="ult.*"/>
+        <glob pattern="uni.*"/>
+        <glob pattern="*.669"/>
+        <glob pattern="*.m15"/>
+        <glob pattern="*.med"/>
+        <glob pattern="*.mmd0"/>
+        <glob pattern="*.mmd1"/>
+        <glob pattern="*.mmd2"/>
+        <glob pattern="*.mmd3"/>
+        <glob pattern="*.mod"/>
+        <glob pattern="*.mtm"/>
+        <glob pattern="*.ult"/>
+        <glob pattern="*.uni"/>
+    </mime-type>
+    <mime-type type="audio/x-mptm">
+        <comment>OpenMPT Module</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.mptm"/>
+    </mime-type>
+    <mime-type type="audio/x-ntk">
+        <comment>NoiseTrekker module</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="TWNNSNG1" offset="0"/>
+            <match type="string" value="TWNNSNG2" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.ntk"/>
+    </mime-type>
+    <mime-type type="audio/x-okt">
+        <comment>Oktalyzer Module</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="okt.*"/>
+        <glob pattern="*.okt"/>
+    </mime-type>
+    <mime-type type="audio/x-prun">
+        <comment>prun file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="prun.*"/>
+        <glob pattern="pru2.*"/>
+        <glob pattern="*.prun"/>
+        <glob pattern="*.pru2"/>
+    </mime-type>
+    <mime-type type="audio/x-psf">
+        <comment>Portable Sound Format</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="PSF" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.psf"/>
+        <glob pattern="*.psf2"/>
+    </mime-type>
+    <mime-type type="audio/x-psm">
+        <comment>psm file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.psm"/>
+    </mime-type>
+    <mime-type type="audio/x-pt3">
+        <comment>pt3 file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.pt3"/>
+    </mime-type>
+    <mime-type type="audio/x-ptk">
+        <comment>ProTrekkr module</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="TWNNSNG6" offset="0"/>
+            <match type="string" value="TWNNSNGI" offset="0"/>
+            <match type="string" value="TWNNSNGG" offset="0"/>
+            <match type="string" value="PROTREK" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.ptk"/>
+    </mime-type>
+    <mime-type type="audio/x-s3m">
+        <comment>Scream Tracker 3 audio</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="SCRM" offset="44"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="s3m.*"/>
+        <glob pattern="*.s3m"/>
+    </mime-type>
+    <mime-type type="audio/x-sc2">
+        <comment>sc2 file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="sc2.*"/>
+        <glob pattern="*.sc2"/>
+    </mime-type>
+    <mime-type type="audio/x-sc68">
+        <comment>sc68 file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="sc68.*"/>
+        <glob pattern="*.sc68"/>
+    </mime-type>
+    <mime-type type="audio/x-scl">
+        <comment>scl file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="scl.*"/>
+        <glob pattern="*.scl"/>
+    </mime-type>
+    <mime-type type="audio/x-sid2">
+        <comment>sid2 file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="sid2.*"/>
+        <glob pattern="*.sid2"/>
+    </mime-type>
+    <mime-type type="audio/x-sndh">
+        <comment>Atari ST audio (SNDH)</comment>
+        <icon name="audio-x-generic"/>
+        <magic priority="60">
+            <match type="string" value="Ice!" offset="0"/>
+            <match type="string" value="ICE!" offset="0"/>
+            <match type="string" value="SNDH" offset="12"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="snd.*"/>
+        <glob pattern="sndh.*"/>
+        <glob pattern="*.snd"/>
+        <glob pattern="*.sndh"/>
+    </mime-type>
+    <mime-type type="audio/x-soundmon">
+        <comment>SoundMon</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="BPSM" offset="26"/>
+            <match type="string" value="V.2" offset="26"/>
+            <match type="string" value="V.3" offset="26"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="bp.*"/>
+        <glob pattern="bp2.*"/>
+        <glob pattern="bp3.*"/>
+        <glob pattern="bs.*"/>
+        <glob pattern="sndmon.*"/>
+        <glob pattern="synth.*"/>
+        <glob pattern="*.bp"/>
+        <glob pattern="*.bp2"/>
+        <glob pattern="*.bp3"/>
+        <glob pattern="*.bs"/>
+        <glob pattern="*.sndmon"/>
+        <glob pattern="*.synth"/>
+    </mime-type>
+    <mime-type type="audio/x-spc">
+        <comment>SNES SPC700</comment>
+        <icon name="audio-x-generic"/>
+        <magic priority="60">
+            <match type="string" value="SNES-SPC700 Sound File Data" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.spc"/>
+    </mime-type>
+    <mime-type type="audio/x-spl">
+        <comment>Sound Programming Language (SOPROL)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="big32" value="0x000003f3" offset="0">
+                <match type="big32" value="0x00000000" offset="4">
+                    <match type="big32" value="0x00000001" offset="8">
+                        <match type="big32" value="0x00000000" offset="12">
+                            <match type="string" value="Nu!SOPROL!" offset="34"/>
+                        </match>
+                    </match>
+                </match>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="spl.*"/>
+        <glob pattern="*.spl"/>
+    </mime-type>
+    <mime-type type="audio/x-stk">
+        <comment>stk file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="stk.*"/>
+        <glob pattern="*.stk"/>
+    </mime-type>
+    <mime-type type="audio/x-stm">
+        <comment>Scream Tracker audio</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="!Scream!\x1A" offset="20"/>
+            <match type="string" value="!SCREAM!\x1A" offset="20"/>
+            <match type="string" value="BMOD2STM\x1A" offset="20"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="stm.*"/>
+        <glob pattern="*.stm"/>
+    </mime-type>
+    <mime-type type="audio/x-sun">
+        <comment>sun file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="sun.*"/>
+        <glob pattern="*.sun"/>
+    </mime-type>
+    <mime-type type="audio/x-sunvox">
+        <comment>sunvox file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="sunvox.*"/>
+        <glob pattern="*.sunvox"/>
+    </mime-type>
+    <mime-type type="audio/x-symmod">
+        <comment>symmod file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="symmod.*"/>
+        <glob pattern="*.symmod"/>
+    </mime-type>
+    <mime-type type="audio/x-tfmx">
+        <comment>The Final Musicsystem eXtended</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="mdat.*"/>
+        <glob pattern="*.mdat"/>
+    </mime-type>
+    <mime-type type="audio/x-tfmx-st">
+        <comment>TFMX ST</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="mdst.*"/>
+        <glob pattern="*.mdst"/>
+    </mime-type>
+    <mime-type type="audio/x-umx">
+        <comment>umx file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.umx"/>
+    </mime-type>
+    <mime-type type="audio/x-v2m">
+        <comment>v2m file</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="v2m.*"/>
+        <glob pattern="*.v2m"/>
+    </mime-type>
+    <mime-type type="audio/x-vgm">
+        <comment>Video Game Music</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="Vgm " offset="0"/>
+            <match type="big16" value="0x1f8b" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="vgm.*"/>
+        <glob pattern="vgz.*"/>
+        <glob pattern="*.vgm"/>
+        <glob pattern="*.vgz"/>
+    </mime-type>
+    <mime-type type="audio/x-xm">
+        <comment>FastTracker II audio</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="Extended Module:" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="xm.*"/>
+        <glob pattern="*.xm"/>
+    </mime-type>
+</mime-info>

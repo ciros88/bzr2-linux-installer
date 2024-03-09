@@ -58,8 +58,8 @@ get_elements_of_array1_not_contained_in_array2() {
 
 mime_types_scan() {
   local mime_types_required=()
-  mapfile -t mime_types_required < <(sed -n "\|mime_types=(| , \|)|{p; \|)|q}" "$path_bzr2_installer" |
-    sed -e 's:mime_types=(::g' -e 's:)::g' -e 's: :\n:g' | sed '/^[[:space:]]*$/d')
+  mapfile -t mime_types_required < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$bzr2_installer" |
+    sed -e 's:mime_types_supported=(::g' -e 's:)::g' -e 's: :\n:g' | sed '/^[[:space:]]*$/d')
   IFS=" " read -r -a mime_types_required <<<"$(tr ' ' '\n' <<<"${mime_types_required[@]}" | sort -u | tr '\n' ' ')"
   local mime_types_found=()
   mapfile -t mime_types_found < <(ls -d -1 "$samples_path"/*/)
@@ -205,8 +205,12 @@ No sample file found"
 
 check_requirements
 
-path_bzr2_installer="$(dirname "$0")/../bzr2_installer.sh"
+bzr2_installer_filename="bzr2_installer.sh"
+bzr2_installer="$(dirname "$0")/../$bzr2_installer_filename"
+bzr2_xml_filename="bzr2.xml"
+bzr2_xml="$(dirname "$0")/../$bzr2_xml_filename"
 samples_path="$(dirname "$0")/samples"
+
 echo -e "\nMIME types ${bold}scanning${bold_reset}...\n"
 
 mapfile -t scan_results < <(mime_types_scan)
@@ -240,7 +244,8 @@ Passed ${bold}$((test_query_default_passed))${bold_reset}, \
 Failed ${bold}$((test_query_default_failed))${bold_reset}"
 echo -e "\nTesting ${bold}xdg-mime query filetype${bold_reset} \
 (MIME types effectiveness against provided sample files)...\n"
-bzr2_installer_mimes_segment=$(sed -n '/create_mime_type_xml_files()/,$p' "$path_bzr2_installer")
+
+bzr2_xml_content=$(cat "$bzr2_xml")
 test_query_filetype_passed=0
 test_query_filetype_failed=0
 test_query_filetype_missing=0
@@ -248,7 +253,7 @@ test_query_filetype_invalid=0
 
 for mime_type in "${mime_types[@]}"; do
   sed_pattern="\|<mime-type type=\"$mime_type\">| , \|</mime-type>|{p; \|</mime-type>|q}"
-  mime_single=$(echo "$bzr2_installer_mimes_segment" | sed -n "$sed_pattern")
+  mime_single=$(echo "$bzr2_xml_content" | sed -n "$sed_pattern")
 
   if [ -z "$mime_single" ]; then
     mime_single=$(sed -n "$sed_pattern" "/usr/share/mime/packages/freedesktop.org.xml")
