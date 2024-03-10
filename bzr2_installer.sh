@@ -479,8 +479,7 @@ EOF
 }
 
 setup_launcher_icon() {
-  echo
-  echo "installing bzr2 icon for bzr2 launcher"
+  echo -e "\ninstalling bzr2 icon for bzr2 launcher"
 
   for size in 16 22 24 32 48 64 128 256 512; do
     xdg-icon-resource install --noupdate --novendor --context apps --mode user --size ${size} "$bzr2_icon_unversioned"
@@ -495,12 +494,11 @@ setup_launcher_icon() {
 }
 
 setup_mime_types() {
+  echo -e "\nassociating bzr2 to all supported MIME types"
+
   local mime_dir_user=$HOME/.local/share/mime
   local mime_packages_dir_user="$mime_dir_user/packages"
   install -D -m644 "$bzr2_xml" "$mime_packages_dir_user"
-
-  echo -e "\nassociating bzr2 to all supported MIME types"
-
   xdg-mime default $bzr2_desktop_filename "${mime_types_supported[@]}"
   update-mime-database "$mime_dir_user"
   update-desktop-database "$HOME/.local/share/applications"
