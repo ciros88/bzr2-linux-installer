@@ -35,10 +35,12 @@ test_query_filetype() {
   mime_actual=$(xdg-mime query filetype "$file")
 
   if [ "$mime_actual" == "$mime_expected" ]; then
+    ((test_query_filetype_passed += 1))
     if [ "$hide_tests_pass" = false ]; then
       echo -e "[ ${bold}OK${bold_reset} ][expected: $mime_expected][actual: $mime_actual][$file]"
     fi
   else
+    ((test_query_filetype_failed += 1))
     echo -e "[${bold}FAIL${bold_reset}][expected: $mime_expected][actual: $mime_actual][$file]"
   fi
 
@@ -80,6 +82,12 @@ fi
 
 target=$(realpath -s "$target")
 
+echo -e "\nTesting ${bold}xdg-mime query filetype${bold_reset} \
+(MIME type effectiveness against provided target)...\n"
+
+test_query_filetype_passed=0
+test_query_filetype_failed=0
+
 if [ $is_target_dir = true ]; then
   readarray -d '' files < <(find "$target" -type f -print0)
 
@@ -93,3 +101,7 @@ else
   file=$target
   test_query_filetype
 fi
+
+echo -e "\nTest results [${bold}xdg-mime query filetype${bold_reset}]:"
+echo -e "Run ${bold}$((test_query_filetype_passed + test_query_filetype_failed))${bold_reset}: \
+Passed ${bold}$test_query_filetype_passed${bold_reset}, Failed ${bold}$test_query_filetype_failed${bold_reset}"
