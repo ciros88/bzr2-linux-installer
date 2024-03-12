@@ -31,7 +31,7 @@ check_requirements() {
 }
 
 test_query_filetype() {
-
+  local mime_actual
   mime_actual=$(xdg-mime query filetype "$file")
 
   if [ "$mime_actual" == "$mime_expected" ]; then
@@ -43,8 +43,8 @@ test_query_filetype() {
     ((test_query_filetype_failed += 1))
     echo -e "[${bold}FAIL${bold_reset}][expected: $mime_expected][actual: $mime_actual][$file]"
   fi
-
 }
+
 
 check_requirements
 
@@ -94,8 +94,6 @@ if [ $is_target_dir = true ]; then
   for file in "${files[@]}"; do
     test_query_filetype
   done
-
-  #TODO test_query_default
 
 else
   file=$target
