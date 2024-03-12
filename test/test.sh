@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # NAME
-#     test_single.sh - test both XDG MIME 'query filetype' & 'query default'
-#     for a single MIME type against a target file or directory content
+#     test.sh - test XDG MIME 'query filetype' & 'query default'
+#     against a target file or directory content
 #
-# SYNOPSIS #TODO update for test_query_default
-#     ./test_single.sh mime_type target
+# SYNOPSIS #TODO
+#     ./test.sh mime_type target
 #
 # AUTHOR
 #     Ciro Scognamiglio
