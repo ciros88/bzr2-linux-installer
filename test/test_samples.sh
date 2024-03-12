@@ -123,14 +123,14 @@ test_query_default() {
     echo -e "[${bold}FAIL${bold_reset}][$mime_type][invalid MIME type provided]"
     return 1
   else
-    if [ "$query_default_result" = "bzr2.desktop" ]; then
+    if [ "$query_default_result" = "$desktop_expected" ]; then
       if [ "$hide_tests_pass" = false ]; then
         echo -e "[ ${bold}OK${bold_reset} ][$mime_type]"
         return 0
       fi
     else
       echo -e "[${bold}FAIL${bold_reset}][$mime_type][actual: $query_default_result]\
-[expected: bzr2.desktop]"
+[expected: $desktop_expected]"
       return 1
     fi
   fi
@@ -229,6 +229,7 @@ Missing ${bold}${scan_results[4]}${bold_reset}"
 echo -e "\nTesting ${bold}xdg-mime query default${bold_reset} (MIME types association with bzr2 desktop entry)...\n"
 test_query_default_passed=0
 test_query_default_failed=0
+desktop_expected="bzr2.desktop"
 
 for mime_type in "${mime_types[@]}"; do
   if test_query_default 2>/dev/null; then
