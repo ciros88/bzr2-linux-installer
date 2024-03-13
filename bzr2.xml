@@ -291,7 +291,7 @@
         <magic>
             <match type="big32" value="0x48e700f0" offset="0">
                 <match type="big16" value="0x41fa" offset="4">
-                    <match type="big16" value="0x4cd8" offset="8"/>
+                    <match type="big32" value="0x4cd80600" offset="8"/>
                 </match>
             </match>
             <match type="string" value=".ZADS89." offset="768:1024"/>
