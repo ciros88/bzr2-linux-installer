@@ -132,8 +132,10 @@
         </magic>
         <glob-deleteall/>
         <glob pattern="dz.*"/>
+        <glob pattern="dzp.*"/>
         <glob pattern="mkiio.*"/>
         <glob pattern="*.dz"/>
+        <glob pattern="*.dzp"/>
         <glob pattern="*.mkiio"/>
     </mime-type>
     <mime-type type="audio/x-fc">
