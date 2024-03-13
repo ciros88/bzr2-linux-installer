@@ -146,12 +146,14 @@
         <glob pattern="fc13.*"/>
         <glob pattern="fc14.*"/>
         <glob pattern="fcm.*"/>
+        <glob pattern="fut.*"/>
         <glob pattern="smc.*"/>
         <glob pattern="smod.*"/>
         <glob pattern="*.fc"/>
         <glob pattern="*.fc13"/>
         <glob pattern="*.fc14"/>
         <glob pattern="*.fcm"/>
+        <glob pattern="*.fut"/>
         <glob pattern="*.smc"/>
         <glob pattern="*.smod"/>
     </mime-type>
