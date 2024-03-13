@@ -313,6 +313,7 @@
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="MCMD" offset="0"/>
+            <match type="big32" value="0x48e7fffe" offset="0"/>
         </magic>
         <glob-deleteall/>
         <glob pattern="mcmd.*"/>
