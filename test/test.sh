@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # NAME
-#     test.sh - test XDG MIME 'query filetype' & 'query default'
+#     test.sh - test bzr2 XDG desktop entry association or XDG MIME type association
 #     against a target file or directory content
 #
-# SYNOPSIS #TODO
-#     ./test.sh mime_type target
+# SYNOPSIS
+#     ./test.sh [-h|--help|target] [MIME type]
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -49,8 +49,16 @@ test_query_default_on_query_filetype() {
   local mime_actual
   mime_type=$(xdg-mime query filetype "$file")
 
+  if [ -z "$mime_type" ]; then
+    mime_type="NONE"
+  fi
+
   local query_default_result
   query_default_result=$(xdg-mime query default "$mime_type")
+
+  if [ -z "$query_default_result" ]; then
+    query_default_result="NONE"
+  fi
 
   if [ "$query_default_result" = "$desktop_expected" ]; then
     if [ "$hide_tests_pass" = false ]; then
@@ -66,18 +74,20 @@ test_query_default_on_query_filetype() {
 
 check_requirements
 
+help_string="Usage: $(basename "$0") [-h|--help|target] [MIME type]"
+
 if [ -z "$1" ]; then
-  echo "MIME type arg is required"
-  exit 1
-fi
-
-mime_provided="$1"
-target="$2"
-
-if [ -z "$target" ]; then
   echo "target arg is required"
+  echo "$help_string"
   exit 1
 fi
+
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+  echo "$help_string"
+  exit 0
+fi
+
+target="$1"
 
 if [ ! -e "$target" ]; then
   echo "provided target does not exists"
@@ -106,36 +116,39 @@ else
   files=("$target")
 fi
 
-echo -e "\nTesting ${bold}xdg-mime query default${bold_reset} on ${bold}xdg-mime query filetype${bold_reset} \
-(file's MIME type association with bzr2 desktop entry)...\n"
+mime_provided="$2"
 
-test_query_default_passed=0
-test_query_default_failed=0
-desktop_expected="bzr2.desktop"
+if [ -z "$mime_provided" ]; then
+  echo -e "\nTesting ${bold}bzr2 desktop entry association with provided target${bold_reset}...\n"
 
-for file in "${files[@]}"; do
-  if test_query_default_on_query_filetype 2>/dev/null; then
-    ((test_query_default_passed += 1))
-  else
-    ((test_query_default_failed += 1))
-  fi
-done
+  test_query_default_passed=0
+  test_query_default_failed=0
+  desktop_expected="bzr2.desktop"
 
-echo -e "\nTest results [${bold}xdg-mime query default${bold_reset}]:"
-echo -e "Run ${bold}$((test_query_default_passed + test_query_default_failed))${bold_reset}, \
-Passed ${bold}$((test_query_default_passed))${bold_reset}, \
-Failed ${bold}$((test_query_default_failed))${bold_reset}"
-echo -e "\nTesting ${bold}xdg-mime query filetype${bold_reset} \
-(MIME type effectiveness against provided target)...\n"
+  for file in "${files[@]}"; do
+    if test_query_default_on_query_filetype 2>/dev/null; then
+      ((test_query_default_passed += 1))
+    else
+      ((test_query_default_failed += 1))
+    fi
+  done
 
-mime_expected=$mime_provided
-test_query_filetype_passed=0
-test_query_filetype_failed=0
+  echo -e "\nTest results [${bold}xdg-mime query default${bold_reset}]:"
+  echo -e "Run ${bold}$((test_query_default_passed + test_query_default_failed))${bold_reset}, \
+  Passed ${bold}$((test_query_default_passed))${bold_reset}, \
+  Failed ${bold}$((test_query_default_failed))${bold_reset}"
+else
+  echo -e "\nTesting ${bold}MIME type association with provided target${bold_reset}...\n"
 
-for file in "${files[@]}"; do
-  test_query_filetype
-done
+  mime_expected=$mime_provided
+  test_query_filetype_passed=0
+  test_query_filetype_failed=0
 
-echo -e "\nTest results [${bold}xdg-mime query filetype${bold_reset}]:"
-echo -e "Run ${bold}$((test_query_filetype_passed + test_query_filetype_failed))${bold_reset}: \
-Passed ${bold}$test_query_filetype_passed${bold_reset}, Failed ${bold}$test_query_filetype_failed${bold_reset}"
+  for file in "${files[@]}"; do
+    test_query_filetype
+  done
+
+  echo -e "\nTest results [${bold}xdg-mime query filetype${bold_reset}]:"
+  echo -e "Run ${bold}$((test_query_filetype_passed + test_query_filetype_failed))${bold_reset}: \
+  Passed ${bold}$test_query_filetype_passed${bold_reset}, Failed ${bold}$test_query_filetype_failed${bold_reset}"
+fi
