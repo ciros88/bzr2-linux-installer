@@ -228,12 +228,22 @@ entire wine env, otherwise only the configuration will be performed" ${force_rei
 }
 
 get_bzr2_zip_dir() {
-  local bzr2_zip_filename
+  local bzr2_zip_filenames
 
   if $has_matched_versioning_pattern_old; then
-    bzr2_zip_filename=$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/$/.zip/')
+    bzr2_zip_filenames=("$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/$/.zip/')")
   else
-    bzr2_zip_filename="$bzr2_version.zip"
+
+    local bzr2_version_minor="${bzr2_version##*.}"
+
+    if [ "$bzr2_version_minor" -lt 67 ]; then
+      bzr2_zip_filenames=("$bzr2_version.zip")
+    elif [ "$bzr2_version_minor" -eq 67 ]; then
+      bzr2_zip_filenames=("$bzr2_version.zip" "BZR-Player-$bzr2_version.zip")
+    else
+      bzr2_zip_filenames=("BZR-Player-$bzr2_version.zip")
+    fi
+
   fi
 
   while :; do
@@ -241,15 +251,32 @@ get_bzr2_zip_dir() {
     bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" \
       "$(realpath -s "$bzr2_zip_dir_default")")
 
-    bzr2_zip="$bzr2_zip_dir"/"$bzr2_zip_filename"
+    local bzr2_zips=()
+    for bzr2_zip_filename in "${bzr2_zip_filenames[@]}"; do
+      bzr2_zips+=("$bzr2_zip_dir"/"$bzr2_zip_filename")
+    done
 
-    if [ ! -f "$bzr2_zip" ]; then
-      echo -e "\nfile ${bold}$bzr2_zip${bold_reset} not found... $invalid_value_inserted_message"
-    else
-      echo -e "\nrelease zip archive ${bold}$bzr2_zip${bold_reset} for version ${bold}$bzr2_version${bold_reset} \
+    for i in "${!bzr2_zips[@]}"; do
+      if [ -f "${bzr2_zips[i]}" ]; then
+        echo -e "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version ${bold}$bzr2_version${bold_reset} \
 has been found"
-      break
+        bzr2_zip="${bzr2_zips[i]}"
+        break 2
+      fi
+    done
+
+    if [ ${#bzr2_zips[@]} -gt 1 ]; then
+      echo -e "\nnone of these files are found:"
+
+      for bzr2_zip in "${bzr2_zips[@]}"; do
+        echo "${bold}${bzr2_zip}${bold_reset}"
+      done
+
+      echo -e "$invalid_value_inserted_message"
+    else
+      echo -e "\nfile ${bold}${bzr2_zips[0]}${bold_reset} not found... $invalid_value_inserted_message"
     fi
+
   done
 }
 
