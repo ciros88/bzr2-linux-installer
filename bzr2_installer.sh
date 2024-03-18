@@ -7,7 +7,7 @@
 #     ./bzr2_installer.sh
 #
 # DESCRIPTION
-#     install and configure BZR Player 2 (bzr2) using wine
+#     download, install and configure BZR Player 2 (bzr2) using wine
 #
 #     handle multiple bzr2 versions (useful for testing purposes) in separated
 #     wine prefixes as ~/.bzr2-<player version>-<wine arch>
@@ -19,7 +19,8 @@
 #     eventually associated to supported MIME types
 #
 # NOTES
-#     bzr2 versions older than 2.0.19.Alpha have not been tested
+#     - an internet connection is required, at least, in order to properly run winetricks
+#     - bzr2 versions older than 2.0.19.Alpha have not been tested
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -30,6 +31,11 @@ main() {
   bzr2_version_default="2.0.67"
   winearch_default="win64"
   force_reinstall_default="n"
+  download_urls=(
+    "http://bzrplayer.blazer.nu/getFile.php?id="
+    "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/artifacts/artifacts/"
+  )
+  download_tries=2
   bzr2_zip_dir_default="."
   bzr2_xml_dir_default="."
   dpi_default="auto"
@@ -84,7 +90,12 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
   fi
 
   if ! $is_already_installed || [ "$force_reinstall" = y ]; then
-    get_bzr2_zip_dir
+    get_bzr2_zip_filenames
+    download_bzr2
+
+    if [ $is_downloaded == false ]; then
+      get_bzr2_local_zip_dir
+    fi
   fi
 
   get_dpi
@@ -123,7 +134,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 check_requirements() {
   local requirements=(
     realpath cat sed unzip update-desktop-database update-mime-database wine winetricks
-    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install
+    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget
   )
 
   for requirement in "${requirements[@]}"; do
@@ -227,13 +238,10 @@ entire wine env, otherwise only the configuration will be performed" ${force_rei
   force_reinstall="$input"
 }
 
-get_bzr2_zip_dir() {
-  local bzr2_zip_filenames
-
+get_bzr2_zip_filenames() {
   if $has_matched_versioning_pattern_old; then
     bzr2_zip_filenames=("$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/$/.zip/')")
   else
-
     local bzr2_version_minor="${bzr2_version##*.}"
 
     if [ "$bzr2_version_minor" -lt 67 ]; then
@@ -243,9 +251,67 @@ get_bzr2_zip_dir() {
     else
       bzr2_zip_filenames=("BZR-Player-$bzr2_version.zip")
     fi
+  fi
+}
 
+download_bzr2() {
+  local download_dir
+  for tmp_dir in "$XDG_RUNTIME_DIR" "$TMPDIR" "$(dirname "$(mktemp -u --tmpdir)")" "/tmp" "/var/tmp" "/var/cache"; do
+    if [ -w "$tmp_dir" ]; then
+      download_dir="$tmp_dir"
+      break
+    fi
+  done
+
+  local download_dir_msg
+  if [ -z "$download_dir" ]; then
+    download_dir_msg="unable to find a writable temp directory: "
+    download_dir="$HOME"
   fi
 
+  download_dir_msg+="bzr2 will be downloaded to ${bold}$download_dir${bold_reset}"
+  echo -e "\n$download_dir_msg"
+
+  local is_download_url_fallback=false
+
+  for download_url in "${download_urls[@]}"; do
+    for bzr2_zip_filename in "${bzr2_zip_filenames[@]}"; do
+      if [ $is_download_url_fallback = true ]; then
+        local query_string="$bzr2_zip_filename"
+      else
+        local query_string="$bzr2_version"
+      fi
+
+      echo -en "\ntrying to download ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
+      set +e
+      wget -q --tries=$download_tries --backups=1 -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
+        "$download_url$query_string"
+
+      local wget_result=$?
+
+      if [ $wget_result -eq 0 ] && unzip -tq "$download_dir/${bzr2_zip_filenames[0]}" >/dev/null 2>&1; then
+        set -e
+        #TODO
+        #unzip -l archive.zip | grep -q name_of_file && echo $?
+        echo "DONE"
+
+        bzr2_zip="$download_dir/${bzr2_zip_filenames[0]}"
+        is_downloaded=true
+        return
+      fi
+      echo -n "FAIL"
+    done
+
+    set -e
+    is_download_url_fallback=true
+  done
+
+  echo -e "\n\nunable to download bzr2"
+  is_downloaded=false
+  return
+}
+
+get_bzr2_local_zip_dir() {
   while :; do
     local bzr2_zip_dir
     bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" \
@@ -258,8 +324,8 @@ get_bzr2_zip_dir() {
 
     for i in "${!bzr2_zips[@]}"; do
       if [ -f "${bzr2_zips[i]}" ]; then
-        echo -e "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version ${bold}$bzr2_version${bold_reset} \
-has been found"
+        echo -e "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
+${bold}$bzr2_version${bold_reset} has been found"
         bzr2_zip="${bzr2_zips[i]}"
         break 2
       fi
