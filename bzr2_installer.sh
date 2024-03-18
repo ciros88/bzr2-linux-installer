@@ -93,7 +93,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
     get_bzr2_zip_filenames
     download_bzr2
 
-    if [ $is_downloaded == false ]; then
+    if [ "$is_downloaded" == false ]; then
       get_bzr2_local_zip_dir
     fi
   fi
@@ -282,27 +282,31 @@ download_bzr2() {
         local query_string="$bzr2_version"
       fi
 
-      echo -en "\ntrying to download ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
+      echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
+
       set +e
       wget -q --tries=$download_tries --backups=1 -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
         "$download_url$query_string"
 
       local wget_result=$?
+      set -e
 
-      if [ $wget_result -eq 0 ] && unzip -tq "$download_dir/${bzr2_zip_filenames[0]}" >/dev/null 2>&1; then
-        set -e
-        #TODO
-        #unzip -l archive.zip | grep -q name_of_file && echo $?
-        echo "DONE"
+      bzr2_zip="$download_dir/$bzr2_zip_filename"
 
-        bzr2_zip="$download_dir/${bzr2_zip_filenames[0]}"
-        is_downloaded=true
-        return
+      if [ $wget_result -eq 0 ] && unzip -tq "$bzr2_zip" >/dev/null 2>&1; then
+        echo -n "sanity check... "
+        if [ "$(unzip -l "$bzr2_zip" | grep -c "$bzr2_exe_filename")" -eq 1 ] >/dev/null 2>&1; then
+          echo "OK"
+          is_downloaded=true
+          return
+        else
+          echo -n "FAIL"
+        fi
+      else
+        echo -n "FAIL"
       fi
-      echo -n "FAIL"
     done
 
-    set -e
     is_download_url_fallback=true
   done
 
