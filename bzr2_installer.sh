@@ -93,7 +93,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
     get_bzr2_zip_filenames
     download_bzr2
 
-    if [ "$is_downloaded" == false ]; then
+    if [ "$is_zip_downloaded" == false ]; then
       get_bzr2_local_zip_dir
     fi
   fi
@@ -254,6 +254,18 @@ get_bzr2_zip_filenames() {
   fi
 }
 
+bzr2_zip_sanity_check() {
+  echo -n "sanity check... "
+
+  if [ "$(unzip -l "$1" | grep -c "$bzr2_exe_filename")" -eq 1 ] >/dev/null 2>&1; then
+    echo "OK"
+    return 0
+  else
+    echo -n "FAIL"
+    return 1
+  fi
+}
+
 download_bzr2() {
   local download_dir
   for tmp_dir in "$XDG_RUNTIME_DIR" "$TMPDIR" "$(dirname "$(mktemp -u --tmpdir)")" "/tmp" "/var/tmp" "/var/cache"; do
@@ -294,13 +306,14 @@ download_bzr2() {
       bzr2_zip="$download_dir/$bzr2_zip_filename"
 
       if [ $wget_result -eq 0 ] && unzip -tq "$bzr2_zip" >/dev/null 2>&1; then
-        echo -n "sanity check... "
-        if [ "$(unzip -l "$bzr2_zip" | grep -c "$bzr2_exe_filename")" -eq 1 ] >/dev/null 2>&1; then
-          echo "OK"
-          is_downloaded=true
+        set +e
+        bzr2_zip_sanity_check "$bzr2_zip"
+        local is_zip_sane=$?
+        set -e
+
+        if [ $is_zip_sane -eq 0 ]; then
+          is_zip_downloaded=true
           return
-        else
-          echo -n "FAIL"
         fi
       else
         echo -n "FAIL"
@@ -311,7 +324,7 @@ download_bzr2() {
   done
 
   echo -e "\n\nunable to download bzr2"
-  is_downloaded=false
+  is_zip_downloaded=false
   return
 }
 
@@ -328,15 +341,23 @@ get_bzr2_local_zip_dir() {
 
     for i in "${!bzr2_zips[@]}"; do
       if [ -f "${bzr2_zips[i]}" ]; then
-        echo -e "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
-${bold}$bzr2_version${bold_reset} has been found"
-        bzr2_zip="${bzr2_zips[i]}"
-        break 2
+        echo -en "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
+${bold}$bzr2_version${bold_reset} has been found... "
+
+        set +e
+        bzr2_zip_sanity_check "${bzr2_zips[i]}"
+        local is_zip_sane=$?
+        set -e
+
+        if [ "$is_zip_sane" -eq 0 ]; then
+          bzr2_zip="${bzr2_zips[i]}"
+          break 2
+        fi
       fi
     done
 
     if [ ${#bzr2_zips[@]} -gt 1 ]; then
-      echo -e "\nnone of these files are found:"
+      echo -e "\nnone of these files are found or valid:"
 
       for bzr2_zip in "${bzr2_zips[@]}"; do
         echo "${bold}${bzr2_zip}${bold_reset}"
@@ -344,7 +365,7 @@ ${bold}$bzr2_version${bold_reset} has been found"
 
       echo -e "$invalid_value_inserted_message"
     else
-      echo -e "\nfile ${bold}${bzr2_zips[0]}${bold_reset} not found... $invalid_value_inserted_message"
+      echo -e "\nvalid ${bold}${bzr2_zips[0]}${bold_reset} file not found... $invalid_value_inserted_message"
     fi
 
   done
