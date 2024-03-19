@@ -28,6 +28,15 @@
 set -e
 
 main() {
+
+  if [ "$(id -u)" -ne 0 ]; then
+    echo "Root privileges are required"
+    exit 1
+  fi
+
+  USER=${SUDO_USER}
+  HOME=$(eval echo ~"$SUDO_USER")
+
   bzr2_version_default="2.0.67"
   winearch_default="win64"
   force_reinstall_default="n"
@@ -111,7 +120,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
     setup_bzr2
   fi
 
-  ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
+  sudo -u "$USER" ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
 
   echo "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> \
 ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
@@ -119,7 +128,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
   setup_dpi
   setup_launcher_script
 
-  ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
+  sudo -u "$USER" ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
 
   setup_desktop_entry
   setup_launcher_icon
@@ -134,7 +143,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 check_requirements() {
   local requirements=(
     realpath cat sed unzip update-desktop-database update-mime-database wine winetricks
-    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget
+    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget sudo
   )
 
   for requirement in "${requirements[@]}"; do
@@ -498,9 +507,9 @@ for listing all)" ${mime_types_association_default})
 }
 
 setup_bzr2() {
-  mkdir -p "$bzr2_dir"
-  unzip -oq "$bzr2_zip" -d "$bzr2_dir"
-  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog \
+  sudo -u "$USER" mkdir -p "$bzr2_dir"
+  sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog \
     autostart_winedbg=disabled
 }
 
@@ -511,7 +520,7 @@ setup_dpi() {
   "default") return ;;
 
   "auto")
-    dpi_to_set=$(xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
+    dpi_to_set=$(sudo -u "$USER" xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     if [ -z "$dpi_to_set" ]; then
       echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used \
 in wine"
@@ -528,19 +537,19 @@ in wine"
 
   dpi_to_set='0x'$(printf '%x\n' "$dpi_to_set")
 
-  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
     "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 
-  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
     "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 
-  WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
     "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 }
 
 setup_launcher_script() {
 
-  cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
+  sudo -u "$USER" cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
 #!/bin/bash
 #
 # NAME
@@ -564,9 +573,8 @@ export WINEDEBUG=-all
 WINEPREFIX="$bzr2_wineprefix_dir_unversioned" WINEARCH="$winearch" wine "$bzr2_exe_win"
 EOF
 
-  sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
-
-  chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  sudo -u "$USER" sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  sudo -u "$USER" chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
 }
 
 setup_desktop_entry() {
@@ -577,7 +585,8 @@ setup_desktop_entry() {
     desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
   done
 
-  cat <<EOF >"$bzr2_desktop"
+  sudo -u "$USER" touch "$bzr2_desktop"
+  sudo -u "$USER" cat <<EOF >"$bzr2_desktop"
 [Desktop Entry]
 Type=Application
 Name=BZR Player 2
@@ -593,33 +602,34 @@ NoDisplay=false
 #StartupNotify=
 EOF
 
-  xdg-desktop-menu install --novendor --mode user "$bzr2_desktop"
+  xdg-desktop-menu install --novendor --mode system "$bzr2_desktop"
 }
 
 setup_launcher_icon() {
   echo -e "\ninstalling bzr2 icon for bzr2 launcher"
 
   for size in 16 22 24 32 48 64 128 256 512; do
-    xdg-icon-resource install --noupdate --novendor --context apps --mode user --size ${size} "$bzr2_icon_unversioned"
+    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon_unversioned"
   done
 
   xdg-icon-resource forceupdate
 
   if type gtk-update-icon-cache &>/dev/null; then
     echo
-    gtk-update-icon-cache -t -f "$HOME/.local/share/icons/hicolor"
+    gtk-update-icon-cache -t -f "/usr/share/icons/hicolor"
   fi
 }
 
 setup_mime_types() {
   echo -e "\nassociating bzr2 to all supported MIME types"
 
-  local mime_dir_user=$HOME/.local/share/mime
-  local mime_packages_dir_user="$mime_dir_user/packages"
-  install -D -m644 "$bzr2_xml" "$mime_packages_dir_user"
-  xdg-mime default $bzr2_desktop_filename "${mime_types_supported[@]}"
-  update-mime-database "$mime_dir_user"
-  update-desktop-database "$HOME/.local/share/applications"
+  local mime_dir_system=/usr/share/mime
+  local mime_packages_dir_system="$mime_dir_system/packages"
+
+  install -D -m644 "$bzr2_xml" "$mime_packages_dir_system"
+  sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types_supported[@]}"
+  update-mime-database "$mime_dir_system"
+  update-desktop-database "/usr/share/applications"
 }
 
 main "$@" exit
