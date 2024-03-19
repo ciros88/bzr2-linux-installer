@@ -257,7 +257,7 @@ get_bzr2_zip_filenames() {
 bzr2_zip_sanity_check() {
   echo -n "sanity check... "
 
-  if [ "$(unzip -l "$1" | grep -c "$bzr2_exe_filename")" -eq 1 ] >/dev/null 2>&1; then
+  if unzip -tq "$1" >/dev/null 2>&1 && [ "$(unzip -l "$1" | grep -c "$bzr2_exe_filename")" -eq 1 ] >/dev/null 2>&1; then
     echo "OK"
     return 0
   else
