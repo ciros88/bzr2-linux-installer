@@ -207,7 +207,7 @@ check_requirements
 
 bzr2_installer_filename="bzr2_installer.sh"
 bzr2_installer="$(dirname "$0")/../$bzr2_installer_filename"
-bzr2_xml_filename="bzr2.xml"
+bzr2_xml_filename="x-bzr2.xml"
 bzr2_xml="$(dirname "$0")/../$bzr2_xml_filename"
 samples_path="$(dirname "$0")/samples"
 

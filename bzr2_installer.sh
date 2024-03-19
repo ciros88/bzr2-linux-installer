@@ -59,7 +59,7 @@ main() {
   bzr2_wineprefix_dir_unversioned="$HOME/.bzr2"
   bzr2_exe_filename="BZRPlayer.exe"
   bzr2_launcher_filename="bzr2.sh"
-  bzr2_xml_filename="bzr2.xml"
+  bzr2_xml_filename="x-bzr2.xml"
   bzr2_desktop_filename="bzr2.desktop"
   bzr2_icon_unversioned="$bzr2_wineprefix_dir_unversioned"/bzr2.png
 
