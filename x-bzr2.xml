@@ -471,7 +471,7 @@
     <mime-type type="audio/x-psf">
         <comment>Portable Sound Format</comment>
         <icon name="audio-x-generic"/>
-        <magic>
+        <magic priority="60">
             <match type="string" value="PSF" offset="0"/>
         </magic>
         <glob-deleteall/>
