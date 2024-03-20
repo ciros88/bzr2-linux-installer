@@ -114,7 +114,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
 
   if ! $is_already_installed || [ "$force_reinstall" = y ]; then
     if [ "$force_reinstall" = y ]; then
-      rm -rf "$bzr2_wineprefix_dir"
+      sudo -u "$USER" rm -rf "$bzr2_wineprefix_dir"
     fi
 
     setup_bzr2
