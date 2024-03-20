@@ -84,7 +84,8 @@ main() {
   get_winearch
 
   bzr2_exe="$bzr2_dir/$bzr2_exe_filename"
-  bzr2_desktop="$bzr2_wineprefix_dir"/"$bzr2_desktop_filename"
+  bzr2_launcher="$bzr2_wineprefix_dir/$bzr2_launcher_filename"
+  bzr2_desktop="$bzr2_wineprefix_dir/$bzr2_desktop_filename"
   bzr2_icon="$bzr2_wineprefix_dir"/bzr2.png
 
   if [ -f "$bzr2_exe" ]; then
@@ -157,7 +158,7 @@ check_requirements() {
 check_installation_files() {
   local bzr2_xml_dir
   bzr2_xml_dir=$(realpath -s "$bzr2_xml_dir_default")
-  bzr2_xml="$bzr2_xml_dir"/"$bzr2_xml_filename"
+  bzr2_xml="$bzr2_xml_dir/$bzr2_xml_filename"
 
   if [ ! -f "$bzr2_xml" ]; then
     echo -e "\nfile ${bold}$bzr2_xml${bold_reset} not found"
@@ -345,7 +346,7 @@ get_bzr2_local_zip_dir() {
 
     local bzr2_zips=()
     for bzr2_zip_filename in "${bzr2_zip_filenames[@]}"; do
-      bzr2_zips+=("$bzr2_zip_dir"/"$bzr2_zip_filename")
+      bzr2_zips+=("$bzr2_zip_dir/$bzr2_zip_filename")
     done
 
     for i in "${!bzr2_zips[@]}"; do
@@ -549,7 +550,8 @@ in wine"
 
 setup_launcher_script() {
 
-  sudo -u "$USER" cat <<EOF >"$bzr2_wineprefix_dir/$bzr2_launcher_filename"
+  bzr2_launcher_content=$(
+    cat <<EOF
 #!/bin/bash
 #
 # NAME
@@ -563,7 +565,7 @@ setup_launcher_script() {
 #         run bzr2
 #
 #     ./bzr2.sh file1 file2 dir1 dir2
-#         run bzr2 with selected files and directories content as arguments
+#         run bzr2 with selected files and/or directories as arguments
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -572,9 +574,11 @@ set -e
 export WINEDEBUG=-all
 WINEPREFIX="$bzr2_wineprefix_dir_unversioned" WINEARCH="$winearch" wine "$bzr2_exe_win"
 EOF
+  )
 
-  sudo -u "$USER" sed -i '$s/$/ "$@" \&/' "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
-  sudo -u "$USER" chmod +x "$bzr2_wineprefix_dir"/"$bzr2_launcher_filename"
+  bzr2_launcher_content=$(echo "$bzr2_launcher_content" | sed '$s/$/ "$@" \&/')
+  sudo -u "$USER" bash -c "echo '$bzr2_launcher_content' > '$bzr2_launcher'"
+  sudo -u "$USER" chmod +x "$bzr2_launcher"
 }
 
 setup_desktop_entry() {
@@ -585,8 +589,8 @@ setup_desktop_entry() {
     desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
   done
 
-  sudo -u "$USER" touch "$bzr2_desktop"
-  sudo -u "$USER" cat <<EOF >"$bzr2_desktop"
+  bzr2_desktop_content=$(
+    cat <<EOF
 [Desktop Entry]
 Type=Application
 Name=BZR Player 2
@@ -601,7 +605,9 @@ NoDisplay=false
 #Path=
 #StartupNotify=
 EOF
+  )
 
+  sudo -u "$USER" bash -c "echo '$bzr2_desktop_content' > '$bzr2_desktop'"
   xdg-desktop-menu install --novendor --mode system "$bzr2_desktop"
 }
 
