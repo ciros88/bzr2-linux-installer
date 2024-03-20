@@ -306,7 +306,7 @@ download_bzr2() {
       echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
 
       set +e
-      wget -q --tries=$download_tries --backups=1 -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
+      wget -q --tries=$download_tries -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
         "$download_url$query_string"
 
       local wget_result=$?
