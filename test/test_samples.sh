@@ -139,7 +139,7 @@ test_query_default() {
 test_query_filetype() {
   local mime_type_dir_name=${mime_type////-}
   local mime_type_dir_path
-  mime_type_dir_path="$samples_path"/"$mime_type_dir_name"
+  mime_type_dir_path="$samples_path/$mime_type_dir_name"
   local mime_type_dir_files=()
   mapfile -t mime_type_dir_files < <(ls -1 "$mime_type_dir_path"/*.* 2>/dev/null)
   local mime_type_dir_filenames=()
