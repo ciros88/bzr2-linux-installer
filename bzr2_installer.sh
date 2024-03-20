@@ -556,14 +556,14 @@ setup_launcher_script() {
 #     bzr2.sh - BZR Player 2 linux runner
 #
 # SYNOPSIS
-#     ./bzr2.sh [track(s)]
+#     ./bzr2.sh [target(s)]
 #
 # EXAMPLES
 #     ./bzr2.sh
 #         run bzr2
 #
-#     ./bzr2.sh track1 track2
-#         run bzr2 with selected tracks as arguments
+#     ./bzr2.sh file1 file2 dir1 dir2
+#         run bzr2 with selected files and directories content as arguments
 #
 # AUTHOR
 #     Ciro Scognamiglio
