@@ -175,29 +175,15 @@
             <match type="string" value="TFMX" offset="0"/>
             <match type="byte" value="0x60" offset="0">
                 <match type="byte" value="0x60" offset="2">
-                    <match type="byte" value="0x48" offset="4">
-                        <match type="byte" value="0xe7" offset="5"/>
-                    </match>
-                    <match type="byte" value="0x41" offset="4">
-                        <match type="byte" value="0xfa" offset="5"/>
-                    </match>
+                    <match type="big16" value="0x4e78" offset="4"/>
+                    <match type="big16" value="0x41fa" offset="4"/>
                 </match>
                 <match type="byte" value="0x00" offset="1">
-                    <match type="byte" value="0x60" offset="4">
-                        <match type="byte" value="0x00" offset="5">
-                            <match type="byte" value="0x48" offset="8">
-                                <match type="byte" value="0xe7" offset="9"/>
-                            </match>
-                            <match type="byte" value="0x60" offset="8">
-                                <match type="byte" value="0x00" offset="9">
-                                    <match type="byte" value="0x60" offset="12">
-                                        <match type="byte" value="0x00" offset="13">
-                                            <match type="byte" value="0x48" offset="16">
-                                                <match type="byte" value="0xe7" offset="17"/>
-                                            </match>
-                                        </match>
-                                    </match>
-                                </match>
+                    <match type="big16" value="0x6000" offset="4">
+                        <match type="big16" value="0x48e7" offset="8"/>
+                        <match type="big16" value="0x6000" offset="8">
+                            <match type="big16" value="0x6000" offset="12">
+                                <match type="big16" value="0x48e7" offset="16"/>
                             </match>
                         </match>
                     </match>
