@@ -42,71 +42,23 @@
         <comment>David Whittaker</comment>
         <icon name="audio-x-generic"/>
         <magic>
-            <match type="byte" value="0x48" offset="0">
-                <match type="byte" value="0xe7" offset="1">
-                    <match type="byte" value="0xf1" offset="2">
-                        <match type="byte" value="0xfe" offset="3">
-                            <match type="byte" value="0x61" offset="4">
-                                <match type="byte" value="0x00" offset="5"/>
-                            </match>
-                        </match>
-                    </match>
-                </match>
+            <match type="big32" value="0x48e7f1fe" offset="0">
+                <match type="big16" value="0x6100" offset="4"/>
             </match>
-            <match type="byte" value="0x47" offset="0">
-                <match type="byte" value="0xfa" offset="1">
-                    <match type="byte" value="0xff" offset="2">
-                        <match type="byte" value="0xfe" offset="3">
-                            <match type="byte" value="0x61" offset="4">
-                                <match type="byte" value="0x00" offset="5"/>
-                            </match>
-                        </match>
-                    </match>
-                </match>
+            <match type="big32" value="0x47fafffe" offset="0">
+                <match type="big16" value="0x6100" offset="4"/>
             </match>
-            <match type="byte" value="0x08" offset="0">
-                <match type="byte" value="0xf9" offset="1">
-                    <match type="byte" value="0x00" offset="2">
-                        <match type="byte" value="0x01" offset="3">
-                            <match type="byte" value="0x00" offset="4">
-                                <match type="byte" value="0xbf" offset="5"/>
-                            </match>
-                        </match>
-                    </match>
-                </match>
+            <match type="big32" value="0x08f90001" offset="0">
+                <match type="big16" value="0x00bf" offset="4"/>
             </match>
-            <match type="byte" value="0x20" offset="0">
-                <match type="byte" value="0x2f" offset="1">
-                    <match type="byte" value="0x00" offset="2">
-                        <match type="byte" value="0x04" offset="3">
-                            <match type="byte" value="0x48" offset="4">
-                                <match type="byte" value="0xe7" offset="5"/>
-                            </match>
-                        </match>
-                    </match>
-                </match>
+            <match type="big32" value="0x202f0004" offset="0">
+                <match type="big16" value="0x48e7" offset="4"/>
             </match>
-            <match type="byte" value="0x30" offset="0">
-                <match type="byte" value="0x3c" offset="1">
-                    <match type="byte" value="0x00" offset="2">
-                        <match type="byte" value="0x00" offset="3">
-                            <match type="byte" value="0x47" offset="4">
-                                <match type="byte" value="0xfa" offset="5"/>
-                            </match>
-                        </match>
-                    </match>
-                </match>
+            <match type="big32" value="0x303c0000" offset="0">
+                <match type="big16" value="0x47fa" offset="4"/>
             </match>
-            <match type="byte" value="0x70" offset="0">
-                <match type="byte" value="0x00" offset="1">
-                    <match type="byte" value="0x47" offset="2">
-                        <match type="byte" value="0xfa" offset="3">
-                            <match type="byte" value="0xff" offset="4">
-                                <match type="byte" value="0xfc" offset="5"/>
-                            </match>
-                        </match>
-                    </match>
-                </match>
+            <match type="big32" value="0x700047fa" offset="0">
+                <match type="big16" value="0xfffc" offset="4"/>
             </match>
         </magic>
         <glob-deleteall/>
