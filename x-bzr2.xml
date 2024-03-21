@@ -262,10 +262,8 @@
         <comment>Sharp X68000 MDX</comment>
         <icon name="audio-x-generic"/>
         <magic>
-            <match type="byte" value="0x0d" offset="0:1024">
-                <match type="byte" value="0x0a" offset="1:1025">
-                    <match type="byte" value="0x1a" offset="2:1026"/>
-                </match>
+            <match type="big16" value="0x0d0a" offset="0:1025">
+                <match type="byte" value="0x1a" offset="2:1026"/>
             </match>
         </magic>
         <glob-deleteall/>
