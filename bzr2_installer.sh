@@ -518,7 +518,9 @@ setup_dpi() {
   local dpi_to_set
 
   case "$dpi" in
-  "default") return ;;
+  "default")
+    dpi_to_set=96
+    ;;
 
   "auto")
     dpi_to_set=$(sudo -u "$USER" xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
