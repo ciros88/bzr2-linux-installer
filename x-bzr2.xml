@@ -483,6 +483,20 @@
         <glob pattern="scl.*"/>
         <glob pattern="*.scl"/>
     </mime-type>
+    <mime-type type="audio/x-scn">
+        <comment>Sean Connolly</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="big16" value="0x6000" offset="0">
+                <match type="big16" value="0x6000" offset="4">
+                    <match type="big16" value="0x6000" offset="8"/>
+                </match>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="scn.*"/>
+        <glob pattern="*.scn"/>
+    </mime-type>
     <mime-type type="audio/x-sid2">
         <comment>sid2 file</comment>
         <icon name="audio-x-generic"/>
