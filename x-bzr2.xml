@@ -12,6 +12,14 @@
         <glob pattern="ahx.*"/>
         <glob pattern="*.ahx"/>
     </mime-type>
+    <mime-type type="audio/x-aon">
+        <comment>Art Of Noise</comment>
+        <generic-icon name="audio-x-generic"/>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="aon.*"/>
+        <glob pattern="*.aon"/>
+    </mime-type>
     <mime-type type="audio/x-cust">
         <comment>DeliTracker Custom</comment>
         <icon name="audio-x-generic"/>
@@ -276,6 +284,13 @@
         <glob-deleteall/>
         <glob pattern="*.minipsf"/>
         <glob pattern="*.minipsf2"/>
+    </mime-type>
+    <mime-type type="audio/x-ml">
+        <comment>Musicline Editor</comment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="*.ml"/>
+        <glob pattern="ml.*"/>
     </mime-type>
     <mime-type type="audio/x-mmdc">
         <comment>MED Packer</comment>
