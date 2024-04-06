@@ -14,10 +14,11 @@ makedepends=('gendesk' 'unzip')
 optdepends=("xorg-xrdb") #TODO
 options=(!strip)
 zip="BZR-Player-$pkgver.zip"
-mimes=x-bzr-player.xml
+installer="bzr2_installer.sh"
+mimes="x-bzr-player.xml"
 source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$mimes"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/bzr2_installer.sh")
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$installer"
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$mimes")
 noextract=($zip)
 sha256sums=('02d2dd2f43a281ecb846b8a8f6b515bd18134b2ef26abb311211391896afcc22'
   'SKIP'
@@ -33,13 +34,23 @@ prepare() {
   mkdir -p "${pkgname}-bin"
   bsdtar -xf "$zip" -C "${pkgname}-bin"
 
+  mime_types_supported=()
+  mapfile -t mime_types_supported < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$installer" |
+    sed -e 's:mime_types_supported=(::g' -e 's:)::g' -e 's: :\n:g' | sed '/^[[:space:]]*$/d')
+
+  for mime_type in "${mime_types_supported[@]}"; do
+    desktop_entry_mime_types="$desktop_entry_mime_types$mime_type;"
+  done
+
+  desktop_entry_mime_types="${desktop_entry_mime_types%?}"
+
   gendesk -n -f --pkgname "$pkgname" --pkgdesc "$pkgdesc" \
-    --name=$_pkgname \
+    --name="$_pkgname" \
     --genericname='Audio player' \
-    --exec '' \
-    --icon '' \
-    --categories 'AudioVideo;Audio;Player;Music' \
-    --mimetype=''
+    --exec="" \
+    --icon="$pkgname" \
+    --categories='AudioVideo;Audio;Player;Music' \
+    --mimetype="$desktop_entry_mime_types"
 }
 
 package() {
