@@ -72,7 +72,6 @@ main() {
   bzr2_launcher_filename="$bzr2_pkgname.sh"
   bzr2_xml_filename="x-$bzr2_pkgname.xml"
   bzr2_desktop_filename="$bzr2_pkgname.desktop"
-  bzr2_icon_unversioned="$bzr2_wineprefix_dir_unversioned/$bzr2_pkgname.png"
 
   check_requirements
   check_installation_files
@@ -600,7 +599,7 @@ Type=Application
 Name=$bzr2_name
 GenericName=Audio player
 Comment=Audio player supporting a wide types of multi-platform exotic file formats
-Icon=$bzr2_icon_unversioned
+Icon=$bzr2_pkgname
 Exec=$bzr2_wineprefix_dir_unversioned/$bzr2_launcher_filename %U
 Categories=AudioVideo;Audio;Player;Music;
 MimeType=$desktop_entry_mime_types
@@ -619,7 +618,7 @@ setup_launcher_icon() {
   echo -e "\ninstalling bzr2 icon for bzr2 launcher"
 
   for size in 16 22 24 32 48 64 128 256 512; do
-    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon_unversioned"
+    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon"
   done
 
   xdg-icon-resource forceupdate
