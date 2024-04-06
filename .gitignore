@@ -1,3 +1,5 @@
 .idea/
+aur/*
+!aur/PKGBUILD
 artifacts/*.zip
 *.zip
