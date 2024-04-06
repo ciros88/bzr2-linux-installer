@@ -597,7 +597,7 @@ setup_desktop_entry() {
 Type=Application
 Name=BZR Player 2
 GenericName=Audio player
-Comment=Audio player supporting a wide types of exotic file formats
+Comment=Audio player supporting a wide types of multi-platform exotic file formats
 Icon=$bzr2_icon_unversioned
 Exec=$bzr2_wineprefix_dir_unversioned/$bzr2_launcher_filename %U
 Categories=AudioVideo;Audio;Player;Music;
