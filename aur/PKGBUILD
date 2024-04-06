@@ -3,34 +3,35 @@
 
 pkgname='bzr-player'
 _pkgname='BZR Player'
-_pkgname_zip='BZR-Player'
 pkgver='2.0.68'
 pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
 url="http://bzrplayer.blazer.nu"
-license=('GPL3') #TODO
-depends=('wine' 'winetricks')
+license=('GPL3')
+depends=('wine' 'winetricks' 'hicolor-icon-theme')
 makedepends=('gendesk' 'unzip')
 optdepends=("xorg-xrdb") #TODO
 options=(!strip)
+zip="BZR-Player-$pkgver.zip"
 mimes=x-bzr-player.xml
-source=("$_pkgname_zip-$pkgver.zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
-        "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$mimes"
-        "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/bzr2_installer.sh")
-
+source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$mimes"
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/bzr2_installer.sh")
+noextract=($zip)
 sha256sums=('02d2dd2f43a281ecb846b8a8f6b515bd18134b2ef26abb311211391896afcc22'
-            'SKIP'
-            'SKIP')
+  'SKIP'
+  'SKIP')
 
 # https://wiki.archlinux.org/title/Creating_packages
 # https://wiki.archlinux.org/title/PKGBUILD
 # https://wiki.archlinux.org/title/Wine_package_guidelines
 # https://wiki.archlinux.org/title/desktop_entries#gendesk
 
-prepare()
-{
-  #cd "$_pkgname_zip-$pkgver"
+prepare() {
+
+  mkdir -p "${pkgname}-bin"
+  bsdtar -xf "$zip" -C "${pkgname}-bin"
 
   gendesk -n -f --pkgname "$pkgname" --pkgdesc "$pkgdesc" \
     --name=$_pkgname \
@@ -41,10 +42,15 @@ prepare()
     --mimetype=''
 }
 
-package()
-{
-  #cd "$_pkgname_zip-$pkgver"
-  install -Dm644 "BZRPlayer.exe" "$pkgdir/usr/share/$pkgname" #TODO
+package() {
+
+  install -dm755 "$pkgdir/usr/share"
+  cp -a "${pkgname}-bin" "$pkgdir/usr/share/$pkgname"
   install -Dm644 "$mimes" "$pkgdir/usr/share/mime/packages/$mimes"
   install -Dm644 "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
+
+  for size in 16 22 24 32 48 64 128 256 512; do
+    install -Dm644 "$pkgdir/usr/share/$pkgname/resources/icon.png" \
+      "$pkgdir/usr/share/icons/hicolor/$size/apps/$pkgname.png"
+  done
 }
