@@ -207,7 +207,7 @@ check_requirements
 
 bzr2_installer_filename="bzr2_installer.sh"
 bzr2_installer="$(dirname "$0")/../$bzr2_installer_filename"
-bzr2_xml_filename="x-bzr2.xml"
+bzr2_xml_filename="x-bzr-player.xml"
 bzr2_xml="$(dirname "$0")/../$bzr2_xml_filename"
 samples_path="$(dirname "$0")/samples"
 
@@ -229,7 +229,7 @@ Missing ${bold}${scan_results[4]}${bold_reset}"
 echo -e "\nTesting ${bold}xdg-mime query default${bold_reset} (MIME types association with bzr2 desktop entry)...\n"
 test_query_default_passed=0
 test_query_default_failed=0
-desktop_expected="bzr2.desktop"
+desktop_expected="bzr-player.desktop"
 
 for mime_type in "${mime_types[@]}"; do
   if test_query_default 2>/dev/null; then

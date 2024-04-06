@@ -123,7 +123,7 @@ if [ -z "$mime_provided" ]; then
 
   test_query_default_passed=0
   test_query_default_failed=0
-  desktop_expected="bzr2.desktop"
+  desktop_expected="bzr-player.desktop"
 
   for file in "${files[@]}"; do
     if test_query_default_on_query_filetype 2>/dev/null; then

@@ -10,10 +10,10 @@
 #     download, install and configure BZR Player 2 (bzr2) using wine
 #
 #     handle multiple bzr2 versions (useful for testing purposes) in separated
-#     wine prefixes as ~/.bzr2-<player version>-<wine arch>
+#     wine prefixes as ~/.bzr-player-<version>-<wine arch>
 #
-#     provides a symbolic link to ~/.bzr2 as a stable entry point
-#     for accessing bzr2, in which the bzr2.sh player runner script is generated
+#     provides a symbolic link to ~/.bzr-player as a stable entry point
+#     for accessing bzr2, in which the bzr-player.sh player runner script is generated
 #
 #     also generates an XDG desktop entry for launching the player,
 #     eventually associated to supported MIME types
@@ -65,12 +65,14 @@ main() {
 
   invalid_value_inserted_message="please insert a valid value"
 
-  bzr2_wineprefix_dir_unversioned="$HOME/.bzr2"
+  bzr2_name="BZR Player"
+  bzr2_pkgname="bzr-player"
+  bzr2_wineprefix_dir_unversioned="$HOME/.$bzr2_pkgname"
   bzr2_exe_filename="BZRPlayer.exe"
-  bzr2_launcher_filename="bzr2.sh"
-  bzr2_xml_filename="x-bzr2.xml"
-  bzr2_desktop_filename="bzr2.desktop"
-  bzr2_icon_unversioned="$bzr2_wineprefix_dir_unversioned"/bzr2.png
+  bzr2_launcher_filename="$bzr2_pkgname.sh"
+  bzr2_xml_filename="x-$bzr2_pkgname.xml"
+  bzr2_desktop_filename="$bzr2_pkgname.desktop"
+  bzr2_icon_unversioned="$bzr2_wineprefix_dir_unversioned/$bzr2_pkgname.png"
 
   check_requirements
   check_installation_files
@@ -86,7 +88,7 @@ main() {
   bzr2_exe="$bzr2_dir/$bzr2_exe_filename"
   bzr2_launcher="$bzr2_wineprefix_dir/$bzr2_launcher_filename"
   bzr2_desktop="$bzr2_wineprefix_dir/$bzr2_desktop_filename"
-  bzr2_icon="$bzr2_wineprefix_dir"/bzr2.png
+  bzr2_icon="$bzr2_wineprefix_dir/$bzr2_pkgname.png"
 
   if [ -f "$bzr2_exe" ]; then
     is_already_installed=true
@@ -209,15 +211,15 @@ wine environment (multilib pkgs could be required)" ${winearch_default})
 
     case $input in
     "win32")
-      bzr2_exe_win="c:\\Program Files\\BZR Player 2\\$bzr2_exe_filename"
+      bzr2_exe_win="c:\\Program Files\\$bzr2_name\\$bzr2_exe_filename"
       bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
-      bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files/BZR Player 2"
+      bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files/$bzr2_name"
       break
       ;;
     "win64")
-      bzr2_exe_win="c:\\Program Files (x86)\\BZR Player 2\\$bzr2_exe_filename"
+      bzr2_exe_win="c:\\Program Files (x86)\\$bzr2_name\\$bzr2_exe_filename"
       bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
-      bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files (x86)/BZR Player 2"
+      bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files (x86)/$bzr2_name"
       break
       ;;
     *)
@@ -557,16 +559,16 @@ setup_launcher_script() {
 #!/bin/bash
 #
 # NAME
-#     bzr2.sh - BZR Player 2 linux runner
+#     bzr-player.sh - BZR Player 2 linux runner
 #
 # SYNOPSIS
-#     ./bzr2.sh [target(s)]
+#     ./bzr-player.sh [target(s)]
 #
 # EXAMPLES
-#     ./bzr2.sh
+#     ./bzr-player.sh
 #         run bzr2
 #
-#     ./bzr2.sh file1 file2 dir1 dir2
+#     ./bzr-player.sh file1 file2 dir1 dir2
 #         run bzr2 with selected files and/or directories as arguments
 #
 # AUTHOR
@@ -595,7 +597,7 @@ setup_desktop_entry() {
     cat <<EOF
 [Desktop Entry]
 Type=Application
-Name=BZR Player 2
+Name=$bzr2_name
 GenericName=Audio player
 Comment=Audio player supporting a wide types of multi-platform exotic file formats
 Icon=$bzr2_icon_unversioned
