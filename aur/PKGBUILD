@@ -8,8 +8,8 @@ pkgver='2.0.68'
 pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
-url='http://bzrplayer.blazer.nu/'
-license=('GPL')                                                                              #TODO
+url="http://bzrplayer.blazer.nu"
+license=('GPL3')                                                                              #TODO
 depends=('wine' 'winetricks')
 makedepends=('gendesk' 'unzip')
 optdepends=("xorg-xrdb")                                                                     #TODO
@@ -27,7 +27,7 @@ sha256sums=('02d2dd2f43a281ecb846b8a8f6b515bd18134b2ef26abb311211391896afcc22'
 
 prepare()
 {
-  unzip -od "$srcdir/$pkgname-$pkgver" "$_pkgname_zip-$pkgver.zip"
+  cd "$_pkgname_zip-$pkgver"
 
   gendesk -n -f --pkgname "$pkgname" --pkgdesc "$pkgdesc" \
     --name=$_pkgname \
@@ -40,5 +40,8 @@ prepare()
 
 package()
 {
+  cd "$pkgname-$pkgver"
+  #make DESTDIR="$pkgdir/" install
+
   #install -Dm644 "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
 }
