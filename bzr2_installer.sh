@@ -132,8 +132,8 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 
   sudo -u "$USER" ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
 
+  setup_icon
   setup_desktop_entry
-  setup_launcher_icon
 
   if [ "$mime_types_association" = y ]; then
     setup_mime_types
@@ -584,6 +584,21 @@ EOF
   sudo -u "$USER" chmod +x "$bzr2_launcher"
 }
 
+setup_icon() {
+  echo -e "\ninstalling bzr2 icon for bzr2 launcher"
+
+  for size in 16 22 24 32 48 64 128 256 512; do
+    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon"
+  done
+
+  xdg-icon-resource forceupdate
+
+  if type gtk-update-icon-cache &>/dev/null; then
+    echo
+    gtk-update-icon-cache -t -f "/usr/share/icons/hicolor"
+  fi
+}
+
 setup_desktop_entry() {
   echo -e "\ninstalling bzr2 desktop menu entry"
   local desktop_entry_mime_types=""
@@ -612,21 +627,6 @@ EOF
 
   sudo -u "$USER" bash -c "echo '$bzr2_desktop_content' > '$bzr2_desktop'"
   xdg-desktop-menu install --novendor --mode system "$bzr2_desktop"
-}
-
-setup_launcher_icon() {
-  echo -e "\ninstalling bzr2 icon for bzr2 launcher"
-
-  for size in 16 22 24 32 48 64 128 256 512; do
-    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon"
-  done
-
-  xdg-icon-resource forceupdate
-
-  if type gtk-update-icon-cache &>/dev/null; then
-    echo
-    gtk-update-icon-cache -t -f "/usr/share/icons/hicolor"
-  fi
 }
 
 setup_mime_types() {
