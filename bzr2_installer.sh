@@ -635,7 +635,7 @@ setup_mime_types() {
   local mime_dir_system=/usr/share/mime
   local mime_packages_dir_system="$mime_dir_system/packages"
 
-  install -D -m644 "$bzr2_xml" "$mime_packages_dir_system"
+  install -Dm644 "$bzr2_xml" "$mime_packages_dir_system"
   sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types_supported[@]}"
   update-mime-database "$mime_dir_system"
   update-desktop-database "/usr/share/applications"
