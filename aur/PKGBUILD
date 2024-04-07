@@ -3,14 +3,14 @@
 
 pkgname='bzr-player'
 _pkgname='BZR Player'
-pkgver='2.0.68'
+pkgver='2.0.69'
 pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
 url="http://bzrplayer.blazer.nu"
 license=('GPL3')
 depends=('wine' 'winetricks' 'hicolor-icon-theme')
-makedepends=('gendesk' 'unzip')
+makedepends=('gendesk' 'libarchive')
 optdepends=("xorg-xrdb") #TODO
 options=(!strip)
 zip="BZR-Player-$pkgver.zip"
@@ -20,7 +20,7 @@ source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$installer"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$mimes")
 noextract=($zip)
-sha256sums=('02d2dd2f43a281ecb846b8a8f6b515bd18134b2ef26abb311211391896afcc22'
+sha256sums=('26eb069230a0214f1d48bd4a7dace5be7ff5ce93fa3bcdf6f61261929a04e595'
   'SKIP'
   'SKIP')
 
@@ -30,7 +30,6 @@ sha256sums=('02d2dd2f43a281ecb846b8a8f6b515bd18134b2ef26abb311211391896afcc22'
 # https://wiki.archlinux.org/title/desktop_entries#gendesk
 
 prepare() {
-
   mkdir -p "${pkgname}-bin"
   bsdtar -xf "$zip" -C "${pkgname}-bin"
 
@@ -54,7 +53,6 @@ prepare() {
 }
 
 package() {
-
   install -dm755 "$pkgdir/usr/share"
   cp -a "${pkgname}-bin" "$pkgdir/usr/share/$pkgname"
   install -Dm644 "$mimes" "$pkgdir/usr/share/mime/packages/$mimes"
