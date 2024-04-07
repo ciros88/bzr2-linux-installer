@@ -37,7 +37,7 @@ main() {
   USER=${SUDO_USER}
   HOME=$(eval echo ~"$SUDO_USER")
 
-  bzr2_version_default="2.0.68"
+  bzr2_version_default="2.0.69"
   winearch_default="win64"
   force_reinstall_default="n"
   download_urls=(
