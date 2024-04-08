@@ -37,6 +37,7 @@ main() {
   USER=${SUDO_USER}
   HOME=$(eval echo ~"$SUDO_USER")
 
+  bzr2_last_version_url="https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/last_version"
   bzr2_version_default="2.0.69"
   winearch_default="win64"
   force_reinstall_default="n"
@@ -78,6 +79,7 @@ main() {
 
   has_matched_versioning_pattern_old=false
 
+  check_bzr2_last_version
   get_bzr2_version
 
   bzr2_version="${bzr2_version,,}"
@@ -145,7 +147,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 check_requirements() {
   local requirements=(
     realpath cat sed unzip update-desktop-database update-mime-database wine winetricks
-    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget sudo
+    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget sudo curl
   )
 
   for requirement in "${requirements[@]}"; do
@@ -173,6 +175,23 @@ show_message_and_read_input() {
     echo "$input"
   else
     echo "$2"
+  fi
+}
+
+check_bzr2_last_version() {
+  echo -en "\nchecking last BZR2 version online... "
+
+  set +e
+  local last_version
+  last_version=$(curl -fs "$bzr2_last_version_url")
+  local curl_result=$?
+  set -e
+
+  if [ $curl_result -eq 0 ]; then
+    echo "${bold}$last_version${bold_reset} found"
+    bzr2_version_default=$last_version
+  else
+    echo "FAIL"
   fi
 }
 
