@@ -19,10 +19,13 @@
 set -e
 bzr2="bzr-player"
 export WINEPREFIX="$HOME/.$bzr2"
+export WINEDEBUG=-all
 
 if [ ! -d "$HOME/.$bzr2" ]; then
   mkdir -p "$HOME/.$bzr2"
   #TODO
+
+  WINEARCH="win32" winetricks nocrashdialog autostart_winedbg=disabled
 fi
 
-WINEDEBUG=-all WINEARCH="win32" wine "/usr/share/$bzr2/BZRPlayer.exe" "$@" &
+WINEARCH="win32" wine "/usr/share/$bzr2/BZRPlayer.exe" "$@" &
