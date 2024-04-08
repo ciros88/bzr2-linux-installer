@@ -22,7 +22,7 @@ source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$mimes")
 noextract=($zip)
 sha256sums=('26eb069230a0214f1d48bd4a7dace5be7ff5ce93fa3bcdf6f61261929a04e595'
-  '504f4b096f3f51ab8bd118270f462affdf58d63847a7e56d6d1d26a6afbd33fc'
+  '40165379a2a54ca993dc0a75130876db15b2760b582c308b1afdc84f2749b0d8'
   'SKIP'
   'SKIP')
 

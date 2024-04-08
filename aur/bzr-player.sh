@@ -21,11 +21,17 @@ bzr2="bzr-player"
 export WINEPREFIX="$HOME/.$bzr2"
 export WINEDEBUG=-all
 
+if [ "$(uname -m)" == "x86_64" ]; then
+  export WINEARCH="win64"
+else
+  export WINEARCH="win32"
+fi
+
 if [ ! -d "$HOME/.$bzr2" ]; then
   mkdir -p "$HOME/.$bzr2"
   #TODO
 
-  WINEARCH="win32" winetricks nocrashdialog autostart_winedbg=disabled
+  winetricks nocrashdialog autostart_winedbg=disabled
 fi
 
-WINEARCH="win32" wine "/usr/share/$bzr2/BZRPlayer.exe" "$@" &
+wine "/usr/share/$bzr2/BZRPlayer.exe" "$@" &
