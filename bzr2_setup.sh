@@ -205,7 +205,7 @@ get_bzr2_version() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "select the BZR2 version to manage" ${bzr2_version_default})
+    input=$(show_message_and_read_input "select the BZR2 version to manage" "${bzr2_version_default}")
 
     if [[ "$input" =~ $versioning_pattern ]]; then
       break
