@@ -14,15 +14,15 @@ makedepends=('gendesk' 'libarchive')
 optdepends=("xorg-xrdb") #TODO
 options=(!strip)
 zip="BZR-Player-$pkgver.zip"
-installer="bzr2_installer.sh"
+setup="bzr2_setup.sh"
 mimes="x-bzr-player.xml"
 source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/aur/$pkgname.sh"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$installer"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/master/$mimes")
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/aur/$pkgname.sh"
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$setup"
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$mimes")
 noextract=($zip)
 sha256sums=('26eb069230a0214f1d48bd4a7dace5be7ff5ce93fa3bcdf6f61261929a04e595'
-  '3cc40abf9cb4b82aa6f900271d73a51540e272a3fe0ff6f001e6ed70520fd4da'
+  '504f4b096f3f51ab8bd118270f462affdf58d63847a7e56d6d1d26a6afbd33fc'
   'SKIP'
   'SKIP')
 
@@ -35,7 +35,7 @@ prepare() {
   mkdir -p "${pkgname}-bin"
   bsdtar -xf "$zip" -C "${pkgname}-bin"
 
-  mapfile -t mime_types_supported < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$installer" |
+  mapfile -t mime_types_supported < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$setup" |
     sed -e 's:mime_types_supported=(::g' -e 's:)::g' -e 's: :\n:g' | sed '/^[[:space:]]*$/d')
 
   for mime_type in "${mime_types_supported[@]}"; do

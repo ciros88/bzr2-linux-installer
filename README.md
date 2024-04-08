@@ -1,4 +1,5 @@
-### *BZR Player 2* linux installer
+### *BZR Player 2.x* for Linux
+**BZR Player 2.x** (**BZR2**) distribution-agnostic installer & aur PKGBUILD
 
 **BZR2** project links:
 

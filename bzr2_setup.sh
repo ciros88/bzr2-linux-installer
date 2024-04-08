@@ -1,26 +1,26 @@
 #!/bin/bash
 #
 # NAME
-#     bzr2_installer.sh - experimental distribution-agnostic BZR Player 2 linux installer
+#     bzr2_setup.sh - distribution-agnostic BZR Player 2.x (BZR2) linux installer
 #
 # SYNOPSIS
-#     ./bzr2_installer.sh
+#     ./bzr2_setup.sh
 #
 # DESCRIPTION
-#     download, install and configure BZR Player 2 (bzr2) using wine
+#     download, install and configure BZR2 using wine
 #
-#     handle multiple bzr2 versions (useful for testing purposes) in separated
+#     handle multiple BZR2 versions (useful for testing purposes) in separated
 #     wine prefixes as ~/.bzr-player-<version>-<wine arch>
 #
 #     provides a symbolic link to ~/.bzr-player as a stable entry point
-#     for accessing bzr2, in which the bzr-player.sh player runner script is generated
+#     for accessing BZR2, in which the bzr-player.sh player runner script is generated
 #
 #     also generates an XDG desktop entry for launching the player,
 #     eventually associated to supported MIME types
 #
 # NOTES
 #     - an internet connection is required, at least, in order to properly run winetricks
-#     - bzr2 versions older than 2.0.19.Alpha have not been tested
+#     - versions older than 2.0.19.Alpha have not been tested
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -42,7 +42,7 @@ main() {
   force_reinstall_default="n"
   download_urls=(
     "http://bzrplayer.blazer.nu/getFile.php?id="
-    "https://raw.githubusercontent.com/ciros88/bzr2-linux-installer/artifacts/artifacts/"
+    "https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/artifacts/"
   )
   download_tries=2
   bzr2_zip_dir_default="."
@@ -92,7 +92,7 @@ main() {
   if [ -f "$bzr2_exe" ]; then
     is_already_installed=true
 
-    echo -e "\nbzr2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation has been detected in \
+    echo -e "\nBZR2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation has been detected in \
 ${bold}$bzr2_wineprefix_dir${bold_reset}"
     get_force_reinstall
   else
@@ -139,7 +139,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
     setup_mime_types
   fi
 
-  echo -e "\nAll done, enjoy bzr2!"
+  echo -e "\nAll done, enjoy BZR2!"
 }
 
 check_requirements() {
@@ -185,7 +185,7 @@ get_bzr2_version() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "select the bzr2 version to manage" ${bzr2_version_default})
+    input=$(show_message_and_read_input "select the BZR2 version to manage" ${bzr2_version_default})
 
     if [[ "$input" =~ $versioning_pattern ]]; then
       break
@@ -233,7 +233,7 @@ wine environment (multilib pkgs could be required)" ${winearch_default})
 get_force_reinstall() {
   while :; do
     local input
-    input=$(show_message_and_read_input "force to reinstall bzr2 (fresh installation, does not keep settings) and the \
+    input=$(show_message_and_read_input "force to reinstall BZR2 (fresh installation, does not keep settings) and the \
 entire wine env, otherwise only the configuration will be performed" ${force_reinstall_default})
 
     case $input in
@@ -292,7 +292,7 @@ download_bzr2() {
     download_dir="$HOME"
   fi
 
-  download_dir_msg+="bzr2 will be downloaded to ${bold}$download_dir${bold_reset}"
+  download_dir_msg+="BZR2 will be downloaded to ${bold}$download_dir${bold_reset}"
   echo -e "\n$download_dir_msg"
 
   local is_download_url_fallback=false
@@ -334,7 +334,7 @@ download_bzr2() {
     is_download_url_fallback=true
   done
 
-  echo -e "\n\nunable to download bzr2"
+  echo -e "\n\nunable to download BZR2"
   is_zip_downloaded=false
   return
 }
@@ -342,7 +342,7 @@ download_bzr2() {
 get_bzr2_local_zip_dir() {
   while :; do
     local bzr2_zip_dir
-    bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with bzr2 release zip archive(s)" \
+    bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with BZR2 release zip archive(s)" \
       "$(realpath -s "$bzr2_zip_dir_default")")
 
     local bzr2_zips=()
@@ -422,7 +422,7 @@ get_size_of_longer_array_entry() {
 get_mime_types_association() {
   while :; do
     local input
-    input=$(show_message_and_read_input "associate bzr2 to all suppported MIME types (enter ${bold}list${bold_reset} \
+    input=$(show_message_and_read_input "associate BZR2 to all suppported MIME types (enter ${bold}list${bold_reset} \
 for listing all)" ${mime_types_association_default})
 
     case $input in
@@ -492,7 +492,7 @@ for listing all)" ${mime_types_association_default})
         mime_patterns+=("$mime_pattern")
       done
 
-      echo -e "\nbzr2 supports following MIME types:\n"
+      echo -e "\nBZR2 supports following MIME types:\n"
 
       for i in "${!mime_types_supported[@]}"; do
         printf "%${mime_length_max}s$delimiter%${mime_comment_length_max}s$delimiter%s\n" "${mime_types_supported[$i]}" \
@@ -558,17 +558,17 @@ setup_launcher_script() {
 #!/bin/bash
 #
 # NAME
-#     bzr-player.sh - BZR Player 2 linux runner
+#     bzr-player.sh - BZR Player 2.x (BZR2) linux runner
 #
 # SYNOPSIS
 #     ./bzr-player.sh [target(s)]
 #
 # EXAMPLES
 #     ./bzr-player.sh
-#         run bzr2
+#         run BZR2
 #
 #     ./bzr-player.sh file1 file2 dir1 dir2
-#         run bzr2 with selected files and/or directories as arguments
+#         run BZR2 with selected files and/or directories as arguments
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -585,7 +585,7 @@ EOF
 }
 
 setup_icon() {
-  echo -e "\ninstalling bzr2 icon for bzr2 launcher"
+  echo -e "\ninstalling BZR2 icon"
 
   for size in 16 22 24 32 48 64 128 256 512; do
     xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon"
@@ -600,7 +600,7 @@ setup_icon() {
 }
 
 setup_desktop_entry() {
-  echo -e "\ninstalling bzr2 desktop menu entry"
+  echo -e "\ninstalling BZR2 desktop menu entry"
   local desktop_entry_mime_types=""
 
   for mime_type in "${mime_types_supported[@]}"; do
@@ -630,7 +630,7 @@ EOF
 }
 
 setup_mime_types() {
-  echo -e "\nassociating bzr2 to all supported MIME types"
+  echo -e "\nassociating BZR2 to all supported MIME types"
 
   local mime_dir_system=/usr/share/mime
   local mime_packages_dir_system="$mime_dir_system/packages"

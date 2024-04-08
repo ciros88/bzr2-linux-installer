@@ -58,7 +58,7 @@ get_elements_of_array1_not_contained_in_array2() {
 
 mime_types_scan() {
   local mime_types_required=()
-  mapfile -t mime_types_required < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$bzr2_installer" |
+  mapfile -t mime_types_required < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$bzr2_setup" |
     sed -e 's:mime_types_supported=(::g' -e 's:)::g' -e 's: :\n:g' | sed '/^[[:space:]]*$/d')
   IFS=" " read -r -a mime_types_required <<<"$(tr ' ' '\n' <<<"${mime_types_required[@]}" | sort -u | tr '\n' ' ')"
   local mime_types_found=()
@@ -205,8 +205,8 @@ No sample file found"
 
 check_requirements
 
-bzr2_installer_filename="bzr2_installer.sh"
-bzr2_installer="$(dirname "$0")/../$bzr2_installer_filename"
+bzr2_setup_filename="bzr2_setup.sh"
+bzr2_setup="$(dirname "$0")/../$bzr2_setup_filename"
 bzr2_xml_filename="x-bzr-player.xml"
 bzr2_xml="$(dirname "$0")/../$bzr2_xml_filename"
 samples_path="$(dirname "$0")/samples"
@@ -226,7 +226,7 @@ echo -e "\nMIME types ${bold}scan${bold_reset} results:"
 echo -e "Required ${bold}${scan_results[0]}${bold_reset}, Found ${bold}${scan_results[1]}${bold_reset} \
 (Valid ${bold}${scan_results[2]}${bold_reset}, Invalid ${bold}${scan_results[3]}${bold_reset}), \
 Missing ${bold}${scan_results[4]}${bold_reset}"
-echo -e "\nTesting ${bold}xdg-mime query default${bold_reset} (MIME types association with bzr2 desktop entry)...\n"
+echo -e "\nTesting ${bold}xdg-mime query default${bold_reset} (MIME types association with BZR2 desktop entry)...\n"
 test_query_default_passed=0
 test_query_default_failed=0
 desktop_expected="bzr-player.desktop"

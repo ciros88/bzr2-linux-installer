@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # NAME
-#     test.sh - test bzr2 XDG desktop entry association or XDG MIME type association
+#     test.sh - test BZR2 XDG desktop entry association or XDG MIME type association
 #     against a target file or directory content
 #
 # SYNOPSIS
@@ -119,7 +119,7 @@ fi
 mime_provided="$2"
 
 if [ -z "$mime_provided" ]; then
-  echo -e "\nTesting ${bold}bzr2 desktop entry association with provided target${bold_reset}...\n"
+  echo -e "\nTesting ${bold}BZR2 desktop entry association with provided target${bold_reset}...\n"
 
   test_query_default_passed=0
   test_query_default_failed=0

@@ -1,17 +1,17 @@
 #!/bin/bash
 #
 # NAME
-#     bzr-player.sh - BZR Player 2 linux runner
+#     bzr-player.sh - BZR Player 2.x (BZR2) linux runner
 #
 # SYNOPSIS
 #     ./bzr-player.sh [target(s)]
 #
 # EXAMPLES
 #     ./bzr-player.sh
-#         run bzr2
+#         run BZR2
 #
 #     ./bzr-player.sh file1 file2 dir1 dir2
-#         run bzr2 with selected files and/or directories as arguments
+#         run BZR2 with selected files and/or directories as arguments
 #
 # AUTHOR
 #     Ciro Scognamiglio
