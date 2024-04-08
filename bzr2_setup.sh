@@ -39,7 +39,7 @@ main() {
 
   bzr2_last_version_url="https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/last_version"
   bzr2_version_default="2.0.69"
-  winearch_default="win64"
+  winearch_default="win32"
   force_reinstall_default="n"
   download_urls=(
     "http://bzrplayer.blazer.nu/getFile.php?id="
@@ -84,6 +84,7 @@ main() {
 
   bzr2_version="${bzr2_version,,}"
 
+  check_arch
   get_winearch
 
   bzr2_exe="$bzr2_dir/$bzr2_exe_filename"
@@ -147,7 +148,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 check_requirements() {
   local requirements=(
     realpath cat sed unzip update-desktop-database update-mime-database wine winetricks
-    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget sudo curl
+    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget sudo curl uname
   )
 
   for requirement in "${requirements[@]}"; do
@@ -219,6 +220,12 @@ get_bzr2_version() {
   done
 
   bzr2_version="$input"
+}
+
+check_arch() {
+  if [ "$(uname -m)" == "x86_64" ]; then
+    winearch_default="win64"
+  fi
 }
 
 get_winearch() {
