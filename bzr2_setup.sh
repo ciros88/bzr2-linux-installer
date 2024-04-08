@@ -587,7 +587,7 @@ EOF
 setup_icon() {
   echo -e "\ninstalling BZR2 icon"
 
-  for size in 16 22 24 32 48 64 128 256 512; do
+  for size in 16 24 32 48 64 128 256 512; do
     xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon"
   done
 
