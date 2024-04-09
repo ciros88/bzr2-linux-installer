@@ -17,8 +17,12 @@
 #     Ciro Scognamiglio
 
 set -e
+
 bzr2="bzr-player"
-export WINEPREFIX="$HOME/.$bzr2"
+bzr2_path="/usr/share/$bzr2"
+bzr2_exe="BZRPlayer.exe"
+
+export WINEPREFIX="$HOME/.$bzr2/wine"
 export WINEDEBUG=-all
 
 if [ "$(uname -m)" == "x86_64" ]; then
@@ -28,10 +32,18 @@ else
 fi
 
 if [ ! -d "$HOME/.$bzr2" ]; then
-  mkdir -p "$HOME/.$bzr2"
-  #TODO
 
+  #TODO avoid winetricks (also in bzr2_setup.sh) ?
   winetricks nocrashdialog autostart_winedbg=disabled
+
+  #mkdir -p "$WINEPREFIX"
+
+  #ln -s "$bzr2_path/$bzr2_exe" "$HOME/.$bzr2/$bzr2"
+  #mkdir -p "$HOME/.$bzr2/plugin"
+  #ln -s -T "$bzr2_path/plugin/config" "$HOME/.$bzr2/plugin/config"
+  #ln -s "$bzr2_path/settings.ini" "$HOME/.$bzr2"
+  #TODO link songlengths
 fi
 
-wine "/usr/share/$bzr2/BZRPlayer.exe" "$@" &
+#wine "$HOME/.$bzr2/$bzr2" "$@" &
+wine "$bzr2_path/$bzr2_exe" "$@" &
