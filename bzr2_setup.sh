@@ -640,14 +640,14 @@ Type=Application
 Name=$bzr2_name
 GenericName=Audio player
 Comment=Audio player supporting a wide types of multi-platform exotic file formats
-Icon=$bzr2_pkgname
 Exec=$bzr2_wineprefix_dir_unversioned/$bzr2_launcher_filename %U
+Icon=$bzr2_pkgname
+Terminal=false
+StartupNotify=false
 Categories=AudioVideo;Audio;Player;Music;
 MimeType=$desktop_entry_mime_types
-Terminal=false
 NoDisplay=false
-#Path=
-#StartupNotify=
+
 EOF
   )
 
