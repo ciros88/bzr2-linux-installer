@@ -1,5 +1,4 @@
 # Maintainer: Ciro Scognamiglio <ciro.scognamiglio88 (at) gmail.com>
-# Contributor: Ciro Scognamiglio <ciro.scognamiglio88 (at) gmail.com>
 
 pkgname='bzr-player'
 _pkgname='BZR Player'
@@ -11,7 +10,6 @@ url="http://bzrplayer.blazer.nu"
 license=('GPL3')
 depends=('wine' 'winetricks' 'hicolor-icon-theme')
 makedepends=('gendesk' 'libarchive')
-optdepends=("xorg-xrdb") #TODO
 options=(!strip)
 zip="BZR-Player-$pkgver.zip"
 setup="bzr2_setup.sh"
@@ -22,7 +20,7 @@ source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$mimes")
 noextract=($zip)
 sha256sums=('26eb069230a0214f1d48bd4a7dace5be7ff5ce93fa3bcdf6f61261929a04e595'
-  '40165379a2a54ca993dc0a75130876db15b2760b582c308b1afdc84f2749b0d8'
+  'b4cbb275873c83b9bf4172d1569aa39475e1176dcb85e14126217f2a803e2b88'
   'SKIP'
   'SKIP')
 
@@ -46,7 +44,7 @@ prepare() {
   gendesk -n -f --pkgname "$pkgname" --pkgdesc "$pkgdesc" \
     --name="$_pkgname" \
     --genericname='Audio player' \
-    --exec="\usr\bin\\$pkgname.sh %U" \
+    --exec="/usr/bin/$pkgname.sh %U" \
     --icon="$pkgname" \
     --categories='AudioVideo;Audio;Player;Music' \
     --mimetype="$desktop_entry_mime_types"
