@@ -607,8 +607,12 @@ setup_launcher_script() {
 #     Ciro Scognamiglio
 
 set -e
+
+export WINEDEBUG=-all
 export WINEPREFIX="$bzr2_wineprefix_dir_unversioned"
-WINEDEBUG=-all WINEARCH="$winearch" wine "$bzr2_exe_win"
+export WINEARCH="$winearch"
+
+wine "$bzr2_exe_win"
 EOF
   )
 

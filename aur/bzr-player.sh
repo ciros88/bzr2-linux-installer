@@ -22,8 +22,8 @@ bzr2="bzr-player"
 bzr2_path="/usr/share/$bzr2"
 bzr2_exe="BZRPlayer.exe"
 
-export WINEPREFIX="$HOME/.$bzr2/wine"
 export WINEDEBUG=-all
+export WINEPREFIX="$HOME/.$bzr2/wine"
 
 if [ "$(uname -m)" == "x86_64" ]; then
   export WINEARCH="win64"
