@@ -1,4 +1,5 @@
 # Maintainer: Ciro Scognamiglio <ciro.scognamiglio88 (at) gmail.com>
+# Contributor: Ciro Scognamiglio <ciro.scognamiglio88 (at) gmail.com>
 
 pkgname='bzr-player'
 _pkgname='BZR Player'
@@ -7,32 +8,30 @@ pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
 url="http://bzrplayer.blazer.nu"
-license=('GPL3')
+license=('custom')
 depends=('wine' 'hicolor-icon-theme')
 makedepends=('gendesk' 'libarchive')
 options=(!strip)
-zip="BZR-Player-$pkgver.zip"
-setup="bzr2_setup.sh"
-mimes="x-bzr-player.xml"
-source=("$zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
+_zip="BZR-Player-$pkgver._zip"
+_setup="bzr2_setup.sh"
+_mimes="x-bzr-player.xml"
+source=("$_zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/aur/$pkgname.sh"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$setup"
-  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$mimes")
-noextract=($zip)
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$_setup"
+  "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$_mimes")
+noextract=($_zip)
 sha256sums=('26eb069230a0214f1d48bd4a7dace5be7ff5ce93fa3bcdf6f61261929a04e595'
   'e9f443454c0c8771f6b297a5c44a08f039be894d9309b6e51ac125a4db373e1a'
   'SKIP'
   'SKIP')
 
-# https://wiki.archlinux.org/title/Creating_packages
-# https://wiki.archlinux.org/title/PKGBUILD
 # https://wiki.archlinux.org/title/Wine_package_guidelines
 
 prepare() {
   mkdir -p "${pkgname}-bin"
-  bsdtar -xf "$zip" -C "${pkgname}-bin"
+  bsdtar -xf "$_zip" -C "${pkgname}-bin"
 
-  mapfile -t mime_types_supported < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$setup" |
+  mapfile -t mime_types_supported < <(sed -n "\|mime_types_supported=(| , \|)|{p; \|)|q}" "$_setup" |
     sed -e 's:mime_types_supported=(::g' -e 's:)::g' -e 's: :\n:g' | sed '/^[[:space:]]*$/d')
 
   for mime_type in "${mime_types_supported[@]}"; do
@@ -55,11 +54,13 @@ package() {
   install -m755 "$pkgname.sh" "$pkgdir/usr/bin"
   install -dm755 "$pkgdir/usr/share"
   cp -a "${pkgname}-bin" "$pkgdir/usr/share/$pkgname"
-  install -Dm644 "$mimes" "$pkgdir/usr/share/mime/packages/$mimes"
+  install -Dm644 "$_mimes" "$pkgdir/usr/share/mime/packages/$_mimes"
   install -Dm644 "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
 
   for size in 16 24 32 48 64 128 256 512; do
     install -Dm644 "$pkgdir/usr/share/$pkgname/resources/icon.png" \
       "$pkgdir/usr/share/icons/hicolor/$size/apps/$pkgname.png"
   done
+
+  #install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
