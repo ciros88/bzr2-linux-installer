@@ -32,11 +32,13 @@ else
 fi
 
 if [ ! -d "$HOME/.$bzr2" ]; then
+  mkdir -p "$WINEPREFIX"
 
-  #TODO avoid winetricks (also in bzr2_setup.sh) ?
-  winetricks nocrashdialog autostart_winedbg=disabled
+  #winetricks nocrashdialog
+  wine reg add "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
 
-  #mkdir -p "$WINEPREFIX"
+  #winetricks autostart_winedbg=disabled (never worked in winetricks)
+  wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" /v Debugger /t REG_SZ /d "-" /f
 
   #ln -s "$bzr2_path/$bzr2_exe" "$HOME/.$bzr2/$bzr2"
   #mkdir -p "$HOME/.$bzr2/plugin"

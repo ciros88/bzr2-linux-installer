@@ -19,7 +19,6 @@
 #     eventually associated to supported MIME types
 #
 # NOTES
-#     - an internet connection is required, at least, in order to properly run winetricks
 #     - versions older than 2.0.19.Alpha have not been tested
 #
 # AUTHOR
@@ -147,8 +146,8 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 
 check_requirements() {
   local requirements=(
-    realpath cat sed unzip update-desktop-database update-mime-database wine winetricks
-    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb install mktemp wget sudo curl uname
+    realpath cat sed unzip update-desktop-database update-mime-database wine xdg-desktop-menu xdg-icon-resource
+    xdg-mime xrdb install mktemp wget sudo curl uname
   )
 
   for requirement in "${requirements[@]}"; do
@@ -537,8 +536,16 @@ for listing all)" ${mime_types_association_default})
 setup_bzr2() {
   sudo -u "$USER" mkdir -p "$bzr2_dir"
   sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" winetricks nocrashdialog \
-    autostart_winedbg=disabled
+
+  #winetricks nocrashdialog
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+    "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
+
+  #winetricks autostart_winedbg=disabled (never worked in winetricks)
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
+    "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" /v Debugger /t REG_SZ /d "-" /f
+
+  echo
 }
 
 setup_dpi() {
