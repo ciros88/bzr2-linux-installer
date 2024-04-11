@@ -57,9 +57,9 @@ package() {
   install -Dm644 "$_mimes" "$pkgdir/usr/share/mime/packages/$_mimes"
   install -Dm644 "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
 
-  for size in 16 24 32 48 64 128 256 512; do
+  for size in 16 32 48 64 128 256 512; do
     install -Dm644 "$pkgdir/usr/share/$pkgname/resources/icon.png" \
-      "$pkgdir/usr/share/icons/hicolor/$size/apps/$pkgname.png"
+      "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/$pkgname.png"
   done
 
   #install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
