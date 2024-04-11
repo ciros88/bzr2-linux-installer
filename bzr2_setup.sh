@@ -79,7 +79,7 @@ main() {
 
   has_matched_versioning_pattern_old=false
   bzr2_icon_filename="$bzr2_pkgname.png"
-  icon_sizes=(16 24 32 48 64 128 256 512)
+  icon_sizes=(16 32 48 64 128 256 512)
   icons_hicolor_path="/usr/share/icons/hicolor"
   mime_dir_system=/usr/share/mime
   mime_packages_dir_system="$mime_dir_system/packages"
@@ -664,7 +664,7 @@ setup_icon() {
     xdg-icon-resource install --noupdate --novendor --context apps --mode system --size "${size}" "$bzr2_icon"
   done
 
-  xdg-icon-resource forceupdate
+  xdg-icon-resource forceupdate --theme hicolor
 
   if type gtk-update-icon-cache &>/dev/null; then
     echo
@@ -769,7 +769,7 @@ remove() {
         xdg-icon-resource uninstall --noupdate --context apps --mode system --size "${size}" "$bzr2_icon_filename"
       done
 
-      xdg-icon-resource forceupdate
+      xdg-icon-resource forceupdate --theme hicolor
 
       if type gtk-update-icon-cache &>/dev/null; then
         echo
