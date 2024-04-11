@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # NAME
-#     bzr-player.sh - BZR Player 2.x (BZR2) linux runner
+#     bzr-player.sh - BZR Player 2.x (BZR2) launcher
 #
 # SYNOPSIS
 #     ./bzr-player.sh [target(s)]

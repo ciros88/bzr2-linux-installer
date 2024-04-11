@@ -7,15 +7,15 @@
 #     ./bzr2_setup.sh
 #
 # DESCRIPTION
-#     download, install and configure BZR2 using wine
+#     download, install and configure BZR2 using wine, also providing the way to remove it
 #
 #     handle multiple BZR2 versions (useful for testing purposes) in separated
 #     wine prefixes as ~/.bzr-player-<version>-<wine arch>
 #
 #     provides a symbolic link to ~/.bzr-player as a stable entry point
-#     for accessing BZR2, in which the bzr-player.sh player runner script is generated
+#     for accessing BZR2, in which the bzr-player.sh player launcher script is generated
 #
-#     also generates an XDG desktop entry for launching the player,
+#     also install icons and generates an XDG desktop entry for launching the player,
 #     eventually associated to supported MIME types
 #
 # NOTES
@@ -36,6 +36,7 @@ main() {
   USER=${SUDO_USER}
   HOME=$(eval echo ~"$SUDO_USER")
 
+  action_default="setup"
   bzr2_last_version_url="https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/last_version"
   bzr2_version_default="2.0.69"
   winearch_default="win32"
@@ -74,10 +75,26 @@ main() {
   bzr2_desktop_filename="$bzr2_pkgname.desktop"
 
   check_requirements
-  check_installation_files
+  check_setup_files
 
   has_matched_versioning_pattern_old=false
+  bzr2_icon_filename="$bzr2_pkgname.png"
+  icon_sizes=(16 24 32 48 64 128 256 512)
+  icons_hicolor_path="/usr/share/icons/hicolor"
+  mime_dir_system=/usr/share/mime
+  mime_packages_dir_system="$mime_dir_system/packages"
+  desktop_apps_dir_system="/usr/share/applications"
 
+  get_action
+
+  if [ "$action" == "setup" ]; then
+    setup
+  else
+    remove
+  fi
+}
+
+setup() {
   check_bzr2_last_version
   get_bzr2_version
 
@@ -89,7 +106,7 @@ main() {
   bzr2_exe="$bzr2_dir/$bzr2_exe_filename"
   bzr2_launcher="$bzr2_wineprefix_dir/$bzr2_launcher_filename"
   bzr2_desktop="$bzr2_wineprefix_dir/$bzr2_desktop_filename"
-  bzr2_icon="$bzr2_wineprefix_dir/$bzr2_pkgname.png"
+  bzr2_icon="$bzr2_wineprefix_dir/$bzr2_icon_filename"
 
   if [ -f "$bzr2_exe" ]; then
     is_already_installed=true
@@ -158,7 +175,7 @@ check_requirements() {
   done
 }
 
-check_installation_files() {
+check_setup_files() {
   local bzr2_xml_dir
   bzr2_xml_dir=$(realpath -s "$bzr2_xml_dir_default")
   bzr2_xml="$bzr2_xml_dir/$bzr2_xml_filename"
@@ -176,6 +193,25 @@ show_message_and_read_input() {
   else
     echo "$2"
   fi
+}
+
+get_action() {
+  while :; do
+    local input
+    input=$(show_message_and_read_input "do you want to ${bold}setup${bold_reset} or ${bold}remove${bold_reset} \
+BZR2?" ${action_default})
+
+    case $input in
+    setup | remove)
+      break
+      ;;
+    *)
+      echo -e "\n$invalid_value_inserted_message"
+      ;;
+    esac
+  done
+
+  action="$input"
 }
 
 check_bzr2_last_version() {
@@ -234,13 +270,13 @@ get_winearch() {
 wine environment (multilib pkgs could be required)" ${winearch_default})
 
     case $input in
-    "win32")
+    win32)
       bzr2_exe_win="c:\\Program Files\\$bzr2_name\\$bzr2_exe_filename"
       bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
       bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files/$bzr2_name"
       break
       ;;
-    "win64")
+    win64)
       bzr2_exe_win="c:\\Program Files (x86)\\$bzr2_name\\$bzr2_exe_filename"
       bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
       bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files (x86)/$bzr2_name"
@@ -552,11 +588,11 @@ setup_dpi() {
   local dpi_to_set
 
   case "$dpi" in
-  "default")
+  default)
     dpi_to_set=96
     ;;
 
-  "auto")
+  auto)
     dpi_to_set=$(sudo -u "$USER" xrdb -query | grep dpi | sed 's/.*://;s/^[[:space:]]*//')
     if [ -z "$dpi_to_set" ]; then
       echo -e "\nunable to retrieve the screen ${bold}DPI${bold_reset}: the ${bold}default${bold_reset} will be used \
@@ -591,7 +627,7 @@ setup_launcher_script() {
 #!/bin/bash
 #
 # NAME
-#     bzr-player.sh - BZR Player 2.x (BZR2) linux runner
+#     bzr-player.sh - BZR Player 2.x (BZR2) launcher
 #
 # SYNOPSIS
 #     ./bzr-player.sh [target(s)]
@@ -622,22 +658,22 @@ EOF
 }
 
 setup_icon() {
-  echo -e "\ninstalling BZR2 icon"
+  echo -e "\ninstalling BZR2 ${bold}icon${bold_reset}"
 
-  for size in 16 24 32 48 64 128 256 512; do
-    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size ${size} "$bzr2_icon"
+  for size in "${icon_sizes[@]}"; do
+    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size "${size}" "$bzr2_icon"
   done
 
   xdg-icon-resource forceupdate
 
   if type gtk-update-icon-cache &>/dev/null; then
     echo
-    gtk-update-icon-cache -t -f "/usr/share/icons/hicolor"
+    gtk-update-icon-cache -t -f "$icons_hicolor_path"
   fi
 }
 
 setup_desktop_entry() {
-  echo -e "\ninstalling BZR2 desktop menu entry"
+  echo -e "\ninstalling BZR2 ${bold}desktop menu entry${bold_reset}"
   local desktop_entry_mime_types=""
 
   for mime_type in "${mime_types_supported[@]}"; do
@@ -667,15 +703,116 @@ EOF
 }
 
 setup_mime_types() {
-  echo -e "\nassociating BZR2 to all supported MIME types"
-
-  local mime_dir_system=/usr/share/mime
-  local mime_packages_dir_system="$mime_dir_system/packages"
+  echo -e "\nassociating BZR2 to all supported ${bold}MIME types${bold_reset}"
 
   install -Dm644 "$bzr2_xml" "$mime_packages_dir_system"
   sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types_supported[@]}"
   update-mime-database "$mime_dir_system"
-  update-desktop-database "/usr/share/applications"
+  update-desktop-database "$desktop_apps_dir_system"
+}
+
+remove() {
+  local nothing_to_remove=true
+  local targets=()
+  mapfile -t targets < <(sudo -u "$USER" find "$HOME" -maxdepth 1 -type d,l -name ".$bzr2_pkgname*" -print | sort -V)
+
+  for target in "${targets[@]}"; do
+    if [ -d "$target" ]; then
+      while :; do
+        local input
+        input=$(show_message_and_read_input "remove ${bold}$target${bold_reset} ?" "y")
+
+        case $input in
+        y)
+          nothing_to_remove=false
+          sudo -u "$USER" rm -rf "$target"
+          break
+          ;;
+        n)
+          break
+          ;;
+        *)
+          echo -e "\n$invalid_value_inserted_message"
+          ;;
+        esac
+      done
+    fi
+  done
+
+  while :; do
+    local input
+    input=$(show_message_and_read_input "remove BZR2 ${bold}desktop menu entry${bold_reset} ?" "y")
+
+    case $input in
+    y)
+      nothing_to_remove=false
+      xdg-desktop-menu uninstall --mode system "$bzr2_desktop_filename"
+      break
+      ;;
+    n)
+      break
+      ;;
+    *)
+      echo -e "\n$invalid_value_inserted_message"
+      ;;
+    esac
+  done
+
+  while :; do
+    local input
+    input=$(show_message_and_read_input "remove BZR2 ${bold}icons${bold_reset} ?" "y")
+
+    case $input in
+    y)
+      nothing_to_remove=false
+      for size in "${icon_sizes[@]}"; do
+        xdg-icon-resource uninstall --noupdate --context apps --mode system --size "${size}" "$bzr2_icon_filename"
+      done
+
+      xdg-icon-resource forceupdate
+
+      if type gtk-update-icon-cache &>/dev/null; then
+        echo
+        gtk-update-icon-cache -t -f "$icons_hicolor_path"
+      fi
+
+      break
+      ;;
+    n)
+      break
+      ;;
+    *)
+      echo -e "\n$invalid_value_inserted_message"
+      ;;
+    esac
+  done
+
+  while :; do
+    local input
+    input=$(show_message_and_read_input "remove BZR2 ${bold}MIME types${bold_reset} ?" "y")
+
+    case $input in
+    y)
+      nothing_to_remove=false
+      rm -f "$mime_packages_dir_system/$bzr2_xml_filename"
+      update-mime-database "$mime_dir_system"
+      update-desktop-database "$desktop_apps_dir_system"
+      break
+      ;;
+    n)
+      break
+      ;;
+    *)
+      echo -e "\n$invalid_value_inserted_message"
+      ;;
+    esac
+  done
+
+  if [ "$nothing_to_remove" == true ]; then
+    echo -e "\nnothing to remove"
+  else
+    echo -e "\nAll done"
+  fi
 }
 
 main "$@" exit
