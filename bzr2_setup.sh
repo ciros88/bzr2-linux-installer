@@ -573,13 +573,14 @@ setup_bzr2() {
   sudo -u "$USER" mkdir -p "$bzr2_dir"
   sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
 
-  #winetricks nocrashdialog
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
-    "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
+  # winetricks nocrashdialog
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
+    wine reg add "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
 
-  #winetricks autostart_winedbg=disabled (never worked in winetricks)
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
-    "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" /v Debugger /t REG_SZ /d "-" /f
+  # winetricks autostart_winedbg=disabled (never worked in winetricks)
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
+    wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" \
+    /v Debugger /t REG_SZ /d "-" /f
 
   echo
 }
@@ -610,14 +611,14 @@ in wine"
 
   dpi_to_set='0x'$(printf '%x\n' "$dpi_to_set")
 
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
-    "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
+    wine reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
-    "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
+    wine reg add "HKEY_CURRENT_USER\Software\Wine\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 
-  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" wine reg add \
-    "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
+  sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
+    wine reg add "HKEY_CURRENT_CONFIG\Software\Fonts" /v LogPixels /t REG_DWORD /d "$dpi_to_set" /f
 }
 
 setup_launcher_script() {
@@ -647,6 +648,7 @@ set -e
 export WINEDEBUG=-all
 export WINEPREFIX="$bzr2_wineprefix_dir_unversioned"
 export WINEARCH="$winearch"
+export WINEDLLOVERRIDES="mscoree=" # disable mono
 
 wine "$bzr2_exe_win"
 EOF

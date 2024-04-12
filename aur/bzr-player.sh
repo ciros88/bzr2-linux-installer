@@ -24,6 +24,7 @@ bzr2_path_home="$HOME/.$bzr2"
 
 export WINEDEBUG=-all #TODO
 export WINEPREFIX="$bzr2_path_home/wine"
+export WINEDLLOVERRIDES="mscoree=" # disable mono
 
 if [ "$(uname -m)" == "x86_64" ]; then
   export WINEARCH="win64"
