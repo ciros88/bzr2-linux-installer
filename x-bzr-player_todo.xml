@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--TODO add: *.ptp to ProTrekkr (https://code.google.com/archive/p/protrekkr/wikis/compressed.wiki)-->
 <!--TODO currently unsupported: audio/ogg audio/x-opus+ogg audio/rmid-->
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
     <mime-type type="audio/rmid">
