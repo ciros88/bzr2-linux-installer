@@ -35,10 +35,10 @@ fi
 if [ ! -d "$bzr2_path_home" ]; then
   mkdir -p "$WINEPREFIX"
 
-  # winetricks nocrashdialog
+  # disable wine crash dialog (winetricks nocrashdialog)
   wine reg add "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
 
-  # winetricks autostart_winedbg=disabled (never worked in winetricks)
+  # disable wine debugger (similar to winetricks autostart_winedbg=disabled)
   wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" /v Debugger /t REG_SZ /d "-" /f
 
   # --- app data setup ---

@@ -573,11 +573,11 @@ setup_bzr2() {
   sudo -u "$USER" mkdir -p "$bzr2_dir"
   sudo -u "$USER" unzip -oq "$bzr2_zip" -d "$bzr2_dir"
 
-  # winetricks nocrashdialog
+  # disable wine crash dialog (winetricks nocrashdialog)
   sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
     wine reg add "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
 
-  # winetricks autostart_winedbg=disabled (never worked in winetricks)
+  # disable wine debugger (similar to winetricks autostart_winedbg=disabled)
   sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
     wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" \
     /v Debugger /t REG_SZ /d "-" /f
