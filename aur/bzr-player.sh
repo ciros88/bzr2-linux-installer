@@ -38,8 +38,8 @@ if [ ! -d "$bzr2_path_home" ]; then
   # disable wine crash dialog (winetricks nocrashdialog)
   wine reg add "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
 
-  # disable wine debugger (similar to winetricks autostart_winedbg=disabled)
-  wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" /v Debugger /t REG_SZ /d "-" /f
+  # disable wine debugger (winetricks autostart_winedbg=disabled)
+  wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" /v Debugger /t REG_SZ /d "false" /f
 
   # --- app data setup ---
   ln -s "$bzr2_path_sys/BZRPlayer.exe" "$bzr2_path_home/$bzr2"

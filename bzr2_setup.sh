@@ -577,10 +577,10 @@ setup_bzr2() {
   sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
     wine reg add "HKEY_CURRENT_USER\Software\Wine\WineDbg" /v ShowCrashDialog /t REG_DWORD /d 0 /f
 
-  # disable wine debugger (similar to winetricks autostart_winedbg=disabled)
+  # disable wine debugger (winetricks autostart_winedbg=disabled)
   sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
     wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" \
-    /v Debugger /t REG_SZ /d "-" /f
+    /v Debugger /t REG_SZ /d "false" /f
 
   echo
 }
