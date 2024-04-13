@@ -10,10 +10,7 @@
 #     download, install and configure BZR2 using wine, also providing the way to remove it
 #
 #     handle multiple BZR2 versions (useful for testing purposes) in separated
-#     wine prefixes as ~/.bzr-player-<version>-<wine arch>
-#
-#     provides a symbolic link to ~/.bzr-player as a stable entry point
-#     for accessing BZR2, in which the bzr-player.sh player launcher script is generated
+#     wine prefixes at ~/.bzr-player/<version>-<wine arch>
 #
 #     also install icons and generates an XDG desktop entry for launching the player,
 #     eventually associated to supported MIME types
@@ -78,7 +75,6 @@ main() {
   check_setup_files
 
   has_matched_versioning_pattern_old=false
-  bzr2_icon_filename="$bzr2_pkgname.png"
   icon_sizes=(16 32 48 64 128 256 512)
   icons_hicolor_path="/usr/share/icons/hicolor"
   mime_dir_system=/usr/share/mime
@@ -97,21 +93,18 @@ main() {
 setup() {
   check_bzr2_last_version
   get_bzr2_version
-
-  bzr2_version="${bzr2_version,,}"
-
   check_arch
   get_winearch
 
   bzr2_exe="$bzr2_dir/$bzr2_exe_filename"
   bzr2_launcher="$bzr2_wineprefix_dir/$bzr2_launcher_filename"
   bzr2_desktop="$bzr2_wineprefix_dir/$bzr2_desktop_filename"
-  bzr2_icon="$bzr2_wineprefix_dir/$bzr2_icon_filename"
+  bzr2_icon="$bzr2_dir/resources/icon.png"
 
   if [ -f "$bzr2_exe" ]; then
     is_already_installed=true
 
-    echo -e "\nBZR2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation has been detected in \
+    echo -e "\nBZR2 ${bold}$bzr2_version${bold_reset} ${bold}$winearch${bold_reset} installation detected at \
 ${bold}$bzr2_wineprefix_dir${bold_reset}"
     get_force_reinstall
   else
@@ -131,26 +124,17 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
   get_dpi
   get_mime_types_association
 
-  echo
-
   if ! $is_already_installed || [ "$force_reinstall" = y ]; then
     if [ "$force_reinstall" = y ]; then
       sudo -u "$USER" rm -rf "$bzr2_wineprefix_dir"
     fi
 
+    echo
     setup_bzr2
   fi
 
-  sudo -u "$USER" ln -sfn "$bzr2_wineprefix_dir" "$bzr2_wineprefix_dir_unversioned"
-
-  echo "symbolic link ${bold}$bzr2_wineprefix_dir_unversioned${bold_reset} -> \
-${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
-
   setup_dpi
   setup_launcher_script
-
-  sudo -u "$USER" ln -sfn "$bzr2_dir/resources/icon.png" "$bzr2_icon"
-
   setup_icon
   setup_desktop_entry
 
@@ -164,7 +148,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset} has been created"
 check_requirements() {
   local requirements=(
     realpath cat sed unzip update-desktop-database update-mime-database wine xdg-desktop-menu xdg-icon-resource
-    xdg-mime xrdb install mktemp wget sudo curl uname
+    xdg-mime xrdb install mktemp wget sudo curl uname sort
   )
 
   for requirement in "${requirements[@]}"; do
@@ -254,7 +238,7 @@ get_bzr2_version() {
     echo -e "\n$invalid_value_inserted_message"
   done
 
-  bzr2_version="$input"
+  bzr2_version="${input,,}"
 }
 
 check_arch() {
@@ -271,14 +255,12 @@ wine environment (multilib pkgs could be required)" ${winearch_default})
 
     case $input in
     win32)
-      bzr2_exe_win="c:\\Program Files\\$bzr2_name\\$bzr2_exe_filename"
-      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
+      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned/$bzr2_version-$input"
       bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files/$bzr2_name"
       break
       ;;
     win64)
-      bzr2_exe_win="c:\\Program Files (x86)\\$bzr2_name\\$bzr2_exe_filename"
-      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned-$bzr2_version-$input"
+      bzr2_wineprefix_dir="$bzr2_wineprefix_dir_unversioned/$bzr2_version-$input"
       bzr2_dir="$bzr2_wineprefix_dir/drive_c/Program Files (x86)/$bzr2_name"
       break
       ;;
@@ -414,7 +396,7 @@ get_bzr2_local_zip_dir() {
     for i in "${!bzr2_zips[@]}"; do
       if [ -f "${bzr2_zips[i]}" ]; then
         echo -en "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
-${bold}$bzr2_version${bold_reset} has been found... "
+${bold}$bzr2_version${bold_reset} found... "
 
         set +e
         bzr2_zip_sanity_check "${bzr2_zips[i]}"
@@ -581,8 +563,6 @@ setup_bzr2() {
   sudo -u "$USER" WINEDEBUG=-all WINEPREFIX="$bzr2_wineprefix_dir" WINEARCH="$winearch" WINEDLLOVERRIDES="mscoree=" \
     wine reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\AeDebug" \
     /v Debugger /t REG_SZ /d "false" /f
-
-  echo
 }
 
 setup_dpi() {
@@ -646,11 +626,11 @@ setup_launcher_script() {
 set -e
 
 export WINEDEBUG=warn
-export WINEPREFIX="$bzr2_wineprefix_dir_unversioned"
+export WINEPREFIX="$bzr2_wineprefix_dir"
 export WINEARCH="$winearch"
 export WINEDLLOVERRIDES="mscoree=" # disable mono
 
-wine "$bzr2_exe_win"
+wine "$bzr2_exe"
 EOF
   )
 
@@ -660,17 +640,21 @@ EOF
 }
 
 setup_icon() {
-  echo -e "\ninstalling BZR2 ${bold}icon${bold_reset}"
+  if [ -f "$bzr2_icon" ]; then
+    echo -e "\ninstalling BZR2 ${bold}icon${bold_reset}"
 
-  for size in "${icon_sizes[@]}"; do
-    xdg-icon-resource install --noupdate --novendor --context apps --mode system --size "${size}" "$bzr2_icon"
-  done
+    for size in "${icon_sizes[@]}"; do
+      xdg-icon-resource install --noupdate --novendor --context apps --mode system --size "${size}" "$bzr2_icon" "$bzr2_pkgname"
+    done
 
-  xdg-icon-resource forceupdate --theme hicolor
+    xdg-icon-resource forceupdate --theme hicolor
 
-  if type gtk-update-icon-cache &>/dev/null; then
-    echo
-    gtk-update-icon-cache -t -f "$icons_hicolor_path"
+    if type gtk-update-icon-cache &>/dev/null; then
+      echo
+      gtk-update-icon-cache -t -f "$icons_hicolor_path"
+    fi
+  else
+    echo -e "\nskipping BZR2 ${bold}icon${bold_reset} installation"
   fi
 }
 
@@ -689,7 +673,7 @@ Type=Application
 Name=$bzr2_name
 GenericName=Audio player
 Comment=Audio player supporting a wide types of multi-platform exotic file formats
-Exec=$bzr2_wineprefix_dir_unversioned/$bzr2_launcher_filename %U
+Exec=$bzr2_launcher %U
 Icon=$bzr2_pkgname
 Terminal=false
 StartupNotify=false
@@ -716,7 +700,7 @@ setup_mime_types() {
 remove() {
   local nothing_to_remove=true
   local targets=()
-  mapfile -t targets < <(sudo -u "$USER" find "$HOME" -maxdepth 1 -type d,l -name ".$bzr2_pkgname*" -print | sort -V)
+  mapfile -t targets < <(sudo -u "$USER" find "$HOME/.$bzr2_pkgname" -maxdepth 1 -type d,l -print | sort -V)
 
   for target in "${targets[@]}"; do
     if [ -d "$target" ]; then
@@ -768,7 +752,7 @@ remove() {
     y)
       nothing_to_remove=false
       for size in "${icon_sizes[@]}"; do
-        xdg-icon-resource uninstall --noupdate --context apps --mode system --size "${size}" "$bzr2_icon_filename"
+        xdg-icon-resource uninstall --noupdate --context apps --mode system --size "${size}" "$bzr2_pkgname"
       done
 
       xdg-icon-resource forceupdate --theme hicolor
