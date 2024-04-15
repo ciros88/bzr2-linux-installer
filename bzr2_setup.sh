@@ -16,7 +16,7 @@
 #     eventually associated to supported MIME types
 #
 # NOTES
-#     - versions older than 2.0.19.Alpha have not been tested
+#     - versions older than 2.0.19 are not supported
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -216,11 +216,11 @@ check_bzr2_last_version() {
 }
 
 get_bzr2_version() {
-  #matches 2. >=0 AND <=9 . >=61 AND <=999
-  local versioning_pattern="^[2]{1}(\.){1}+[0-9]+(\.){1}+(6[1-9]|[7-9][0-9]|[1-9][0-9]{2})$"
+  # matches 2. >=0 AND <=9 . >=61 AND <=999
+  local versioning_pattern="^2\.[0-9]\.{1}+(6[1-9]|[7-9][0-9]|[1-9][0-9]{2})$"
 
-  #matches 2.0. >=19 AND <=60 . Alpha OR alpha
-  local versioning_pattern_old="^[2]{1}(\.)[0]{1}+(\.){1}+(19|[2-5][0-9]|60){1}+(\.){1}+(Alpha|alpha)$"
+  # matches 2.0. >=19 AND <=60
+  local versioning_pattern_old="^2\.0\.{1}+(19|[2-5][0-9]|60){1}$"
 
   while :; do
     local input
@@ -294,7 +294,7 @@ entire wine env, otherwise only the configuration will be performed" ${force_rei
 
 get_bzr2_zip_filenames() {
   if $has_matched_versioning_pattern_old; then
-    bzr2_zip_filenames=("$(echo "$bzr2_version" | sed 's/.0.//;s/.Alpha//;s/.alpha//;s/$/.zip/')")
+    bzr2_zip_filenames=("$(echo "$bzr2_version" | sed 's/.0.//;s/$/.zip/')")
   else
     local bzr2_version_minor="${bzr2_version##*.}"
 
