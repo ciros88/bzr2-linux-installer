@@ -700,7 +700,8 @@ setup_mime_types() {
 remove() {
   local nothing_to_remove=true
   local targets=()
-  mapfile -t targets < <(sudo -u "$USER" find "$HOME/.$bzr2_pkgname" -maxdepth 1 -type d -print | sort -V)
+  mapfile -t targets \
+    < <(sudo -u "$USER" find "$HOME/.$bzr2_pkgname" -maxdepth 1 -path "$HOME/.$bzr2_pkgname*" -type d -print | sort -V)
 
   for target in "${targets[@]}"; do
     if [ -d "$target" ]; then
