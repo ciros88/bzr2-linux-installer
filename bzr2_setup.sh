@@ -142,13 +142,13 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
     setup_mime_types
   fi
 
-  echo -e "\nAll done, enjoy BZR2!"
+  echo -e "\nAll done, enjoy ${bold}BZR2 $bzr2_version $winearch${bold_reset}!"
 }
 
 check_requirements() {
   local requirements=(
-    realpath cat sed unzip update-desktop-database update-mime-database wine xdg-desktop-menu xdg-icon-resource
-    xdg-mime xrdb install mktemp wget sudo curl uname sort
+    cat curl install mktemp realpath sed sort sudo uname unzip update-desktop-database update-mime-database wget wine
+    xdg-desktop-menu xdg-icon-resource xdg-mime xrdb
   )
 
   for requirement in "${requirements[@]}"; do
@@ -199,7 +199,7 @@ BZR2?" ${action_default})
 }
 
 check_bzr2_last_version() {
-  echo -en "\nchecking last BZR2 version online... "
+  echo -en "\nchecking last version online... "
 
   set +e
   local last_version
@@ -224,7 +224,7 @@ get_bzr2_version() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "select the BZR2 version to manage" "${bzr2_version_default}")
+    input=$(show_message_and_read_input "select the version to manage" "${bzr2_version_default}")
 
     if [[ "$input" =~ $versioning_pattern ]]; then
       break
@@ -276,8 +276,8 @@ wine environment (multilib pkgs could be required)" ${winearch_default})
 get_force_reinstall() {
   while :; do
     local input
-    input=$(show_message_and_read_input "force to reinstall BZR2 (fresh installation, does not keep settings) and the \
-entire wine env, otherwise only the configuration will be performed" ${force_reinstall_default})
+    input=$(show_message_and_read_input "force reinstall (fresh installation, does not keep settings), \
+otherwise only the configuration will be performed" ${force_reinstall_default})
 
     case $input in
     y | n)
@@ -335,7 +335,7 @@ download_bzr2() {
     download_dir="$HOME"
   fi
 
-  download_dir_msg+="BZR2 will be downloaded to ${bold}$download_dir${bold_reset}"
+  download_dir_msg+="release archive will be downloaded to ${bold}$download_dir${bold_reset}"
   echo -e "\n$download_dir_msg"
 
   local is_download_url_fallback=false
@@ -377,7 +377,7 @@ download_bzr2() {
     is_download_url_fallback=true
   done
 
-  echo -e "\n\nunable to download BZR2"
+  echo -e "\n\nunable to download the release archive"
   is_zip_downloaded=false
   return
 }
@@ -385,7 +385,7 @@ download_bzr2() {
 get_bzr2_local_zip_dir() {
   while :; do
     local bzr2_zip_dir
-    bzr2_zip_dir=$(show_message_and_read_input "specify the folder path with BZR2 release zip archive(s)" \
+    bzr2_zip_dir=$(show_message_and_read_input "specify the release archive folder path" \
       "$(realpath -s "$bzr2_zip_dir_default")")
 
     local bzr2_zips=()
@@ -395,7 +395,7 @@ get_bzr2_local_zip_dir() {
 
     for i in "${!bzr2_zips[@]}"; do
       if [ -f "${bzr2_zips[i]}" ]; then
-        echo -en "\nrelease zip archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
+        echo -en "\nrelease archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
 ${bold}$bzr2_version${bold_reset} found... "
 
         set +e
@@ -465,7 +465,7 @@ get_size_of_longer_array_entry() {
 get_mime_types_association() {
   while :; do
     local input
-    input=$(show_message_and_read_input "associate BZR2 to all suppported MIME types (enter ${bold}list${bold_reset} \
+    input=$(show_message_and_read_input "associate to all suppported MIME types (enter ${bold}list${bold_reset} \
 for listing all)" ${mime_types_association_default})
 
     case $input in
@@ -641,7 +641,7 @@ EOF
 
 setup_icon() {
   if [ -f "$bzr2_icon" ]; then
-    echo -e "\ninstalling BZR2 ${bold}icon${bold_reset}"
+    echo -e "\ninstalling ${bold}icons${bold_reset}"
 
     for size in "${icon_sizes[@]}"; do
       xdg-icon-resource install --noupdate --novendor --context apps --mode system --size "${size}" "$bzr2_icon" "$bzr2_pkgname"
@@ -654,12 +654,12 @@ setup_icon() {
       gtk-update-icon-cache -t -f "$icons_hicolor_path"
     fi
   else
-    echo -e "\nskipping BZR2 ${bold}icon${bold_reset} installation"
+    echo -e "\nskipping ${bold}icons${bold_reset} installation"
   fi
 }
 
 setup_desktop_entry() {
-  echo -e "\ninstalling BZR2 ${bold}desktop menu entry${bold_reset}"
+  echo -e "\ninstalling ${bold}desktop menu entry${bold_reset}"
   local desktop_entry_mime_types=""
 
   for mime_type in "${mime_types_supported[@]}"; do
@@ -689,7 +689,7 @@ EOF
 }
 
 setup_mime_types() {
-  echo -e "\nassociating BZR2 to all supported ${bold}MIME types${bold_reset}"
+  echo -e "\nassociating to all supported ${bold}MIME types${bold_reset}"
 
   install -Dm644 "$bzr2_xml" "$mime_packages_dir_system"
   sudo -u "$USER" xdg-mime default $bzr2_desktop_filename "${mime_types_supported[@]}"
@@ -727,7 +727,7 @@ remove() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "remove BZR2 ${bold}desktop menu entry${bold_reset} ?" "y")
+    input=$(show_message_and_read_input "remove ${bold}desktop menu entry${bold_reset} ?" "y")
 
     case $input in
     y)
@@ -746,7 +746,7 @@ remove() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "remove BZR2 ${bold}icons${bold_reset} ?" "y")
+    input=$(show_message_and_read_input "remove ${bold}icons${bold_reset} ?" "y")
 
     case $input in
     y)
@@ -775,7 +775,7 @@ remove() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "remove BZR2 ${bold}MIME types${bold_reset} ?" "y")
+    input=$(show_message_and_read_input "remove associtated ${bold}MIME types${bold_reset} ?" "y")
 
     case $input in
     y)

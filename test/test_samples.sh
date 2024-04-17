@@ -24,7 +24,7 @@ bold_reset=$'\e[0m'
 
 check_requirements() {
   local requirements=(
-    sed xdg-mime dirname basename tr sort pwd
+    basename dirname sed sort tr xdg-mime
   )
 
   for requirement in "${requirements[@]}"; do
