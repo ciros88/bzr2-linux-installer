@@ -35,7 +35,7 @@ main() {
 
   action_default="setup"
   bzr2_last_version_url="https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/last_version"
-  bzr2_version_default="2.0.69"
+  bzr2_version_default="2.0.70"
   winearch_default="win32"
   force_reinstall_default="n"
   download_urls=(
