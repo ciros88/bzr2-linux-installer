@@ -699,32 +699,35 @@ setup_mime_types() {
 
 remove() {
   local nothing_to_remove=true
-  local targets=()
-  mapfile -t targets \
-    < <(sudo -u "$USER" find "$HOME/.$bzr2_pkgname" -maxdepth 1 -path "$HOME/.$bzr2_pkgname*" -type d -print | sort -V)
 
-  for target in "${targets[@]}"; do
-    if [ -d "$target" ]; then
-      while :; do
-        local input
-        input=$(show_message_and_read_input "remove ${bold}$target${bold_reset} ?" "y")
+  if [ -d "$bzr2_wineprefix_dir_unversioned" ]; then
+    local targets=()
+    mapfile -t targets \
+      < <(sudo -u "$USER" find "$bzr2_wineprefix_dir_unversioned" -maxdepth 1 -path "$bzr2_wineprefix_dir_unversioned*" -type d -print | sort -V)
 
-        case $input in
-        y)
-          nothing_to_remove=false
-          sudo -u "$USER" rm -rf "$target"
-          break
-          ;;
-        n)
-          break
-          ;;
-        *)
-          echo -e "\n$invalid_value_inserted_message"
-          ;;
-        esac
-      done
-    fi
-  done
+    for target in "${targets[@]}"; do
+      if [ -d "$target" ]; then
+        while :; do
+          local input
+          input=$(show_message_and_read_input "remove ${bold}$target${bold_reset} ?" "y")
+
+          case $input in
+          y)
+            nothing_to_remove=false
+            sudo -u "$USER" rm -rf "$target"
+            break
+            ;;
+          n)
+            break
+            ;;
+          *)
+            echo -e "\n$invalid_value_inserted_message"
+            ;;
+          esac
+        done
+      fi
+    done
+  fi
 
   while :; do
     local input
