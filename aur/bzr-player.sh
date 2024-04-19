@@ -43,7 +43,7 @@ if [ ! -d "$bzr2_path_home" ]; then
 
   # --- app data setup ---
   ln -s "$bzr2_path_sys/BZRPlayer.exe" "$bzr2_path_home/$bzr2"
-  ln -s "$bzr2_path_sys/BZRPlayerTest.exe" "$bzr2_path_home/$bzr2-test"
+  #ln -s "$bzr2_path_sys/BZRPlayerTest.exe" "$bzr2_path_home/$bzr2-test"
 
   readarray -d '' root_dlls < <(find "$bzr2_path_sys" -maxdepth 1 -type f -iname '*.dll' -print0)
 
@@ -51,30 +51,15 @@ if [ ! -d "$bzr2_path_home" ]; then
     ln -s "$root_dll" "$bzr2_path_home"
   done
 
-  ln -s "$bzr2_path_sys/gm.dls" "$bzr2_path_home"
+#  ln -s "$bzr2_path_sys/gm.dls" "$bzr2_path_home"
   ln -s "$bzr2_path_sys/imageformats" "$bzr2_path_home"
-  ln -s "$bzr2_path_sys/layouts" "$bzr2_path_home"
   ln -s "$bzr2_path_sys/platforms" "$bzr2_path_home"
-  mkdir -p "$bzr2_path_home/plugin"
-  ln -s "$bzr2_path_sys/plugin/orgsamples" "$bzr2_path_home/plugin"
-  ln -s "$bzr2_path_sys/plugin/SC68" "$bzr2_path_home/plugin"
-  ln -s "$bzr2_path_sys/plugin/sid" "$bzr2_path_home/plugin"
-  ln -s "$bzr2_path_sys/plugin/uade" "$bzr2_path_home/plugin"
-
-  readarray -d '' plugin_dlls < <(find "$bzr2_path_sys/plugin" -maxdepth 1 -type f -iname '*.dll' -print0)
-
-  for plugin_dll in "${plugin_dlls[@]}"; do
-    ln -s "$plugin_dll" "$bzr2_path_home/plugin"
-  done
-
+  ln -s "$bzr2_path_sys/plugin" "$bzr2_path_home"
   ln -s "$bzr2_path_sys/resources" "$bzr2_path_home"
   # END --- app data setup ---
 
   # --- user data setup ---
-  mkdir -p "$bzr2_path_home/playlists"
-  mkdir -p "$bzr2_path_home/plugin/config"
-  cp -a "$bzr2_path_sys/Songlengths.md5" "$bzr2_path_home"
-  cp -a "$bzr2_path_sys/Songlengths.txt" "$bzr2_path_home"
+  cp -a "$bzr2_path_sys/user" "$bzr2_path_home"
   # END --- user data setup ---
 fi
 

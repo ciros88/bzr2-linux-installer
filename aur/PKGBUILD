@@ -3,7 +3,7 @@
 
 pkgname='bzr-player'
 _pkgname='BZR Player'
-pkgver='2.0.69'
+pkgver='2.0.70'
 pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
@@ -12,16 +12,16 @@ license=('custom')
 depends=('wine' 'hicolor-icon-theme')
 makedepends=('gendesk' 'libarchive')
 options=(!strip)
-_zip="BZR-Player-$pkgver._zip"
+_zip="BZR-Player-$pkgver.zip"
 _setup="bzr2_setup.sh"
 _mimes="x-bzr-player.xml"
 source=("$_zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/aur/$pkgname.sh"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$_setup"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$_mimes")
-noextract=($_zip)
-sha256sums=('26eb069230a0214f1d48bd4a7dace5be7ff5ce93fa3bcdf6f61261929a04e595'
-  '912d1a319f1f00a1f55e7041b5fa8a162360ec5ac1ebde03a83e7a8b4e43553f'
+noextract=("$_zip")
+sha256sums=('50e704debb843e3a4bdd740a7593bde8ebcacb8f94e63dc386027195fbcc847f'
+  'e17117ad27368c2ef6277551697c7ebd0d795732cbf569ce851eb05feb32041c'
   'SKIP'
   'SKIP')
 
