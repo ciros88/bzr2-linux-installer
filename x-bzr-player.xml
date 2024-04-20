@@ -281,9 +281,20 @@
         <magic>
             <match type="string" value="PSF" offset="0"/>
         </magic>
+        <sub-class-of type="audio/x-psf"/>
         <glob-deleteall/>
+        <glob pattern="*.mini2sf"/>
+        <glob pattern="*.minidcsf"/>
+        <glob pattern="*.minidsf"/>
+        <glob pattern="*.minigsf"/>
+        <glob pattern="*.minincsf"/>
         <glob pattern="*.minipsf"/>
+        <glob pattern="*.minipsf1"/>
         <glob pattern="*.minipsf2"/>
+        <glob pattern="*.miniqsf"/>
+        <glob pattern="*.minisnsf"/>
+        <glob pattern="*.minissf"/>
+        <glob pattern="*.miniusf"/>
     </mime-type>
     <mime-type type="audio/x-ml">
         <comment>Musicline Editor</comment>
@@ -425,8 +436,18 @@
             <match type="string" value="PSF" offset="0"/>
         </magic>
         <glob-deleteall/>
+        <glob pattern="*.2sf"/>
+        <glob pattern="*.dcsf"/>
+        <glob pattern="*.dsf"/>
+        <glob pattern="*.gsf"/>
+        <glob pattern="*.ncsf"/>
         <glob pattern="*.psf"/>
+        <glob pattern="*.psf1"/>
         <glob pattern="*.psf2"/>
+        <glob pattern="*.qsf"/>
+        <glob pattern="*.snsf"/>
+        <glob pattern="*.ssf"/>
+        <glob pattern="*.usf"/>
     </mime-type>
     <mime-type type="audio/x-psm">
         <comment>psm file</comment>
