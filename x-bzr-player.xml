@@ -518,6 +518,31 @@
         <glob pattern="scn.*"/>
         <glob pattern="*.scn"/>
     </mime-type>
+    <mime-type type="audio/x-nds-strm">
+        <comment>Nitro Composer (Nintendo DS Sound Data Archive)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="STRM" offset="0">
+                <match type="big32" value="0xfffe0001" offset="4"/>
+                <match type="big32" value="0xfeff0001" offset="4"/>
+            </match>
+        </magic>
+        <sub-class-of type="audio/x-nds-sdat"/>
+        <glob-deleteall/>
+        <glob pattern="*.strm"/>
+    </mime-type>
+    <mime-type type="audio/x-nds-strm-ffta2">
+        <comment>Final Fantasy Tactics A2 RIFF (Nintendo DS)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="RIFF" offset="0">
+                <match type="string" value="IMA " offset="8"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.bin"/>
+        <glob pattern="*.strm"/>
+    </mime-type>
     <mime-type type="audio/x-sid2">
         <comment>sid2 file</comment>
         <icon name="audio-x-generic"/>
