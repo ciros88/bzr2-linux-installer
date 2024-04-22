@@ -35,11 +35,23 @@
         <glob pattern="*.cust"/>
     </mime-type>
     <mime-type type="audio/x-ddmf">
-        <comment>Delusion Digital Music Format (D-Lusion Music File)</comment>
+        <comment>Delusion Digital Music Format (X-Tracker)</comment>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="DDMF" offset="0">
                 <match type="string" value="CMSG" offset="66"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="dmf.*"/>
+        <glob pattern="*.dmf"/>
+    </mime-type>
+    <mime-type type="audio/x-dmf">
+        <comment>D-Lusion Music File (X-Tracker)</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="DMF" offset="0">
+                <match type="byte" value="0x0e" offset="3"/>
             </match>
         </magic>
         <glob-deleteall/>
