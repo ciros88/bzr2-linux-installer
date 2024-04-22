@@ -46,6 +46,16 @@
         <glob pattern="dmf.*"/>
         <glob pattern="*.dmf"/>
     </mime-type>
+    <mime-type type="audio/x-deflemask">
+        <comment>DefleMask module</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value=".DelekDefleMask." offset="0"/>
+            <match type="byte" value="0x78" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.dmf"/>
+    </mime-type>
     <mime-type type="audio/x-dmf">
         <comment>D-Lusion Music File (X-Tracker)</comment>
         <icon name="audio-x-generic"/>
