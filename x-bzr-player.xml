@@ -57,7 +57,7 @@
         <glob pattern="*.dmf"/>
     </mime-type>
     <mime-type type="audio/x-dmf">
-        <comment>D-Lusion Music File (X-Tracker)</comment>
+        <comment>D-Lusion Music File (X-Tracker32)</comment>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="DMF" offset="0">
