@@ -43,7 +43,6 @@
             </match>
         </magic>
         <glob-deleteall/>
-        <glob pattern="dmf.*"/>
         <glob pattern="*.dmf"/>
     </mime-type>
     <mime-type type="audio/x-deflemask">
@@ -56,8 +55,8 @@
         <glob-deleteall/>
         <glob pattern="*.dmf"/>
     </mime-type>
-    <mime-type type="audio/x-dmf">
-        <comment>D-Lusion Music File (X-Tracker32)</comment>
+    <mime-type type="audio/x-dsmi-amf-compact">
+        <comment>DSMI AMF Compact</comment>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="DMF" offset="0">
@@ -65,7 +64,6 @@
             </match>
         </magic>
         <glob-deleteall/>
-        <glob pattern="dmf.*"/>
         <glob pattern="*.dmf"/>
     </mime-type>
     <mime-type type="audio/x-dw">
