@@ -55,6 +55,18 @@
         <glob-deleteall/>
         <glob pattern="*.dmf"/>
     </mime-type>
+    <mime-type type="audio/x-dsmi-amf">
+        <comment>DSMI Advanced Music Format (ASYLUM Music Format)</comment>
+        <acronym>DSMI AMF</acronym>
+        <expanded-acronym>Digital Sound and Music Interface Advanced Music Format</expanded-acronym>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="AMF" offset="0"/>
+            <match type="string" value="ASYLUM Music Format" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.amf"/>
+    </mime-type>
     <mime-type type="audio/x-dsmi-amf-compact">
         <comment>DSMI AMF Compact</comment>
         <icon name="audio-x-generic"/>
