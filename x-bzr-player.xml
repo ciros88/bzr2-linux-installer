@@ -420,6 +420,7 @@
         <glob pattern="669.*"/>
         <glob pattern="m15.*"/>
         <glob pattern="med.*"/>
+        <glob pattern="mmd.*"/>
         <glob pattern="mmd0.*"/>
         <glob pattern="mmd1.*"/>
         <glob pattern="mmd2.*"/>
@@ -431,6 +432,7 @@
         <glob pattern="*.669"/>
         <glob pattern="*.m15"/>
         <glob pattern="*.med"/>
+        <glob pattern="*.mmd"/>
         <glob pattern="*.mmd0"/>
         <glob pattern="*.mmd1"/>
         <glob pattern="*.mmd2"/>
