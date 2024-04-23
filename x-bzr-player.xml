@@ -691,15 +691,21 @@
         <glob pattern="*.sun"/>
     </mime-type>
     <mime-type type="audio/x-sunvox">
-        <comment>sunvox file</comment>
+        <comment>SunVox audio</comment>
         <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="SVOX" offset="0"/>
+        </magic>
         <glob-deleteall/>
-        <glob pattern="sunvox.*"/>
         <glob pattern="*.sunvox"/>
     </mime-type>
     <mime-type type="audio/x-symmod">
-        <comment>symmod file</comment>
+        <comment>SymMOD audio</comment>
+        <expanded-acronym>Symphonie / Symphonie Pro MODule</expanded-acronym>
         <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="SymM" offset="0"/>
+        </magic>
         <glob-deleteall/>
         <glob pattern="symmod.*"/>
         <glob pattern="*.symmod"/>
