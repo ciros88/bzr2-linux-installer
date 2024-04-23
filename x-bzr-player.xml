@@ -169,6 +169,16 @@
         <glob pattern="fp.*"/>
         <glob pattern="*.fp"/>
     </mime-type>
+    <mime-type type="audio/x-furnace">
+        <comment>Furnace audio</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="-Furnace module-" offset="0"/>
+            <match type="byte" value="0x78" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.fur"/>
+    </mime-type>
     <mime-type type="audio/x-hip">
         <comment>Jochen Hippel audio</comment>
         <icon name="audio-x-generic"/>
