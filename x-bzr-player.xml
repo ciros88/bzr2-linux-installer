@@ -211,6 +211,7 @@
     </mime-type>
     <mime-type type="audio/x-hip-coso">
         <comment>Jochen Hippel CoSo audio</comment>
+        <expanded-acronym>Jochen Hippel COmpressed SOng</expanded-acronym>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="COSO" offset="0">
@@ -264,6 +265,7 @@
     </mime-type>
     <mime-type type="audio/x-hip-st-coso">
         <comment>Jochen Hippel ST CoSo audio</comment>
+        <expanded-acronym>Jochen Hippel ST COmpressed SOng</expanded-acronym>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="COSO" offset="0">
