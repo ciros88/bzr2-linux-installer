@@ -69,9 +69,9 @@
         <glob-deleteall/>
         <glob pattern="*.amf"/>
     </mime-type>
-    <mime-type type="audio/x-dsmi-amf-compact">
-        <comment>DSMI Advanced Music Format (Compact)</comment>
-        <expanded-acronym>Digital Sound and Music Interface Advanced Music Format (Compact)</expanded-acronym>
+    <mime-type type="audio/x-dsmi-amf-hack">
+        <comment>DSMI Advanced Music Format (hack)</comment>
+        <expanded-acronym>Digital Sound and Music Interface Advanced Music Format (hack)</expanded-acronym>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="DMF" offset="0">
@@ -223,7 +223,7 @@
         <glob pattern="*.hipc"/>
     </mime-type>
     <mime-type type="audio/x-hip-mcmd">
-        <comment>MCMD (unofficial Hippel clone) audio</comment>
+        <comment>MCMD (unofficial Jochen Hippel 7V clone) audio</comment>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="MCMD" offset="0"/>
