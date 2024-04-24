@@ -75,7 +75,6 @@ main() {
   check_requirements
   check_setup_files
 
-  has_matched_versioning_pattern_old=false
   icon_sizes=(16 32 48 64 128 256 512)
   icons_hicolor_path="/usr/share/icons/hicolor"
   mime_dir_system=/usr/share/mime
@@ -114,7 +113,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
   fi
 
   if ! $is_already_installed || [ "$force_reinstall" = y ]; then
-    get_bzr2_zip_filenames
+    bzr2_zip_filename="BZR-Player-$bzr2_version.zip"
     download_bzr2
 
     if [ "$is_zip_downloaded" == false ]; then
@@ -217,22 +216,14 @@ check_bzr2_last_version() {
 }
 
 get_bzr2_version() {
-  # matches 2. >=0 AND <=9 . >=61 AND <=999
-  local versioning_pattern="^2\.[0-9]\.{1}+(6[1-9]|[7-9][0-9]|[1-9][0-9]{2})$"
-
-  # matches 2.0. >=19 AND <=60
-  local versioning_pattern_old="^2\.0\.{1}+(19|[2-5][0-9]|60){1}$"
+  # matches 2. >=0 AND <=9 . >=19 AND <=999
+  local versioning_pattern="^2\.[0-9]\.{1}+(19|[2-9][0-9]|[1-9][0-9]{2})$"
 
   while :; do
     local input
     input=$(show_message_and_read_input "select the version to manage" "${bzr2_version_default}")
 
     if [[ "$input" =~ $versioning_pattern ]]; then
-      break
-    fi
-
-    if [[ "$input" =~ $versioning_pattern_old ]]; then
-      has_matched_versioning_pattern_old=true
       break
     fi
 
@@ -293,22 +284,6 @@ otherwise only the configuration will be performed" ${force_reinstall_default})
   force_reinstall="$input"
 }
 
-get_bzr2_zip_filenames() {
-  if $has_matched_versioning_pattern_old; then
-    bzr2_zip_filenames=("$(echo "$bzr2_version" | sed 's/.0.//;s/$/.zip/')")
-  else
-    local bzr2_version_minor="${bzr2_version##*.}"
-
-    if [ "$bzr2_version_minor" -lt 67 ]; then
-      bzr2_zip_filenames=("$bzr2_version.zip")
-    elif [ "$bzr2_version_minor" -eq 67 ]; then
-      bzr2_zip_filenames=("$bzr2_version.zip" "BZR-Player-$bzr2_version.zip")
-    else
-      bzr2_zip_filenames=("BZR-Player-$bzr2_version.zip")
-    fi
-  fi
-}
-
 bzr2_zip_sanity_check() {
   echo -n "sanity check... "
 
@@ -342,39 +317,36 @@ download_bzr2() {
   local is_download_url_fallback=false
 
   for download_url in "${download_urls[@]}"; do
-    for bzr2_zip_filename in "${bzr2_zip_filenames[@]}"; do
-      if [ $is_download_url_fallback = true ]; then
-        local query_string="$bzr2_zip_filename"
-      else
-        local query_string="$bzr2_version"
-      fi
+    if [ $is_download_url_fallback = true ]; then
+      local query_string="$bzr2_zip_filename"
+    else
+      local query_string="$bzr2_version"
+    fi
 
-      echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
+    echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
 
+    set +e
+    wget -q --tries=$download_tries -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
+      "$download_url$query_string"
+
+    local wget_result=$?
+    set -e
+
+    bzr2_zip="$download_dir/$bzr2_zip_filename"
+
+    if [ $wget_result -eq 0 ] && unzip -tq "$bzr2_zip" >/dev/null 2>&1; then
       set +e
-      wget -q --tries=$download_tries -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
-        "$download_url$query_string"
-
-      local wget_result=$?
+      bzr2_zip_sanity_check "$bzr2_zip"
+      local is_zip_sane=$?
       set -e
 
-      bzr2_zip="$download_dir/$bzr2_zip_filename"
-
-      if [ $wget_result -eq 0 ] && unzip -tq "$bzr2_zip" >/dev/null 2>&1; then
-        set +e
-        bzr2_zip_sanity_check "$bzr2_zip"
-        local is_zip_sane=$?
-        set -e
-
-        if [ $is_zip_sane -eq 0 ]; then
-          is_zip_downloaded=true
-          return
-        fi
-      else
-        echo -n "FAIL"
+      if [ $is_zip_sane -eq 0 ]; then
+        is_zip_downloaded=true
+        return
       fi
-    done
-
+    else
+      echo -n "FAIL"
+    fi
     is_download_url_fallback=true
   done
 
@@ -389,40 +361,23 @@ get_bzr2_local_zip_dir() {
     bzr2_zip_dir=$(show_message_and_read_input "specify the release archive folder path" \
       "$(realpath -s "$bzr2_zip_dir_default")")
 
-    local bzr2_zips=()
-    for bzr2_zip_filename in "${bzr2_zip_filenames[@]}"; do
-      bzr2_zips+=("$bzr2_zip_dir/$bzr2_zip_filename")
-    done
+    bzr2_zip="$bzr2_zip_dir/$bzr2_zip_filename"
 
-    for i in "${!bzr2_zips[@]}"; do
-      if [ -f "${bzr2_zips[i]}" ]; then
-        echo -en "\nrelease archive ${bold}${bzr2_zips[i]}${bold_reset} for version \
+    if [ -f "$bzr2_zip" ]; then
+      echo -en "\nrelease archive ${bold}$bzr2_zip${bold_reset} for version \
 ${bold}$bzr2_version${bold_reset} found... "
 
-        set +e
-        bzr2_zip_sanity_check "${bzr2_zips[i]}"
-        local is_zip_sane=$?
-        set -e
+      set +e
+      bzr2_zip_sanity_check "$bzr2_zip"
+      local is_zip_sane=$?
+      set -e
 
-        if [ "$is_zip_sane" -eq 0 ]; then
-          bzr2_zip="${bzr2_zips[i]}"
-          break 2
-        fi
+      if [ "$is_zip_sane" -eq 0 ]; then
+        break
       fi
-    done
-
-    if [ ${#bzr2_zips[@]} -gt 1 ]; then
-      echo -e "\nnone of these files are found or valid:"
-
-      for bzr2_zip in "${bzr2_zips[@]}"; do
-        echo "${bold}${bzr2_zip}${bold_reset}"
-      done
-
-      echo -e "$invalid_value_inserted_message"
-    else
-      echo -e "\nvalid ${bold}${bzr2_zips[0]}${bold_reset} file not found... $invalid_value_inserted_message"
     fi
 
+    echo -e "\nvalid ${bold}$bzr2_zip${bold_reset} file not found... $invalid_value_inserted_message"
   done
 }
 
