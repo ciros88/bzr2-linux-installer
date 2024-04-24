@@ -609,9 +609,8 @@
         <glob pattern="*.sid2"/>
     </mime-type>
     <mime-type type="audio/x-sndh">
-        <comment>Atari ST audio</comment>
+        <comment>Atari SoundHeader audio</comment>
         <acronym>SNDH</acronym>
-        <expanded-acronym>SouND Header</expanded-acronym>
         <icon name="audio-x-generic"/>
         <magic priority="60">
             <match type="string" value="Ice!" offset="0"/>
@@ -713,7 +712,7 @@
     </mime-type>
     <mime-type type="audio/x-symmod">
         <comment>SymMOD audio</comment>
-        <expanded-acronym>Symphonie / Symphonie Pro MODule</expanded-acronym>
+        <expanded-acronym>Symphonie / Symphonie Pro Module</expanded-acronym>
         <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="SymM" offset="0"/>
