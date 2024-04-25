@@ -49,7 +49,7 @@ main() {
   mime_types_association_default="y"
   mime_types_supported=(
     application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/vnd.wave audio/x-ahx audio/x-aon
-    audio/x-cust audio/x-ddmf audio/x-deflemask audio/x-dsmi-amf audio/x-dsmi-amf-hack audio/x-dw audio/x-dz
+    audio/x-amf audio/x-cust audio/x-ddmf audio/x-deflemask audio/x-dsmi-amf audio/x-dsmi-amf-hack audio/x-dw audio/x-dz
     audio/x-fc audio/x-fc-bsi audio/x-flac+ogg audio/x-fp audio/x-furnace audio/x-hip audio/x-hip-7v audio/x-hip-coso
     audio/x-hip-mcmd audio/x-hip-st audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-minipsf
     audio/x-ml audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl audio/x-mptm audio/x-nds-strm audio/x-nds-strm-ffta2
