@@ -199,7 +199,9 @@
         </magic>
         <glob-deleteall/>
         <glob pattern="hip.*"/>
+        <glob pattern="hp.*"/>
         <glob pattern="*.hip"/>
+        <glob pattern="*.hp"/>
     </mime-type>
     <mime-type type="audio/x-hip-7v">
         <comment>Jochen Hippel 7V audio</comment>
