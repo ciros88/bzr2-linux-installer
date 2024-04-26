@@ -274,6 +274,14 @@
         <glob pattern="sog.*"/>
         <glob pattern="*.sog"/>
     </mime-type>
+    <mime-type type="audio/x-hip-st-note">
+        <comment>Jochen Hippel ST Note audio</comment>
+        <icon name="audio-x-generic"/>
+        <sub-class-of type="audio/x-hip"/>
+        <glob-deleteall/>
+        <glob pattern="hst.*"/>
+        <glob pattern="*.hst"/>
+    </mime-type>
     <mime-type type="audio/x-hip-st-coso">
         <comment>Jochen Hippel ST CoSo audio</comment>
         <expanded-acronym>Jochen Hippel ST COmpressed SOng</expanded-acronym>
