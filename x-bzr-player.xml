@@ -726,7 +726,9 @@
         <comment>SunVox audio</comment>
         <icon name="audio-x-generic"/>
         <magic>
-            <match type="string" value="SVOX" offset="0"/>
+            <match type="string" value="SVOX" offset="0">
+                <match type="big32" value="0x00000000" offset="4"/>
+            </match>
         </magic>
         <glob-deleteall/>
         <glob pattern="*.sunvox"/>
