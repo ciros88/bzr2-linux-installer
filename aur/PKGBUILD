@@ -8,7 +8,7 @@ pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
 url="http://bzrplayer.blazer.nu"
-license=('custom')
+license=('GPL3')
 depends=('wine' 'hicolor-icon-theme')
 makedepends=('gendesk' 'libarchive')
 options=(!strip)
@@ -60,5 +60,5 @@ package() {
       "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/$pkgname.png"
   done
 
-  #install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
