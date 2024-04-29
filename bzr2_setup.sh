@@ -34,11 +34,11 @@ main() {
   HOME=$(eval echo ~"$SUDO_USER")
 
   action_default="setup"
-  bzr2_last_version_url="https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/last_version"
   bzr2_version_default="2.0.70"
   winearch_default="win32"
   force_reinstall_default="n"
-  download_urls=(
+  url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"
+  urls_download=(
     "http://bzrplayer.blazer.nu/getFile.php?id="
     "https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/artifacts/"
   )
@@ -203,7 +203,7 @@ check_bzr2_last_version() {
 
   set +e
   local last_version
-  last_version=$(curl -fs "$bzr2_last_version_url")
+  last_version=$(curl -fs "$url_latest_version")
   local curl_result=$?
   set -e
 
@@ -316,18 +316,18 @@ download_bzr2() {
 
   local is_download_url_fallback=false
 
-  for download_url in "${download_urls[@]}"; do
+  for url_download in "${urls_download[@]}"; do
     if [ $is_download_url_fallback = true ]; then
       local query_string="$bzr2_zip_filename"
     else
       local query_string="$bzr2_version"
     fi
 
-    echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $download_url$query_string... "
+    echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $url_download$query_string... "
 
     set +e
     wget -q --tries=$download_tries -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
-      "$download_url$query_string"
+      "$url_download$query_string"
 
     local wget_result=$?
     set -e
