@@ -91,7 +91,7 @@ main() {
 }
 
 setup() {
-  check_bzr2_last_version
+  check_bzr2_latest_version
   get_bzr2_version
   check_arch
   get_winearch
@@ -198,18 +198,18 @@ BZR2?" ${action_default})
   action="$input"
 }
 
-check_bzr2_last_version() {
-  echo -en "\nchecking last version online... "
+check_bzr2_latest_version() {
+  echo -en "\nchecking latest version online... "
 
   set +e
-  local last_version
-  last_version=$(curl -fs "$url_latest_version")
+  local latest_version
+  latest_version=$(curl -fs "$url_latest_version")
   local curl_result=$?
   set -e
 
   if [ $curl_result -eq 0 ]; then
-    echo "${bold}$last_version${bold_reset} found"
-    bzr2_version_default=$last_version
+    echo "${bold}$latest_version${bold_reset} found"
+    bzr2_version_default=$latest_version
   else
     echo "FAIL"
   fi
