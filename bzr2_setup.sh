@@ -147,7 +147,7 @@ ${bold}$bzr2_wineprefix_dir${bold_reset}"
 
 check_requirements() {
   local requirements=(
-    cat curl install mktemp realpath sed sort sudo uname unzip update-desktop-database update-mime-database wget wine
+    cat install mktemp realpath sed sort sudo uname unzip update-desktop-database update-mime-database wget wine
     xdg-desktop-menu xdg-icon-resource xdg-mime xrdb
   )
 
@@ -203,11 +203,11 @@ check_bzr2_latest_version() {
 
   set +e
   local latest_version
-  latest_version=$(curl -fs "$url_latest_version")
-  local curl_result=$?
+  latest_version=$(wget -qO- "$url_latest_version")
+  local wget_result=$?
   set -e
 
-  if [ $curl_result -eq 0 ]; then
+  if [ $wget_result -eq 0 ]; then
     echo "${bold}$latest_version${bold_reset} found"
     bzr2_version_default=$latest_version
   else
