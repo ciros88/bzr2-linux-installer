@@ -198,6 +198,16 @@ BZR2?" ${action_default})
   action="$input"
 }
 
+validate_version() {
+  # matches 2. >=0 AND <=9 . >=19 AND <=999
+  local versioning_pattern="^2\.[0-9]\.{1}+(19|[2-9][0-9]|[1-9][0-9]{2})$"
+
+  if [[ "$1" =~ $versioning_pattern ]]; then
+    return 0
+  fi
+  return 1
+}
+
 check_bzr2_latest_version() {
   echo -en "\nchecking latest version online... "
 
@@ -207,7 +217,7 @@ check_bzr2_latest_version() {
   local wget_result=$?
   set -e
 
-  if [ $wget_result -eq 0 ]; then
+  if [ $wget_result -eq 0 ] && validate_version "$latest_version"; then
     echo "${bold}$latest_version${bold_reset} found"
     bzr2_version_default=$latest_version
   else
@@ -216,14 +226,12 @@ check_bzr2_latest_version() {
 }
 
 get_bzr2_version() {
-  # matches 2. >=0 AND <=9 . >=19 AND <=999
-  local versioning_pattern="^2\.[0-9]\.{1}+(19|[2-9][0-9]|[1-9][0-9]{2})$"
 
   while :; do
     local input
     input=$(show_message_and_read_input "select the version to manage" "${bzr2_version_default}")
 
-    if [[ "$input" =~ $versioning_pattern ]]; then
+    if validate_version "$input"; then
       break
     fi
 
