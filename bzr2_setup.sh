@@ -53,10 +53,10 @@ main() {
     audio/x-fc audio/x-fc-bsi audio/x-flac+ogg audio/x-fp audio/x-furnace audio/x-hip audio/x-hip-7v audio/x-hip-coso
     audio/x-hip-mcmd audio/x-hip-st audio/x-hip-st-coso audio/x-it audio/x-lds audio/x-m2 audio/x-mdx audio/x-minipsf
     audio/x-ml audio/x-mmdc audio/x-mo3 audio/x-mod audio/x-mpegurl audio/x-mptm audio/x-nds-strm audio/x-nds-strm-ffta2
-    audio/x-ntk audio/x-okt audio/x-prun audio/x-psf audio/x-psm audio/x-pt3 audio/x-ptk audio/x-s3m audio/x-sc2
-    audio/x-sc68 audio/x-scl audio/x-scn audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl audio/x-stk
-    audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-tfmx-st audio/x-umx audio/x-v2m
-    audio/x-vgm audio/x-vorbis+ogg audio/x-xm
+    audio/x-np audio/x-ntk audio/x-okt audio/x-prun audio/x-psf audio/x-psm audio/x-pt3 audio/x-ptk audio/x-s3m
+    audio/x-sc2 audio/x-sc68 audio/x-scl audio/x-scn audio/x-sid2 audio/x-sndh audio/x-soundmon audio/x-spc audio/x-spl
+    audio/x-stk audio/x-stm audio/x-sun audio/x-sunvox audio/x-symmod audio/x-tfmx audio/x-tfmx-st audio/x-umx
+    audio/x-v2m audio/x-vgm audio/x-vorbis+ogg audio/x-xm
   )
 
   bold=$'\e[1m'

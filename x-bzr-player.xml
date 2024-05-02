@@ -505,6 +505,25 @@
         <glob pattern="*.bin"/>
         <glob pattern="*.strm"/>
     </mime-type>
+    <mime-type type="audio/x-np">
+        <x-npcomment>NoisePacker audio</x-npcomment>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="noisepacker1.*"/>
+        <glob pattern="noisepacker2.*"/>
+        <glob pattern="noisepacker3.*"/>
+        <glob pattern="np.*"/>
+        <glob pattern="np1.*"/>
+        <glob pattern="np2.*"/>
+        <glob pattern="np3.*"/>
+        <glob pattern="*.noisepacker1"/>
+        <glob pattern="*.noisepacker2"/>
+        <glob pattern="*.noisepacker3"/>
+        <glob pattern="*.np"/>
+        <glob pattern="*.np1"/>
+        <glob pattern="*.np2"/>
+        <glob pattern="*.np3"/>
+    </mime-type>
     <mime-type type="audio/x-ntk">
         <comment>NoiseTrekker audio</comment>
         <icon name="audio-x-generic"/>
