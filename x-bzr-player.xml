@@ -301,6 +301,9 @@
         <comment>IMPlay Song Format</comment>
         <acronym>IMS</acronym>
         <icon name="audio-x-generic"/>
+        <magic>
+            <match type="big16" value="0x0100" offset="0"/>
+        </magic>
         <glob-deleteall/>
         <glob pattern="*.ims"/>
     </mime-type>
