@@ -193,15 +193,25 @@
         <icon name="audio-x-generic"/>
         <magic>
             <match type="byte" value="0x60" offset="0">
-                <match type="byte" value="0x60" offset="2"/>
-                <match type="byte" value="0x00" offset="2"/>
+                <match type="big16" value="0x0000" offset="1">
+                    <match type="big16" value="0x6000" offset="4">
+                        <match type="big32" value="0x48e7fffe" offset="8"/>
+                    </match>
+                </match>
+                <match type="byte" value="0x60" offset="2">
+                    <match type="big32" value="0x48e78080" offset="4"/>
+                    <match type="big32" value="0x48e7fffe" offset="4"/>
+                    <match type="big16" value="0x41fa" offset="4"/>
+                </match>
             </match>
         </magic>
         <glob-deleteall/>
         <glob pattern="hip.*"/>
         <glob pattern="hp.*"/>
+        <glob pattern="sog.*"/>
         <glob pattern="*.hip"/>
         <glob pattern="*.hp"/>
+        <glob pattern="*.sog"/>
     </mime-type>
     <mime-type type="audio/x-hip-7v">
         <comment>Jochen Hippel 7V audio</comment>
@@ -249,52 +259,50 @@
     <mime-type type="audio/x-hip-st">
         <comment>Jochen Hippel ST audio</comment>
         <icon name="audio-x-generic"/>
-        <magic>
+        <magic priority="60">
             <match type="string" value="MMME" offset="0"/>
             <match type="string" value="TFMX" offset="0"/>
-            <match type="byte" value="0x60" offset="0">
-                <match type="byte" value="0x60" offset="2">
-                    <match type="big16" value="0x4e78" offset="4"/>
-                    <match type="big16" value="0x41fa" offset="4"/>
-                </match>
-                <match type="byte" value="0x00" offset="1">
-                    <match type="big16" value="0x6000" offset="4">
-                        <match type="big16" value="0x48e7" offset="8"/>
-                        <match type="big16" value="0x6000" offset="8">
-                            <match type="big16" value="0x6000" offset="12">
-                                <match type="big16" value="0x48e7" offset="16"/>
-                            </match>
-                        </match>
+            <match type="big16" value="0x6000" offset="0">
+                <match type="big16" value="0x6000" offset="4">
+                    <match type="big16" value="0x6000" offset="8">
+                        <match type="big32" value="0x48e7fffe" offset="12"/>
+                        <match type="big32" value="0x48e7fffe" offset="34"/>
                     </match>
                 </match>
             </match>
         </magic>
         <sub-class-of type="audio/x-hip"/>
         <glob-deleteall/>
-        <glob pattern="sog.*"/>
-        <glob pattern="*.sog"/>
-    </mime-type>
-    <mime-type type="audio/x-hip-st-note">
-        <comment>Jochen Hippel ST Note audio</comment>
-        <icon name="audio-x-generic"/>
-        <sub-class-of type="audio/x-hip"/>
-        <glob-deleteall/>
         <glob pattern="hst.*"/>
+        <glob pattern="sog.*"/>
         <glob pattern="*.hst"/>
+        <glob pattern="*.sog"/>
     </mime-type>
     <mime-type type="audio/x-hip-st-coso">
         <comment>Jochen Hippel ST CoSo audio</comment>
         <expanded-acronym>Jochen Hippel ST COmpressed SOng</expanded-acronym>
         <icon name="audio-x-generic"/>
-        <magic>
+        <magic priority="70">
             <match type="string" value="COSO" offset="0">
                 <match type="string" value="TFMX" offset="32"/>
                 <match type="string" value="MMME" offset="32"/>
             </match>
+            <match type="big16" value="0x6000" offset="0">
+                <match type="big16" value="0x6000" offset="4">
+                    <match type="big16" value="0x6000" offset="8">
+                        <match type="big32" value="0x48e7fffe" offset="12:102">
+                            <match type="string" value="COSO" offset="2056:4014"/>
+                        </match>
+                        <match type="string" value="MMME" offset="158"/>
+                    </match>
+                </match>
+            </match>
         </magic>
         <sub-class-of type="audio/x-hip"/>
         <glob-deleteall/>
+        <glob pattern="hst.*"/>
         <glob pattern="soc.*"/>
+        <glob pattern="*.hst"/>
         <glob pattern="*.soc"/>
     </mime-type>
     <mime-type type="audio/x-implay">
