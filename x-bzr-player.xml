@@ -315,6 +315,14 @@
         <glob-deleteall/>
         <glob pattern="*.ims"/>
     </mime-type>
+    <mime-type type="audio/x-ims">
+        <comment>Images Music System</comment>
+        <acronym>IMS</acronym>
+        <icon name="audio-x-generic"/>
+        <glob-deleteall/>
+        <glob pattern="ims.*"/>
+        <glob pattern="*.ims"/>
+    </mime-type>
     <mime-type type="audio/x-it">
         <comment>Impulse Tracker audio</comment>
         <icon name="audio-x-generic"/>
