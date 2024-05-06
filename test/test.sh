@@ -5,7 +5,7 @@
 #     against a target file or directory content
 #
 # SYNOPSIS
-#     ./test.sh [-h|--help|target] [MIME type]
+#     ./test.sh [-h|--help|--show-passed] target [MIME type]
 #
 # AUTHOR
 #     Ciro Scognamiglio
@@ -74,20 +74,27 @@ test_query_default_on_query_filetype() {
 
 check_requirements
 
-help_string="Usage: $(basename "$0") [-h|--help|target] [MIME type]"
+help_string="Usage: $(basename "$0") [-h|--help|--show-passed] target [MIME type]"
 
-if [ -z "$1" ]; then
+opts_pointer=1
+
+if [ -z "${!opts_pointer}" ]; then
   echo "target arg is required"
   echo "$help_string"
   exit 1
 fi
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+if [ "${!opts_pointer}" == "-h" ] || [ "${!opts_pointer}" == "--help" ]; then
   echo "$help_string"
   exit 0
 fi
 
-target="$1"
+if [ "${!opts_pointer}" == "--show-passed" ]; then
+  hide_tests_pass=false
+  ((opts_pointer += 1))
+fi
+
+target="${!opts_pointer}"
 
 if [ ! -e "$target" ]; then
   echo "provided target does not exists"
@@ -116,7 +123,8 @@ else
   files=("$target")
 fi
 
-mime_provided="$2"
+((opts_pointer += 1))
+mime_provided="${!opts_pointer}"
 
 if [ -z "$mime_provided" ]; then
   echo -e "\nTesting ${bold}BZR2 desktop entry association with provided target${bold_reset}...\n"
