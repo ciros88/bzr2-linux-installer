@@ -456,7 +456,8 @@ for listing all)" ${mime_types_association_default})
 
         mime_comments+=("$(echo "$mime_single" | grep "<comment>" | sed 's:<comment>::;s:</comment>::;s:    ::')")
         local mime_pattern
-        mime_pattern=$(echo "$mime_single" | grep "<glob pattern=" | sed -e 's:<glob pattern="::g' -e 's:"/>::g')
+        mime_pattern=$(echo "$mime_single" | grep "<glob " | sed -E -e 's:<glob ::g' -e 's: weight="[0-9]+"::g' \
+          -e 's:pattern="::g' -e 's:"/>::g')
         local mime_pattern_split=()
 
         while read -r line; do

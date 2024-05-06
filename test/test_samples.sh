@@ -260,7 +260,8 @@ for mime_type in "${mime_types[@]}"; do
     mime_single=$(sed -n "$sed_pattern" "/usr/share/mime/packages/freedesktop.org.xml")
   fi
 
-  mime_pattern=$(echo "$mime_single" | grep "<glob pattern=" | sed -e 's:<glob pattern="::g' -e 's:"/>::g')
+  mime_pattern=$(echo "$mime_single" | grep "<glob " | sed -E -e 's:<glob ::g' -e 's: weight="[0-9]+"::g' \
+    -e 's:pattern="::g' -e 's:"/>::g')
 
   mapfile -t test_query_filetype_results < <(test_query_filetype)
 
