@@ -10,6 +10,15 @@
         <glob-deleteall/>
         <glob pattern="*.ims"/>
     </mime-type>
+    <mime-type type="audio/x-adlib-raw">
+        <comment>Raw OPL Capture</comment>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="RAWADATA" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.raw"/>
+    </mime-type>
     <mime-type type="audio/x-ahx">
         <comment>Abyss' Highest eXperience audio</comment>
         <acronym>AHX</acronym>
