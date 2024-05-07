@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="audio/x-adlib-ims">
+        <comment>IMPlay Song Format</comment>
+        <acronym>IMS</acronym>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="big16" value="0x0100" offset="0"/>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.ims"/>
+    </mime-type>
     <mime-type type="audio/x-ahx">
         <comment>Abyss' Highest eXperience audio</comment>
         <acronym>AHX</acronym>
@@ -304,16 +314,6 @@
         <glob pattern="soc.*"/>
         <glob pattern="*.hst"/>
         <glob pattern="*.soc"/>
-    </mime-type>
-    <mime-type type="audio/x-implay">
-        <comment>IMPlay Song Format</comment>
-        <acronym>IMS</acronym>
-        <icon name="audio-x-generic"/>
-        <magic>
-            <match type="big16" value="0x0100" offset="0"/>
-        </magic>
-        <glob-deleteall/>
-        <glob pattern="*.ims"/>
     </mime-type>
     <mime-type type="audio/x-ims">
         <comment>Images Music System</comment>
