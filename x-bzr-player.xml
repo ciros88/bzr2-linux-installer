@@ -514,7 +514,7 @@
         <glob-deleteall/>
         <glob pattern="*.mptm"/>
     </mime-type>
-    <mime-type type="audio/x-nds-strm">
+    <mime-type type="audio/x-nintendo-ds-strm">
         <comment>Nitro Composer (Nintendo DS) audio</comment>
         <icon name="audio-x-generic"/>
         <magic>
@@ -523,11 +523,11 @@
                 <match type="big32" value="0xfeff0001" offset="4"/>
             </match>
         </magic>
-        <sub-class-of type="audio/x-nds-sdat"/>
+        <sub-class-of type="audio/x-nintendo-ds-sdat"/>
         <glob-deleteall/>
         <glob pattern="*.strm"/>
     </mime-type>
-    <mime-type type="audio/x-nds-strm-ffta2">
+    <mime-type type="audio/x-nintendo-ds-strm-ffta2">
         <comment>FFTA2 RIFF (Nintendo DS) audio</comment>
         <expanded-acronym>Final Fantasy Tactics A2 RIFF)</expanded-acronym>
         <icon name="audio-x-generic"/>
