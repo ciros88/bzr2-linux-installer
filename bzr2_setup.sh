@@ -43,7 +43,7 @@ main() {
     "https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/artifacts/"
   )
   download_tries=2
-  bzr2_zip_dir_default="."
+  bzr2_zip_dir_default="binaries"
   bzr2_xml_dir_default="."
   dpi_default="auto"
   mime_types_association_default="y"
