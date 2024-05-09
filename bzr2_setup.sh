@@ -34,7 +34,7 @@ main() {
   HOME=$(eval echo ~"$SUDO_USER")
 
   action_default="setup"
-  bzr2_version_default="2.0.70"
+  bzr2_version_default="2.0.71"
   winearch_default="win32"
   force_reinstall_default="n"
   url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"
@@ -100,7 +100,12 @@ setup() {
   bzr2_exe="$bzr2_dir/$bzr2_exe_filename"
   bzr2_launcher="$bzr2_wineprefix_dir/$bzr2_launcher_filename"
   bzr2_desktop="$bzr2_wineprefix_dir/$bzr2_desktop_filename"
-  bzr2_icon="$bzr2_dir/resources/icon.png"
+
+  if is_ge_than "$bzr2_version" "2.0.71"; then
+    bzr2_icon="$bzr2_dir/data/resources/icon.png"
+  else
+    bzr2_icon="$bzr2_dir/resources/icon.png"
+  fi
 
   if [ -f "$bzr2_exe" ]; then
     is_already_installed=true
@@ -272,6 +277,10 @@ wine environment (multilib pkgs could be required)" ${winearch_default})
   done
 
   winearch="$input"
+}
+
+is_ge_than() {
+  printf '%s\n' "$2" "$1" | sort -C -V
 }
 
 get_force_reinstall() {
