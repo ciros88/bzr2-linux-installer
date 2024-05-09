@@ -32,7 +32,7 @@ else
   export WINEARCH="win32"
 fi
 
-if [ ! -d "$bzr2_path_home" ]; then
+if [ ! -d "$WINEPREFIX" ]; then
   mkdir -p "$WINEPREFIX"
 
   # disable wine crash dialog (winetricks nocrashdialog)
@@ -43,7 +43,7 @@ if [ ! -d "$bzr2_path_home" ]; then
 
   # --- app data setup ---
   ln -s "$bzr2_path_sys/BZRPlayer.exe" "$bzr2_path_home/$bzr2"
-  #ln -s "$bzr2_path_sys/BZRPlayerTest.exe" "$bzr2_path_home/$bzr2-test"
+  #TODO #ln -s "$bzr2_path_sys/BZRPlayerTest.exe" "$bzr2_path_home/$bzr2-test"
 
   readarray -d '' root_dlls < <(find "$bzr2_path_sys" -maxdepth 1 -type f -iname '*.dll' -print0)
 
@@ -51,15 +51,13 @@ if [ ! -d "$bzr2_path_home" ]; then
     ln -s "$root_dll" "$bzr2_path_home"
   done
 
-#  ln -s "$bzr2_path_sys/gm.dls" "$bzr2_path_home"
-  ln -s "$bzr2_path_sys/imageformats" "$bzr2_path_home"
+  #  ln -s "$bzr2_path_sys/gm.dls" "$bzr2_path_home"
+  ln -s "$bzr2_path_sys/data" "$bzr2_path_home"
   ln -s "$bzr2_path_sys/platforms" "$bzr2_path_home"
-  ln -s "$bzr2_path_sys/plugin" "$bzr2_path_home"
-  ln -s "$bzr2_path_sys/resources" "$bzr2_path_home"
   # END --- app data setup ---
 
   # --- user data setup ---
-  cp -a "$bzr2_path_sys/user" "$bzr2_path_home"
+  #TODO cp -a "$bzr2_path_sys/user" "$bzr2_path_home"
   # END --- user data setup ---
 fi
 

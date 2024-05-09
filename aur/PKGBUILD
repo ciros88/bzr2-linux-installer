@@ -3,7 +3,7 @@
 
 pkgname='bzr-player'
 _pkgname='BZR Player'
-pkgver='2.0.70'
+pkgver='2.0.71'
 pkgrel='1'
 pkgdesc='Audio player supporting a wide types of multi-platform exotic file formats'
 arch=('i686' 'x86_64')
@@ -20,8 +20,8 @@ source=("$_zip::http://bzrplayer.blazer.nu/getFile.php?id=${pkgver}"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$_setup"
   "https://raw.githubusercontent.com/ciros88/bzr2-linux/master/$_mimes")
 noextract=("$_zip")
-sha256sums=('50e704debb843e3a4bdd740a7593bde8ebcacb8f94e63dc386027195fbcc847f'
-  'e17117ad27368c2ef6277551697c7ebd0d795732cbf569ce851eb05feb32041c'
+sha256sums=('62bdddf62236ba06e8f45835a56b39a654eca4c9f5e54fd6531551474e3f5b9b'
+  '7bed096e4d7ef36e07f787070742b0c7cbe4a2d1b32570f3fe1bff39f9e3c308'
   'SKIP'
   'SKIP')
 
@@ -56,9 +56,9 @@ package() {
   install -Dm644 "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
 
   for size in 16 32 48 64 128 256 512; do
-    install -Dm644 "$pkgdir/usr/share/$pkgname/resources/icon.png" \
+    install -Dm644 "$pkgdir/usr/share/$pkgname/data/resources/icon.png" \
       "$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/$pkgname.png"
   done
 
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  #TODO #install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
