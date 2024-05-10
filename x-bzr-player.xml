@@ -25,8 +25,10 @@
         <generic-icon name="audio-x-generic"/>
         <icon name="audio-x-generic"/>
         <magic>
-            <match type="big32" value="0x54485800" offset="0"/>
-            <match type="big32" value="0x54485801" offset="0"/>
+            <match type="string" value="THX" offset="0">
+                <match type="byte" value="0x00" offset="3"/>
+                <match type="byte" value="0x01" offset="3"/>
+            </match>
         </magic>
         <glob-deleteall/>
         <glob pattern="ahx.*"/>
