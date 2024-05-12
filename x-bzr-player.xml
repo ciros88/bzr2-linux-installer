@@ -335,6 +335,7 @@
             </match>
         </magic>
         <glob-deleteall/>
+        <glob pattern="hvl.*"/>
         <glob pattern="*.hvl"/>
     </mime-type>
     <mime-type type="audio/x-ims">
