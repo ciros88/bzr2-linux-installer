@@ -326,6 +326,20 @@
         <glob pattern="*.hst"/>
         <glob pattern="*.soc"/>
     </mime-type>
+    <mime-type type="audio/x-hvl">
+        <comment>Hively Tracker audio</comment>
+        <acronym>HVL</acronym>
+        <generic-icon name="audio-x-generic"/>
+        <icon name="audio-x-generic"/>
+        <magic>
+            <match type="string" value="HVL" offset="0">
+                <match type="byte" value="0x00" offset="3"/>
+                <match type="byte" value="0x01" offset="3"/>
+            </match>
+        </magic>
+        <glob-deleteall/>
+        <glob pattern="*.hvl"/>
+    </mime-type>
     <mime-type type="audio/x-ims">
         <comment>Images Music System</comment>
         <acronym>IMS</acronym>
