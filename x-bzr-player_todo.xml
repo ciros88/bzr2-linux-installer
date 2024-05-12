@@ -7,7 +7,6 @@
     <mime-type type="audio/rmid">
         <comment>RIFF MIDI (RMID)</comment>
         <generic-icon name="audio-x-generic"/>
-        <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="RIFF" offset="0">
                 <match type="string" value="RMIDdata" offset="8"/>

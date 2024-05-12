@@ -3,7 +3,7 @@
     <mime-type type="audio/x-adlib-ims">
         <comment>IMPlay Song Format</comment>
         <acronym>IMS</acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big16" value="0x0100" offset="0"/>
         </magic>
@@ -12,7 +12,7 @@
     </mime-type>
     <mime-type type="audio/x-adlib-raw">
         <comment>Raw OPL Capture</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="RAWADATA" offset="0"/>
         </magic>
@@ -23,7 +23,6 @@
         <comment>Abyss' Highest eXperience audio</comment>
         <acronym>AHX</acronym>
         <generic-icon name="audio-x-generic"/>
-        <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="THX" offset="0">
                 <match type="byte" value="0x00" offset="3"/>
@@ -37,7 +36,6 @@
     <mime-type type="audio/x-aon">
         <comment>Art Of Noise audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="aon.*"/>
         <glob pattern="*.aon"/>
@@ -45,7 +43,7 @@
     <mime-type type="audio/x-amf">
         <comment>ASYLUM Music Format</comment>
         <acronym>AMF</acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="ASYLUM Music Format V1.0" offset="0"/>
         </magic>
@@ -54,7 +52,7 @@
     </mime-type>
     <mime-type type="audio/x-cust">
         <comment>DeliTracker Custom audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big32" value="0x000003f3" offset="0">
                 <match type="string" value="NuDELIRIUM" offset="0:256"/>
@@ -69,7 +67,7 @@
     <mime-type type="audio/x-ddmf">
         <comment>DDMF (X-Tracker)</comment>
         <expanded-acronym>Delusion Digital Music Format (X-Tracker)</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="DDMF" offset="0">
                 <match type="string" value="CMSG" offset="66"/>
@@ -80,7 +78,7 @@
     </mime-type>
     <mime-type type="audio/x-deflemask">
         <comment>DefleMask audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value=".DelekDefleMask." offset="0"/>
             <match type="byte" value="0x78" offset="0"/>
@@ -92,7 +90,7 @@
         <comment>DSMI Advanced Music Format</comment>
         <acronym>DSMI AMF</acronym>
         <expanded-acronym>Digital Sound and Music Interface Advanced Music Format</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="AMF" offset="0"/>
         </magic>
@@ -102,7 +100,7 @@
     <mime-type type="audio/x-dsmi-amf-hack">
         <comment>DSMI Advanced Music Format (hack)</comment>
         <expanded-acronym>Digital Sound and Music Interface Advanced Music Format (hack)</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="DMF" offset="0">
                 <match type="byte" value="0x0e" offset="3"/>
@@ -113,7 +111,7 @@
     </mime-type>
     <mime-type type="audio/x-dw">
         <comment>David Whittaker audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big32" value="0x48e7f1fe" offset="0">
                 <match type="big16" value="0x6100" offset="4"/>
@@ -142,7 +140,7 @@
     </mime-type>
     <mime-type type="audio/x-dz">
         <comment>Darius Zendeh Player audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big16" value="0x41fa" offset="4">
                 <match type="big32" value="0x4cd80600" offset="8">
@@ -161,7 +159,7 @@
     </mime-type>
     <mime-type type="audio/x-fc">
         <comment>Future Composer audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="SMOD" offset="0"/>
             <match type="string" value="FC14" offset="0"/>
@@ -184,7 +182,7 @@
     </mime-type>
     <mime-type type="audio/x-fc-bsi">
         <comment>Future Composer (BSI) audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="FUCO" offset="0"/>
         </magic>
@@ -194,14 +192,14 @@
     </mime-type>
     <mime-type type="audio/x-fp">
         <comment>Future Player audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="fp.*"/>
         <glob pattern="*.fp"/>
     </mime-type>
     <mime-type type="audio/x-furnace">
         <comment>Furnace audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="-Furnace module-" offset="0"/>
             <match type="byte" value="0x78" offset="0"/>
@@ -211,7 +209,7 @@
     </mime-type>
     <mime-type type="audio/x-hip">
         <comment>Jochen Hippel audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="byte" value="0x60" offset="0">
                 <match type="big16" value="0x0000" offset="1">
@@ -236,7 +234,7 @@
     </mime-type>
     <mime-type type="audio/x-hip-7v">
         <comment>Jochen Hippel 7V audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="**** Player by Jochen Hippel 1990 ***" offset="5"/>
             <match type="big16" value="0x6000" offset="0">
@@ -254,7 +252,7 @@
     <mime-type type="audio/x-hip-coso">
         <comment>Jochen Hippel CoSo audio</comment>
         <expanded-acronym>Jochen Hippel COmpressed SOng</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="COSO" offset="0">
                 <match type="string" value="TFMX" offset="32"/>
@@ -267,7 +265,7 @@
     </mime-type>
     <mime-type type="audio/x-hip-mcmd">
         <comment>MCMD (unofficial Jochen Hippel 7V clone) audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="MCMD" offset="0"/>
             <match type="big32" value="0x48e7fffe" offset="0"/>
@@ -279,7 +277,7 @@
     </mime-type>
     <mime-type type="audio/x-hip-st">
         <comment>Jochen Hippel ST audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic priority="60">
             <match type="string" value="MMME" offset="0"/>
             <match type="string" value="TFMX" offset="0"/>
@@ -302,7 +300,7 @@
     <mime-type type="audio/x-hip-st-coso">
         <comment>Jochen Hippel ST CoSo audio</comment>
         <expanded-acronym>Jochen Hippel ST COmpressed SOng</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic priority="70">
             <match type="string" value="COSO" offset="0">
                 <match type="string" value="TFMX" offset="32"/>
@@ -330,7 +328,6 @@
         <comment>Hively Tracker audio</comment>
         <acronym>HVL</acronym>
         <generic-icon name="audio-x-generic"/>
-        <icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="HVL" offset="0">
                 <match type="byte" value="0x00" offset="3"/>
@@ -343,14 +340,14 @@
     <mime-type type="audio/x-ims">
         <comment>Images Music System</comment>
         <acronym>IMS</acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="ims.*"/>
         <glob pattern="*.ims"/>
     </mime-type>
     <mime-type type="audio/x-it">
         <comment>Impulse Tracker audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="IMPM" offset="0"/>
         </magic>
@@ -361,13 +358,13 @@
     <mime-type type="audio/x-lds">
         <comment>LOUDNESS Sound System audio</comment>
         <acronym>LDS</acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="*.lds"/>
     </mime-type>
     <mime-type type="audio/x-m2">
         <comment>Mark II Sound-System audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big16" value="0x41fa" offset="4">
                 <match type="big32" value="0x4cd80600" offset="8">
@@ -389,7 +386,7 @@
     </mime-type>
     <mime-type type="audio/x-mdx">
         <comment>Sharp X68000 MDX audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big16" value="0x0d0a" offset="0:1025">
                 <match type="byte" value="0x1a" offset="2:1026"/>
@@ -402,7 +399,7 @@
         <comment>MiniPSF audio</comment>
         <acronym>MiniPSF</acronym>
         <expanded-acronym>Miniature Portable Sound Format</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="PSF" offset="0"/>
         </magic>
@@ -423,14 +420,14 @@
     </mime-type>
     <mime-type type="audio/x-ml">
         <comment>Musicline Editor audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="*.ml"/>
         <glob pattern="ml.*"/>
     </mime-type>
     <mime-type type="audio/x-mmdc">
         <comment>MED Packer audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="MMDC" offset="0"/>
         </magic>
@@ -440,7 +437,7 @@
     </mime-type>
     <mime-type type="audio/x-mod">
         <comment>Amiga SoundTracker audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic priority="40">
             <match type="string" value="MTM" offset="0"/>
             <match type="string" value="MMD0" offset="0"/>
@@ -526,13 +523,13 @@
     </mime-type>
     <mime-type type="audio/x-mptm">
         <comment>OpenMPT Module audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="*.mptm"/>
     </mime-type>
     <mime-type type="audio/x-nintendo-ds-strm">
         <comment>Nitro Composer (Nintendo DS) audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="STRM" offset="0">
                 <match type="big32" value="0xfffe0001" offset="4"/>
@@ -546,7 +543,7 @@
     <mime-type type="audio/x-nintendo-ds-strm-ffta2">
         <comment>FFTA2 RIFF (Nintendo DS) audio</comment>
         <expanded-acronym>Final Fantasy Tactics A2 RIFF)</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="RIFF" offset="0">
                 <match type="string" value="IMA " offset="8"/>
@@ -558,7 +555,7 @@
     </mime-type>
     <mime-type type="audio/x-np">
         <x-npcomment>NoisePacker audio</x-npcomment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="noisepacker1.*"/>
         <glob pattern="noisepacker2.*"/>
@@ -577,7 +574,7 @@
     </mime-type>
     <mime-type type="audio/x-ntk">
         <comment>NoiseTrekker audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="TWNNSNG1" offset="0"/>
             <match type="string" value="TWNNSNG2" offset="0"/>
@@ -587,14 +584,14 @@
     </mime-type>
     <mime-type type="audio/x-okt">
         <comment>Oktalyzer audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="okt.*"/>
         <glob pattern="*.okt"/>
     </mime-type>
     <mime-type type="audio/x-prun">
         <comment>prun file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="prun.*"/>
         <glob pattern="pru2.*"/>
@@ -605,7 +602,7 @@
         <comment>PSF audio</comment>
         <acronym>PSF</acronym>
         <expanded-acronym>Portable Sound Format</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic priority="60">
             <match type="string" value="PSF" offset="0"/>
         </magic>
@@ -625,19 +622,19 @@
     </mime-type>
     <mime-type type="audio/x-psm">
         <comment>psm file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="*.psm"/>
     </mime-type>
     <mime-type type="audio/x-pt3">
         <comment>pt3 file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="*.pt3"/>
     </mime-type>
     <mime-type type="audio/x-ptk">
         <comment>ProTrekkr audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="TWNNSNG6" offset="0"/>
             <match type="string" value="TWNNSNGI" offset="0"/>
@@ -649,7 +646,7 @@
     </mime-type>
     <mime-type type="audio/x-s3m">
         <comment>Scream Tracker 3 audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="SCRM" offset="44"/>
         </magic>
@@ -659,28 +656,28 @@
     </mime-type>
     <mime-type type="audio/x-sc2">
         <comment>sc2 file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="sc2.*"/>
         <glob pattern="*.sc2"/>
     </mime-type>
     <mime-type type="audio/x-sc68">
         <comment>sc68 file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="sc68.*"/>
         <glob pattern="*.sc68"/>
     </mime-type>
     <mime-type type="audio/x-scl">
         <comment>scl file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="scl.*"/>
         <glob pattern="*.scl"/>
     </mime-type>
     <mime-type type="audio/x-scn">
         <comment>Sean Connolly</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big16" value="0x6000" offset="0">
                 <match type="big16" value="0x6000" offset="4">
@@ -694,7 +691,7 @@
     </mime-type>
     <mime-type type="audio/x-sid2">
         <comment>sid2 file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="sid2.*"/>
         <glob pattern="*.sid2"/>
@@ -702,7 +699,7 @@
     <mime-type type="audio/x-sndh">
         <comment>Atari SoundHeader audio</comment>
         <acronym>SNDH</acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic priority="60">
             <match type="string" value="Ice!" offset="0"/>
             <match type="string" value="ICE!" offset="0"/>
@@ -716,7 +713,7 @@
     </mime-type>
     <mime-type type="audio/x-soundmon">
         <comment>SoundMon audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="BPSM" offset="26"/>
             <match type="string" value="V.2" offset="26"/>
@@ -740,7 +737,7 @@
         <comment>Super NES SPC700 audio</comment>
         <acronym>SNES SPC700</acronym>
         <expanded-acronym>Super Nintendo Entertainment System SPC700</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic priority="60">
             <match type="string" value="SNES-SPC700 Sound File Data" offset="0"/>
         </magic>
@@ -750,7 +747,7 @@
     <mime-type type="audio/x-spl">
         <comment>SOPROL audio</comment>
         <expanded-acronym>Sound Programming Language</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="big32" value="0x000003f3" offset="0">
                 <match type="big32" value="0x00000000" offset="4">
@@ -768,14 +765,14 @@
     </mime-type>
     <mime-type type="audio/x-stk">
         <comment>stk file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="stk.*"/>
         <glob pattern="*.stk"/>
     </mime-type>
     <mime-type type="audio/x-stm">
         <comment>Scream Tracker audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="!Scream!\x1A" offset="20"/>
             <match type="string" value="!SCREAM!\x1A" offset="20"/>
@@ -787,14 +784,14 @@
     </mime-type>
     <mime-type type="audio/x-sun">
         <comment>sun file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="sun.*"/>
         <glob pattern="*.sun"/>
     </mime-type>
     <mime-type type="audio/x-sunvox">
         <comment>SunVox audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="SVOX" offset="0">
                 <match type="big32" value="0x00000000" offset="4"/>
@@ -806,7 +803,7 @@
     <mime-type type="audio/x-symmod">
         <comment>SymMOD audio</comment>
         <expanded-acronym>Symphonie / Symphonie Pro Module</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="SymM" offset="0"/>
         </magic>
@@ -817,7 +814,7 @@
     <mime-type type="audio/x-tfmx">
         <comment>TFMX audio</comment>
         <expanded-acronym>The Final Musicsystem eXtended</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="mdat.*"/>
         <glob pattern="*.mdat"/>
@@ -825,27 +822,27 @@
     <mime-type type="audio/x-tfmx-st">
         <comment>TFMX ST audio</comment>
         <expanded-acronym>The Final Musicsystem eXtended (Atari ST)</expanded-acronym>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="mdst.*"/>
         <glob pattern="*.mdst"/>
     </mime-type>
     <mime-type type="audio/x-umx">
         <comment>umx file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="*.umx"/>
     </mime-type>
     <mime-type type="audio/x-v2m">
         <comment>v2m file</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="v2m.*"/>
         <glob pattern="*.v2m"/>
     </mime-type>
     <mime-type type="audio/x-vgm">
         <comment>Video Game Music</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="Vgm " offset="0"/>
             <match type="big16" value="0x1f8b" offset="0"/>
@@ -858,7 +855,7 @@
     </mime-type>
     <mime-type type="audio/x-xm">
         <comment>FastTracker II audio</comment>
-        <icon name="audio-x-generic"/>
+        <generic-icon name="audio-x-generic"/>
         <magic>
             <match type="string" value="Extended Module:" offset="0"/>
         </magic>
