@@ -554,7 +554,7 @@
         <glob pattern="*.strm"/>
     </mime-type>
     <mime-type type="audio/x-np">
-        <x-npcomment>NoisePacker audio</x-npcomment>
+        <comment>NoisePacker audio</comment>
         <generic-icon name="audio-x-generic"/>
         <glob-deleteall/>
         <glob pattern="noisepacker1.*"/>
