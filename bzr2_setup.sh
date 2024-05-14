@@ -464,7 +464,8 @@ for listing all)" ${mime_types_association_default})
           mime_single=$(sed -n "$sed_pattern" "$mime_packages_dir_system/freedesktop.org.xml")
         fi
 
-        mime_comments+=("$(echo "$mime_single" | grep "<comment>" | sed 's:<comment>::;s:</comment>::;s:    ::')")
+        mime_comments+=("$(echo "$mime_single" | grep "<comment>" | sed 's:<comment>::;s:</comment>::;s:    ::' |
+          sed 's/^ *//g')")
         local mime_pattern
         mime_pattern=$(echo "$mime_single" | grep "<glob " | sed -E -e 's:<glob ::g' -e 's: weight="[0-9]+"::g' \
           -e 's:pattern="::g' -e 's:"/>::g')
