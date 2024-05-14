@@ -7,7 +7,6 @@
         <magic>
             <match type="big16" value="0x0100" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.ims"/>
     </mime-type>
     <mime-type type="audio/x-adlib-raw">
@@ -16,7 +15,6 @@
         <magic>
             <match type="string" value="RAWADATA" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.raw"/>
     </mime-type>
     <mime-type type="audio/x-ahx">
@@ -29,14 +27,12 @@
                 <match type="byte" value="0x01" offset="3"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="ahx.*"/>
         <glob pattern="*.ahx"/>
     </mime-type>
     <mime-type type="audio/x-aon">
         <comment>Art Of Noise audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="aon.*"/>
         <glob pattern="*.aon"/>
     </mime-type>
@@ -47,7 +43,6 @@
         <magic>
             <match type="string" value="ASYLUM Music Format V1.0" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.amf"/>
     </mime-type>
     <mime-type type="audio/x-cust">
@@ -58,7 +53,6 @@
                 <match type="string" value="NuDELIRIUM" offset="0:256"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="cus.*"/>
         <glob pattern="cust.*"/>
         <glob pattern="*.cus"/>
@@ -73,7 +67,6 @@
                 <match type="string" value="CMSG" offset="66"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.dmf"/>
     </mime-type>
     <mime-type type="audio/x-deflemask">
@@ -83,7 +76,6 @@
             <match type="string" value=".DelekDefleMask." offset="0"/>
             <match type="byte" value="0x78" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.dmf"/>
     </mime-type>
     <mime-type type="audio/x-dsmi-amf">
@@ -94,7 +86,6 @@
         <magic>
             <match type="string" value="AMF" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.amf"/>
     </mime-type>
     <mime-type type="audio/x-dsmi-amf-hack">
@@ -106,7 +97,6 @@
                 <match type="byte" value="0x0e" offset="3"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.dmf"/>
     </mime-type>
     <mime-type type="audio/x-dw">
@@ -132,7 +122,6 @@
                 <match type="big16" value="0xfffc" offset="4"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="dw.*"/>
         <glob pattern="dwold.*"/>
         <glob pattern="*.dw"/>
@@ -149,7 +138,6 @@
                 </match>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="dz.*"/>
         <glob pattern="dzp.*"/>
         <glob pattern="mkiio.*"/>
@@ -164,7 +152,6 @@
             <match type="string" value="SMOD" offset="0"/>
             <match type="string" value="FC14" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="fc.*"/>
         <glob pattern="fc13.*"/>
         <glob pattern="fc14.*"/>
@@ -186,14 +173,12 @@
         <magic>
             <match type="string" value="FUCO" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="bsi.*"/>
         <glob pattern="*.bsi"/>
     </mime-type>
     <mime-type type="audio/x-fp">
         <comment>Future Player audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="fp.*"/>
         <glob pattern="*.fp"/>
     </mime-type>
@@ -204,7 +189,6 @@
             <match type="string" value="-Furnace module-" offset="0"/>
             <match type="byte" value="0x78" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.fur"/>
     </mime-type>
     <mime-type type="audio/x-hip">
@@ -224,7 +208,6 @@
                 </match>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="hip.*"/>
         <glob pattern="hp.*"/>
         <glob pattern="sog.*"/>
@@ -243,7 +226,6 @@
             <match type="string" value="TFMX" offset="0:1048576"/>
         </magic>
         <sub-class-of type="audio/x-hip"/>
-        <glob-deleteall/>
         <glob pattern="hip7.*"/>
         <glob pattern="s7g.*"/>
         <glob pattern="*.hip7"/>
@@ -259,7 +241,6 @@
             </match>
         </magic>
         <sub-class-of type="audio/x-hip"/>
-        <glob-deleteall/>
         <glob pattern="hipc.*"/>
         <glob pattern="*.hipc"/>
     </mime-type>
@@ -271,7 +252,6 @@
             <match type="big32" value="0x48e7fffe" offset="0"/>
         </magic>
         <sub-class-of type="audio/x-hip"/>
-        <glob-deleteall/>
         <glob pattern="mcmd.*"/>
         <glob pattern="*.mcmd"/>
     </mime-type>
@@ -291,7 +271,6 @@
             </match>
         </magic>
         <sub-class-of type="audio/x-hip"/>
-        <glob-deleteall/>
         <glob pattern="hst.*"/>
         <glob pattern="sog.*"/>
         <glob pattern="*.hst"/>
@@ -318,7 +297,6 @@
             </match>
         </magic>
         <sub-class-of type="audio/x-hip"/>
-        <glob-deleteall/>
         <glob pattern="hst.*"/>
         <glob pattern="soc.*"/>
         <glob pattern="*.hst"/>
@@ -334,7 +312,6 @@
                 <match type="byte" value="0x01" offset="3"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="hvl.*"/>
         <glob pattern="*.hvl"/>
     </mime-type>
@@ -342,7 +319,6 @@
         <comment>Images Music System</comment>
         <acronym>IMS</acronym>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="ims.*"/>
         <glob pattern="*.ims"/>
     </mime-type>
@@ -352,7 +328,6 @@
         <magic>
             <match type="string" value="IMPM" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="it.*"/>
         <glob pattern="*.it"/>
     </mime-type>
@@ -360,7 +335,6 @@
         <comment>LOUDNESS Sound System audio</comment>
         <acronym>LDS</acronym>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="*.lds"/>
     </mime-type>
     <mime-type type="audio/x-m2">
@@ -373,7 +347,6 @@
                 </match>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="m2.*"/>
         <glob pattern="mii.*"/>
         <glob pattern="mk2.*"/>
@@ -393,7 +366,6 @@
                 <match type="byte" value="0x1a" offset="2:1026"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.mdx"/>
     </mime-type>
     <mime-type type="audio/x-minipsf">
@@ -405,7 +377,6 @@
             <match type="string" value="PSF" offset="0"/>
         </magic>
         <sub-class-of type="audio/x-psf"/>
-        <glob-deleteall/>
         <glob pattern="*.mini2sf"/>
         <glob pattern="*.minidcsf"/>
         <glob pattern="*.minidsf"/>
@@ -422,7 +393,6 @@
     <mime-type type="audio/x-ml">
         <comment>Musicline Editor audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="*.ml"/>
         <glob pattern="ml.*"/>
     </mime-type>
@@ -432,7 +402,6 @@
         <magic>
             <match type="string" value="MMDC" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="mmdc.*"/>
         <glob pattern="*.mmdc"/>
     </mime-type>
@@ -496,7 +465,6 @@
             <match type="string" value="M.K." offset="1080"/>
             <match type="string" value="M!K!" offset="1080"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="669.*"/>
         <glob pattern="m15.*"/>
         <glob pattern="med.*"/>
@@ -525,7 +493,6 @@
     <mime-type type="audio/x-mptm">
         <comment>OpenMPT Module audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="*.mptm"/>
     </mime-type>
     <mime-type type="audio/x-nintendo-ds-strm">
@@ -538,7 +505,6 @@
             </match>
         </magic>
         <sub-class-of type="audio/x-nintendo-ds-sdat"/>
-        <glob-deleteall/>
         <glob pattern="*.strm"/>
     </mime-type>
     <mime-type type="audio/x-nintendo-ds-strm-ffta2">
@@ -550,14 +516,12 @@
                 <match type="string" value="IMA " offset="8"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.bin"/>
         <glob pattern="*.strm"/>
     </mime-type>
     <mime-type type="audio/x-np">
         <comment>NoisePacker audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="noisepacker1.*"/>
         <glob pattern="noisepacker2.*"/>
         <glob pattern="noisepacker3.*"/>
@@ -580,20 +544,17 @@
             <match type="string" value="TWNNSNG1" offset="0"/>
             <match type="string" value="TWNNSNG2" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.ntk"/>
     </mime-type>
     <mime-type type="audio/x-okt">
         <comment>Oktalyzer audio</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="okt.*"/>
         <glob pattern="*.okt"/>
     </mime-type>
     <mime-type type="audio/x-prun">
         <comment>prun file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="prun.*"/>
         <glob pattern="pru2.*"/>
         <glob pattern="*.prun"/>
@@ -607,7 +568,6 @@
         <magic priority="60">
             <match type="string" value="PSF" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.2sf"/>
         <glob pattern="*.dcsf"/>
         <glob pattern="*.dsf"/>
@@ -624,13 +584,11 @@
     <mime-type type="audio/x-psm">
         <comment>psm file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="*.psm"/>
     </mime-type>
     <mime-type type="audio/x-pt3">
         <comment>pt3 file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="*.pt3"/>
     </mime-type>
     <mime-type type="audio/x-ptk">
@@ -642,7 +600,6 @@
             <match type="string" value="TWNNSNGG" offset="0"/>
             <match type="string" value="PROTREK" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.ptk"/>
     </mime-type>
     <mime-type type="audio/x-s3m">
@@ -651,28 +608,24 @@
         <magic>
             <match type="string" value="SCRM" offset="44"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="s3m.*"/>
         <glob pattern="*.s3m"/>
     </mime-type>
     <mime-type type="audio/x-sc2">
         <comment>sc2 file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="sc2.*"/>
         <glob pattern="*.sc2"/>
     </mime-type>
     <mime-type type="audio/x-sc68">
         <comment>sc68 file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="sc68.*"/>
         <glob pattern="*.sc68"/>
     </mime-type>
     <mime-type type="audio/x-scl">
         <comment>scl file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="scl.*"/>
         <glob pattern="*.scl"/>
     </mime-type>
@@ -686,14 +639,12 @@
                 </match>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="scn.*"/>
         <glob pattern="*.scn"/>
     </mime-type>
     <mime-type type="audio/x-sid2">
         <comment>sid2 file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="sid2.*"/>
         <glob pattern="*.sid2"/>
     </mime-type>
@@ -706,7 +657,6 @@
             <match type="string" value="ICE!" offset="0"/>
             <match type="string" value="SNDH" offset="12"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="snd.*"/>
         <glob pattern="sndh.*"/>
         <glob pattern="*.snd"/>
@@ -720,7 +670,6 @@
             <match type="string" value="V.2" offset="26"/>
             <match type="string" value="V.3" offset="26"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="bp.*"/>
         <glob pattern="bp2.*"/>
         <glob pattern="bp3.*"/>
@@ -742,7 +691,6 @@
         <magic priority="60">
             <match type="string" value="SNES-SPC700 Sound File Data" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.spc"/>
     </mime-type>
     <mime-type type="audio/x-spl">
@@ -760,14 +708,12 @@
                 </match>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="spl.*"/>
         <glob pattern="*.spl"/>
     </mime-type>
     <mime-type type="audio/x-stk">
         <comment>stk file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="stk.*"/>
         <glob pattern="*.stk"/>
     </mime-type>
@@ -779,14 +725,12 @@
             <match type="string" value="!SCREAM!\x1A" offset="20"/>
             <match type="string" value="BMOD2STM\x1A" offset="20"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="stm.*"/>
         <glob pattern="*.stm"/>
     </mime-type>
     <mime-type type="audio/x-sun">
         <comment>sun file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="sun.*"/>
         <glob pattern="*.sun"/>
     </mime-type>
@@ -798,7 +742,6 @@
                 <match type="big32" value="0x00000000" offset="4"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.sunvox"/>
     </mime-type>
     <mime-type type="audio/x-symmod">
@@ -808,7 +751,6 @@
         <magic>
             <match type="string" value="SymM" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="symmod.*"/>
         <glob pattern="*.symmod"/>
     </mime-type>
@@ -816,7 +758,6 @@
         <comment>TFMX audio</comment>
         <expanded-acronym>The Final Musicsystem eXtended</expanded-acronym>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="mdat.*"/>
         <glob pattern="*.mdat"/>
     </mime-type>
@@ -824,20 +765,17 @@
         <comment>TFMX ST audio</comment>
         <expanded-acronym>The Final Musicsystem eXtended (Atari ST)</expanded-acronym>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="mdst.*"/>
         <glob pattern="*.mdst"/>
     </mime-type>
     <mime-type type="audio/x-umx">
         <comment>umx file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="*.umx"/>
     </mime-type>
     <mime-type type="audio/x-v2m">
         <comment>v2m file</comment>
         <generic-icon name="audio-x-generic"/>
-        <glob-deleteall/>
         <glob pattern="v2m.*"/>
         <glob pattern="*.v2m"/>
     </mime-type>
@@ -848,7 +786,6 @@
             <match type="string" value="Vgm " offset="0"/>
             <match type="big16" value="0x1f8b" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="vgm.*"/>
         <glob pattern="vgz.*"/>
         <glob pattern="*.vgm"/>
@@ -860,7 +797,6 @@
         <magic>
             <match type="string" value="Extended Module:" offset="0"/>
         </magic>
-        <glob-deleteall/>
         <glob pattern="xm.*"/>
         <glob pattern="*.xm"/>
     </mime-type>

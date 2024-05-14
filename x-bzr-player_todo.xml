@@ -12,7 +12,6 @@
                 <match type="string" value="RMIDdata" offset="8"/>
             </match>
         </magic>
-        <glob-deleteall/>
         <glob pattern="*.mid"/>
         <glob pattern="*.midi"/>
         <glob pattern="*.rmi"/>
