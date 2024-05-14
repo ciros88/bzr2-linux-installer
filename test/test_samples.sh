@@ -22,6 +22,9 @@ hide_tests_pass=true
 bold=$'\e[1m'
 bold_reset=$'\e[0m'
 
+mime_dir_system="/usr/share/mime"
+mime_packages_dir_system="$mime_dir_system/packages"
+
 check_requirements() {
   local requirements=(
     basename dirname sed sort tr xdg-mime
@@ -257,7 +260,7 @@ for mime_type in "${mime_types[@]}"; do
   mime_single=$(echo "$bzr2_xml_content" | sed -n "$sed_pattern")
 
   if [ -z "$mime_single" ]; then
-    mime_single=$(sed -n "$sed_pattern" "/usr/share/mime/packages/freedesktop.org.xml")
+    mime_single=$(sed -n "$sed_pattern" "$mime_packages_dir_system/freedesktop.org.xml")
   fi
 
   mime_pattern=$(echo "$mime_single" | grep "<glob " | sed -E -e 's:<glob ::g' -e 's: weight="[0-9]+"::g' \

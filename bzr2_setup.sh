@@ -78,7 +78,7 @@ main() {
 
   icon_sizes=(16 32 48 64 128 256 512)
   icons_hicolor_path="/usr/share/icons/hicolor"
-  mime_dir_system=/usr/share/mime
+  mime_dir_system="/usr/share/mime"
   mime_packages_dir_system="$mime_dir_system/packages"
   desktop_apps_dir_system="/usr/share/applications"
 
@@ -461,7 +461,7 @@ for listing all)" ${mime_types_association_default})
         mime_single=$(echo "$bzr2_xml_content" | sed -n "$sed_pattern")
 
         if [ -z "$mime_single" ]; then
-          mime_single=$(sed -n "$sed_pattern" "/usr/share/mime/packages/freedesktop.org.xml")
+          mime_single=$(sed -n "$sed_pattern" "$mime_packages_dir_system/freedesktop.org.xml")
         fi
 
         mime_comments+=("$(echo "$mime_single" | grep "<comment>" | sed 's:<comment>::;s:</comment>::;s:    ::')")
