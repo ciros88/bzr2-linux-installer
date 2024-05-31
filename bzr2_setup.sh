@@ -606,6 +606,7 @@ export WINEPREFIX="$bzr2_wineprefix_dir"
 export WINEARCH="$winearch"
 export WINEDLLOVERRIDES="mscoree=" # disable mono
 
+cd "$bzr2_dir" #TODO workaround for 2.0.72 version
 wine "$bzr2_exe"
 EOF
   )
