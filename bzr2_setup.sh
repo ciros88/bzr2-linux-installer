@@ -34,7 +34,7 @@ main() {
   HOME=$(eval echo ~"$SUDO_USER")
 
   action_default="setup"
-  bzr2_version_default="2.0.71"
+  bzr2_version_default="2.0.72" #TODO add retry strategy
   winearch_default="win32"
   force_reinstall_default="n"
   url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"

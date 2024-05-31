@@ -43,7 +43,7 @@ if [ ! -d "$WINEPREFIX" ]; then
 
   # --- app data setup ---
   ln -s "$bzr2_path_sys/BZRPlayer.exe" "$bzr2_path_home/$bzr2"
-  #TODO #ln -s "$bzr2_path_sys/BZRPlayerTest.exe" "$bzr2_path_home/$bzr2-test"
+  ln -s "$bzr2_path_sys/BZRPlayerTest.exe" "$bzr2_path_home/$bzr2-test"
 
   readarray -d '' root_dlls < <(find "$bzr2_path_sys" -maxdepth 1 -type f -iname '*.dll' -print0)
 
@@ -53,13 +53,13 @@ if [ ! -d "$WINEPREFIX" ]; then
 
   #  ln -s "$bzr2_path_sys/gm.dls" "$bzr2_path_home"
   ln -s "$bzr2_path_sys/data" "$bzr2_path_home"
-  ln -s "$bzr2_path_sys/platforms" "$bzr2_path_home"
   # END --- app data setup ---
 
   # --- user data setup ---
-  #TODO cp -a "$bzr2_path_sys/user" "$bzr2_path_home"
+  cp -a "$bzr2_path_sys/user" "$bzr2_path_home"
   # END --- user data setup ---
 fi
 
+cd "$bzr2_path_home"  #TODO workaround for 2.0.72 version
 export WINEDEBUG=warn #TODO
 wine "$bzr2_path_home/$bzr2" "$@" &
