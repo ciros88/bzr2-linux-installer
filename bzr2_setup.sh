@@ -34,7 +34,7 @@ main() {
   HOME=$(eval echo ~"$SUDO_USER")
 
   action_default="setup"
-  bzr2_version_default="2.0.72" #TODO add retry strategy
+  bzr2_version_default="2.0.72"
   winearch_default="win32"
   force_reinstall_default="n"
   url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"
@@ -606,7 +606,6 @@ export WINEPREFIX="$bzr2_wineprefix_dir"
 export WINEARCH="$winearch"
 export WINEDLLOVERRIDES="mscoree=" # disable mono
 
-cd "$bzr2_dir" #TODO workaround for 2.0.72 version
 wine "$bzr2_exe"
 EOF
   )
