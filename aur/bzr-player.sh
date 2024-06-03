@@ -53,6 +53,7 @@ if [ ! -d "$WINEPREFIX" ]; then
 
   #  ln -s "$bzr2_path_sys/gm.dls" "$bzr2_path_home"
   ln -s "$bzr2_path_sys/data" "$bzr2_path_home"
+  ln -s "$bzr2_path_sys/platforms" "$bzr2_path_home" #TODO remove
   # END --- app data setup ---
 
   # --- user data setup ---
@@ -60,6 +61,5 @@ if [ ! -d "$WINEPREFIX" ]; then
   # END --- user data setup ---
 fi
 
-cd "$bzr2_path_home"  #TODO workaround for 2.0.72 version
 export WINEDEBUG=warn #TODO
 wine "$bzr2_path_home/$bzr2" "$@" &
