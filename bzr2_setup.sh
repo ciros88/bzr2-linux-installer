@@ -40,7 +40,7 @@ main() {
   url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"
   urls_download=(
     "http://bzrplayer.blazer.nu/getFile.php?id="
-    "https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/artifacts/"
+    "https://raw.githubusercontent.com/ciros88/bzr2-linux/artifacts/binaries/"
   )
   download_tries=2
   bzr2_zip_dir_default="binaries"
