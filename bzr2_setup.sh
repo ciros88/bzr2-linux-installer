@@ -177,7 +177,13 @@ check_setup_files() {
 }
 
 show_message_and_read_input() {
-  read -rp $'\n'"$1 (${bold}$2${bold_reset}): " input
+  if [ -z "$2" ]; then
+    local message=$'\n'"$1: "
+  else
+    local message=$'\n'"$1 (${bold}$2${bold_reset}): "
+  fi
+
+  IFS= read -r -p "$message" input
   if [ -n "$input" ]; then
     echo "$input"
   else
