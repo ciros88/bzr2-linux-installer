@@ -33,7 +33,6 @@ main() {
   USER=${SUDO_USER}
   HOME=$(eval echo ~"$SUDO_USER")
 
-  action_default="setup"
   winearch_default="win32"
   force_reinstall_default="n"
   url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"
@@ -44,8 +43,6 @@ main() {
   download_tries=2
   bzr2_zip_dir_default="binaries"
   bzr2_xml_dir_default="."
-  dpi_default="auto"
-  mime_types_association_default="y"
   mime_types_supported=(
     application/ogg audio/flac audio/midi audio/mp2 audio/mpeg audio/prs.sid audio/vnd.wave audio/x-adlib-ims
     audio/x-adlib-raw audio/x-ahx audio/x-aon audio/x-amf audio/x-cust audio/x-ddmf audio/x-deflemask audio/x-dsmi-amf
@@ -194,7 +191,7 @@ get_action() {
   while :; do
     local input
     input=$(show_message_and_read_input "do you want to ${bold}setup${bold_reset} or ${bold}remove${bold_reset} \
-BZR2?" ${action_default})
+BZR2?" "setup")
 
     case $input in
     setup | remove)
@@ -446,7 +443,7 @@ get_dpi() {
   while :; do
     local input
     input=$(show_message_and_read_input "select the DPI, ${bold}auto${bold_reset} for using the current from xorg \
-screen 0 or ${bold}default${bold_reset} for using the default one" ${dpi_default})
+screen 0 or ${bold}default${bold_reset} for using the default one" "auto")
 
     case $input in
     default | auto)
@@ -481,7 +478,7 @@ get_mime_types_association() {
   while :; do
     local input
     input=$(show_message_and_read_input "associate to all suppported MIME types (enter ${bold}list${bold_reset} \
-for listing all)" ${mime_types_association_default})
+for listing all)" "y")
 
     case $input in
     y | n)
