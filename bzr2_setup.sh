@@ -34,7 +34,6 @@ main() {
   HOME=$(eval echo ~"$SUDO_USER")
 
   action_default="setup"
-  bzr2_version_default="2.0.72"
   winearch_default="win32"
   force_reinstall_default="n"
   url_latest_version="http://bzrplayer.blazer.nu/latest-version.php"
@@ -232,7 +231,7 @@ check_bzr2_latest_version() {
 
     if [ $wget_result -eq 0 ] && validate_version "$latest_version"; then
       echo "${bold}$latest_version${bold_reset} found"
-      bzr2_version_default=$latest_version
+      bzr2_version=$latest_version
       break
     fi
 
@@ -260,7 +259,7 @@ get_bzr2_version() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "select the version to manage" "${bzr2_version_default}")
+    input=$(show_message_and_read_input "select the version to manage" "$bzr2_version")
 
     if validate_version "$input"; then
       break
