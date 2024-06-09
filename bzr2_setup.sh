@@ -215,20 +215,39 @@ validate_version() {
 }
 
 check_bzr2_latest_version() {
-  echo -en "\nchecking latest version online... "
+  while :; do
+    echo -en "\nchecking latest version online... "
 
-  set +e
-  local latest_version
-  latest_version=$(wget -qO- "$url_latest_version")
-  local wget_result=$?
-  set -e
+    set +e
+    local latest_version
+    latest_version=$(wget -qO- "$url_latest_version")
+    local wget_result=$?
+    set -e
 
-  if [ $wget_result -eq 0 ] && validate_version "$latest_version"; then
-    echo "${bold}$latest_version${bold_reset} found"
-    bzr2_version_default=$latest_version
-  else
+    if [ $wget_result -eq 0 ] && validate_version "$latest_version"; then
+      echo "${bold}$latest_version${bold_reset} found"
+      bzr2_version_default=$latest_version
+      break
+    fi
+
     echo "FAIL"
-  fi
+    while :; do
+      local input
+      input=$(show_message_and_read_input "do you want to ${bold}retry${bold_reset} online latest version check \
+or ${bold}skip${bold_reset} it?" "retry")
+
+      case $input in
+      retry) break ;;
+
+      skip)
+        break 2
+        ;;
+      *)
+        echo -e "\n$invalid_value_inserted_message"
+        ;;
+      esac
+    done
+  done
 }
 
 get_bzr2_version() {
@@ -332,45 +351,62 @@ download_bzr2() {
   download_dir_msg+="release archive will be downloaded to ${bold}$download_dir${bold_reset}"
   echo -e "\n$download_dir_msg"
 
-  local is_download_url_fallback=false
+  while :; do
+    local is_download_url_fallback=false
+    for url_download in "${urls_download[@]}"; do
+      if [ $is_download_url_fallback = true ]; then
+        local query_string="$bzr2_zip_filename"
+      else
+        local query_string="$bzr2_version"
+      fi
 
-  for url_download in "${urls_download[@]}"; do
-    if [ $is_download_url_fallback = true ]; then
-      local query_string="$bzr2_zip_filename"
-    else
-      local query_string="$bzr2_version"
-    fi
+      echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $url_download$query_string... "
 
-    echo -en "\ndownloading ${bold}$bzr2_zip_filename${bold_reset} from $url_download$query_string... "
-
-    set +e
-    wget -q --tries=$download_tries -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
-      "$url_download$query_string"
-
-    local wget_result=$?
-    set -e
-
-    bzr2_zip="$download_dir/$bzr2_zip_filename"
-
-    if [ $wget_result -eq 0 ] && unzip -tq "$bzr2_zip" >/dev/null 2>&1; then
       set +e
-      bzr2_zip_sanity_check "$bzr2_zip"
-      local is_zip_sane=$?
+      wget -q --tries=$download_tries -P "$download_dir" -O "$download_dir/$bzr2_zip_filename" \
+        "$url_download$query_string"
+
+      local wget_result=$?
       set -e
 
-      if [ $is_zip_sane -eq 0 ]; then
-        is_zip_downloaded=true
-        return
-      fi
-    else
-      echo -n "FAIL"
-    fi
-    is_download_url_fallback=true
-  done
+      bzr2_zip="$download_dir/$bzr2_zip_filename"
 
-  echo -e "\n\nunable to download the release archive"
-  is_zip_downloaded=false
-  return
+      if [ $wget_result -eq 0 ] && unzip -tq "$bzr2_zip" >/dev/null 2>&1; then
+        set +e
+        bzr2_zip_sanity_check "$bzr2_zip"
+        local is_zip_sane=$?
+        set -e
+
+        if [ $is_zip_sane -eq 0 ]; then
+          is_zip_downloaded=true
+          return
+        fi
+      else
+        echo -n "FAIL"
+      fi
+      is_download_url_fallback=true
+    done
+
+    echo -e "\n\nunable to download the release archive"
+
+    while :; do
+      local input
+      input=$(show_message_and_read_input "do you want to ${bold}retry${bold_reset} downloading it \
+or select a ${bold}local${bold_reset} release archive?" "retry")
+
+      case $input in
+      retry) break ;;
+
+      local)
+        is_zip_downloaded=false
+        break 2
+        ;;
+      *)
+        echo -e "\n$invalid_value_inserted_message"
+        ;;
+      esac
+    done
+  done
 }
 
 get_bzr2_local_zip_dir() {
