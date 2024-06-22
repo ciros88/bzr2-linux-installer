@@ -793,7 +793,7 @@ remove() {
 
   while :; do
     local input
-    input=$(show_message_and_read_input "remove associtated ${bold}MIME types${bold_reset} ?" "y")
+    input=$(show_message_and_read_input "remove associated ${bold}MIME types${bold_reset} ?" "y")
 
     case $input in
     y)
